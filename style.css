@@ -1,23 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700;900&display=swap');
-
-*,
+/* Estilos gerais */
 body {
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     -moz-osx-font-smoothing: grayscale;
-
-}
-
-html,
-body {
-    height: 100%;
     background: linear-gradient(to top, #bc8b6fe8 50%, #c2774b 90%) no-repeat;
     overflow: hidden;
 }
 
+.container {
+    max-width: 1100px;
+    margin: auto;
+}
 
+/* Estilo para o formulário de registro */
 .form-holder {
     display: flex;
     flex-direction: column;
@@ -30,14 +27,8 @@ body {
 .form-holder .form-content {
     position: relative;
     text-align: center;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
     display: flex;
-    -webkit-justify-content: center;
     justify-content: center;
-    -webkit-align-items: center;
     align-items: center;
     padding: 60px;
 }
@@ -48,12 +39,10 @@ body {
     display: inline-block;
     width: 100%;
     min-width: 540px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
     border-radius: 10px;
     text-align: left;
-    -webkit-transition: all 0.4s ease;
     transition: all 0.4s ease;
+    background-color: #dbdbdb;
 }
 
 .form-content h3 {
@@ -64,10 +53,6 @@ body {
     margin-bottom: 5px;
 }
 
-.form-content h3.form-title {
-    margin-bottom: 30px;
-}
-
 .form-content p {
     color: #dbdbdb;
     text-align: left;
@@ -76,7 +61,6 @@ body {
     line-height: 20px;
     margin-bottom: 30px;
 }
-
 
 .form-content label,
 .was-validated .form-check-input:invalid~.form-check-label,
@@ -98,7 +82,6 @@ body {
     font-size: 15px;
     font-weight: 300;
     color: #8D8D8D;
-    -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
     margin-top: 16px;
 }
@@ -109,6 +92,7 @@ body {
     border: 0px;
     box-shadow: none;
     align-items: center;
+    margin-top: 16px;
 }
 
 .btn-primary:hover,
@@ -123,13 +107,14 @@ body {
 
 .btn-outline-secondary {
     border-color: #61412eaf;
+}
 
-
+.btn-btn-sm-btn-outline-secondary:hover {
+    background-color: #c2774b;
 }
 
 .col-md-12-mt-3:hover {
-
-    background-color: #794526;
+    background-color: #ff0000;
 }
 
 .clean {
@@ -151,7 +136,6 @@ body {
     outline: none;
     resize: none;
     height: 120px;
-    -webkit-transition: none;
     transition: none;
     margin-bottom: 14px;
 }
@@ -174,4 +158,30 @@ body {
 
 .valid-feedback {
     color: #185237c1;
+}
+
+/* Estilo para a tabela de funcionários */
+.table {
+    margin-top: 20px;
+}
+
+.table th,
+.table td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f2f2f2;
+}
+
+.action-icons {
+    font-size: 18px;
+    margin-right: 5px;
+    color: #007bff;
+}
+
+.action-icons:hover {
+    color: #0056b3;
 }
