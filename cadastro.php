@@ -4,7 +4,7 @@
 <head>
 
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css'>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./Style.css">
 
     <title>Cadastro de Funcionarios</title>
     <style>
@@ -113,49 +113,7 @@
     </div>
     <!-- partial -->
     <script src="./script.js"></script>
-    <h2>Lista de Funcionários</h2>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Área</th>
-                <th>Senha</th>
-                <th>Gênero</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            include 'config.php';
-
-            $sql = "SELECT * FROM funcionario";
-            $result = $conn->query($sql);
-
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    echo "<tr>";
-                    echo "<td>" . $row['id'] . "</td>";
-                    echo "<td>" . $row['nome'] . "</td>";
-                    echo "<td>" . $row['email'] . "</td>";
-                    echo "<td>" . $row['area'] . "</td>";
-                    echo "<td>" . $row['senha'] . "</td>";
-                    echo "<td>" . $row['genero'] . "</td>";
-                    echo "<td>";
-                    echo "<a href='editar_funcionario.php?id=" . $row['id'] . "' class='btn btn-sm btn-primary'>Editar</a>";
-                    echo "<a href='excluir_funcionario.php?id=" . $row['id'] . "' class='btn btn-sm btn-danger' onclick='return confirm(\"Tem certeza que deseja excluir este funcionário?\")'>Excluir</a>";
-                    echo "</td>";
-                    echo "</tr>";
-                }
-            } else {
-                echo "<tr><td colspan='7'>Nenhum funcionário encontrado</td></tr>";
-            }
-
-            $conn->close();
-            ?>
-        </tbody>
-    </table>
+    
 
 </body>
 

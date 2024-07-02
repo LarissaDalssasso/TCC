@@ -1,15 +1,15 @@
 
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif
-}
-
 body {
     height: 100vh;
-    background: linear-gradient(to top, #cdab6c96 50%, #caa155dc 90%) no-repeat
-}
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+    background: linear-gradient(to top, #bc8b6fe8 50%, #c2774b 90%) no-repeat;
+    overflow: hidden;
+    margin: 0; /* Removendo margens padrão do body */
+    padding: 0; }
 
 .container {
     margin: 50px auto

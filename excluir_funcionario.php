@@ -14,4 +14,4 @@ if ($conn->query($sql) === TRUE) {
 $conn->close();
 
 // Redirecionar de volta para a página de cadastro
-header("Location: cadastro.php");
+header("Location: administrar_funcionarios.php");

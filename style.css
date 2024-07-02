@@ -7,6 +7,8 @@ body {
     -moz-osx-font-smoothing: grayscale;
     background: linear-gradient(to top, #bc8b6fe8 50%, #c2774b 90%) no-repeat;
     overflow: hidden;
+    margin: 0; /* Removendo margens padrão do body */
+    padding: 0; /* Removendo padding padrão do body */
 }
 
 .container {
@@ -14,7 +16,7 @@ body {
     margin: auto;
 }
 
-/* Estilo para o formulário de registro */
+/* Estilo para o formulário de registro e administrar funcionários */
 .form-holder {
     display: flex;
     flex-direction: column;
@@ -46,7 +48,7 @@ body {
 }
 
 .form-content h3 {
-    color: #dbdbdb;
+    color: #794526c1;
     text-align: left;
     font-size: 28px;
     font-weight: 600;
@@ -54,7 +56,7 @@ body {
 }
 
 .form-content p {
-    color: #dbdbdb;
+    color: #794526c1;
     text-align: left;
     font-size: 17px;
     font-weight: 300;
@@ -65,7 +67,7 @@ body {
 .form-content label,
 .was-validated .form-check-input:invalid~.form-check-label,
 .was-validated .form-check-input:valid~.form-check-label {
-    color: #dbdbdb;
+    color: #794526c1;
 }
 
 .form-content input[type=text],
@@ -93,12 +95,14 @@ body {
     box-shadow: none;
     align-items: center;
     margin-top: 16px;
+    min-width: 100px; /* Largura mínima para garantir consistência */
+    width: auto; /* Tamanho automático para o conteúdo */
 }
 
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active {
-    background-color: #794526;
+    background-color: #cfb3a2;
     outline: none !important;
     border: none !important;
     box-shadow: none;
@@ -106,7 +110,7 @@ body {
 }
 
 .btn-outline-secondary {
-    border-color: #61412eaf;
+    border-color: #c84900af;
 }
 
 .btn-btn-sm-btn-outline-secondary:hover {
@@ -128,7 +132,7 @@ body {
     padding: 8px 20px;
     border-radius: 6px;
     text-align: left;
-    background-color: #dbdbdb;
+    background-color: #989898;
     border: 0;
     font-size: 15px;
     font-weight: 300;
@@ -143,8 +147,8 @@ body {
 .form-content textarea:hover,
 .form-content textarea:focus {
     border: 0;
-    background-color: #ebeff8;
-    color: #c2774b;
+    background-color: #c5c5c5;
+    color: #794526c1;
 }
 
 .mv-up {
@@ -162,6 +166,9 @@ body {
 
 /* Estilo para a tabela de funcionários */
 .table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #dbdbdb; /* Cor de fundo para toda a tabela */
     margin-top: 20px;
 }
 
@@ -179,9 +186,20 @@ body {
 .action-icons {
     font-size: 18px;
     margin-right: 5px;
-    color: #007bff;
+    color: #794526c1;
 }
 
 .action-icons:hover {
-    color: #0056b3;
+    color: #794526c1;
+}
+
+/* Ajuste de alinhamento para botões */
+.btn-group {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.btn-group .btn {
+    margin-right: 10px;
 }
