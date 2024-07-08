@@ -302,12 +302,12 @@ var JotForm = {
       'control_payfast'
     ],
     tempStripeCEForms: [
-        '230024636370952', 
-        '230894369312966', 
-        '33361556326858', 
-        '230841251513446', 
-        '62366391795266', 
-        '220392206656353', 
+        '230024636370952',
+        '230894369312966',
+        '33361556326858',
+        '230841251513446',
+        '62366391795266',
+        '220392206656353',
         '230923831008349',  // from here
         '73394165522963',
         '83003904243346',
@@ -352,7 +352,7 @@ var JotForm = {
         '230494425755360',
         '230923288296364',
         '230923831008349',
-        '230952526252050'  // to here belongs to * lidingoslalom * user 44 forms 
+        '230952526252050'  // to here belongs to * lidingoslalom * user 44 forms
     ],
     prevEmbedFormHeight: 0,
     isEncrypted : false,
@@ -453,7 +453,7 @@ var JotForm = {
                     if (action.includes('pci.jotform.com')) {
                         d = d.replace('pci.','submit.');
                     }
-                    
+
                     if (typeof JotForm.enterprise !== 'undefined' && JotForm.enterprise) {
                         d = "https://"+ JotForm.enterprise + "/";
                     } else if (typeof JotForm.hipaa !== 'undefined' && JotForm.hipaa) {
@@ -500,7 +500,7 @@ var JotForm = {
                         ],
                         integrations: [
                           new Sentry.Integrations.GlobalHandlers({
-                            onunhandledrejection: false 
+                            onunhandledrejection: false
                           })
                         ],
                         denyUrls: [
@@ -566,7 +566,7 @@ var JotForm = {
                             if (window.navigator.userAgent.indexOf('FB_IAB') !== -1) {
                                 return null;
                             }
-                            
+
                             return event;
                         }
                     });
@@ -784,7 +784,7 @@ var JotForm = {
                                 }
                             }
 
-                            trackSubmitSource('direct');
+                            trackSubmitSource(isAIAgentEmbedForm() ? 'ai-agent' : 'direct');
                         } catch (error) {
                             console.log(error);
                         }
@@ -853,7 +853,7 @@ var JotForm = {
                 this.checkConditionDebugMode();
 
                 this.checkJSON();
-                
+
                 if (callback) {
                     /**
                      * When callback function threw an error
@@ -915,7 +915,7 @@ var JotForm = {
                         });
                     }
                 }
-                
+
                 if (window.location.pathname.indexOf("/edit/") !== -1) {
                    var urlParts = window.location.href.split("/");
                    //  Submission ID should be given after "edit"
@@ -975,7 +975,7 @@ var JotForm = {
                 if (this.payment === "square") {
                     this.handleSquare();
                 }
-  
+
                 if (this.payment === "mollie") {
                   this.handleMollie();
                 }
@@ -990,7 +990,7 @@ var JotForm = {
                 if (this.payment === "authnet") {
                     this.handleAuthNet();
                 }
-  
+
                 if (this.payment === "bluepay") {
                   this.handleBluepay();
                 }
@@ -1041,7 +1041,7 @@ var JotForm = {
                 this.handlePages();
                 this.checkEmbed();
                 this.checkPwa();
-                
+
 
                 if (document.querySelector('.form-product-has-subproducts')) {
                     if (JotForm.newPaymentUI) {
@@ -1207,6 +1207,9 @@ var JotForm = {
                     document.querySelectorAll('.form-submit-button').forEach(function (b) {
                         b.disabled = true;
                         b.classList.add('conditionallyDisabled');
+                        if (isAIAgentEmbedForm()) {
+                            b.style.display = 'none';
+                        }
                     });
                 }
                 //display all sections
@@ -1493,7 +1496,7 @@ var JotForm = {
                     ready();
                 });
         }
-        
+
         if (document.readyState === 'complete' || (this.jsForm && (document.readyState === undefined || document.readyState === 'interactive'))) {
             sourceCodeCompatibilityFixers();
         } else {
@@ -1505,8 +1508,8 @@ var JotForm = {
         this.calculationMap = getCalculationMap();
         this.loopMapExist = this.loopMap && this.loopMap.size;
 
-        
-        if(typeof __conditionDebugger_logPerformance === 'function') { // Try to log before trying the setInterval method way. 
+
+        if(typeof __conditionDebugger_logPerformance === 'function') { // Try to log before trying the setInterval method way.
             __conditionDebugger_logPerformance([{
                 title: 'Form Initialization',
                 value: (performance.now() - firstPerformancePoint).toFixed(2)
@@ -1580,7 +1583,7 @@ var JotForm = {
       }
       return false;
     },
-    
+
     iframeRezizeTimeout: null,
     /**
     ** Call handleIFrameHeight only periodically so millions of messages are not sent when user has lots of conditions
@@ -1645,7 +1648,7 @@ var JotForm = {
         const getCalculationMap = () => {
             return calculationMap;
         };
-      
+
         const getLoops = id => {
             if (!calculationMap) resolveCalculationMap();
             if (!calculationLoops) resolveLoops();
@@ -1659,7 +1662,7 @@ var JotForm = {
             }
             return calculationLoops;
         };
-      
+
         return {
             resolveCalculationMap,
             resolveLoops,
@@ -1711,7 +1714,7 @@ var JotForm = {
             var firstPage = formAll.querySelector('.form-section');
             var firstElement = firstPage.querySelector('li');
             var isFirstElementHead = firstElement.dataset.type === 'control_head';
-            
+
             if ( isFirstElementHead ) {
               firstElement.insertAdjacentHTML('afterend', touchlessBox);
             } else {
@@ -1722,11 +1725,11 @@ var JotForm = {
 
     calendarCheck: function(){
       var section = JotForm.currentSection;
-      
+
       if(!section){
         section = document.querySelector('.form-section');
       }
-      
+
       var formLineCount = section.querySelectorAll('.form-line').length;
       var calendar = false;
 
@@ -1838,7 +1841,13 @@ var JotForm = {
             const welcomeViewHeight = welcomeView ? Math.max(welcomeView.offsetHeight + 160, 539) : 0; // 160px is top and bottom padding
             height = welcomeViewHeight > 0 ? welcomeViewHeight : height;
         }
-        
+
+        // if form has formuser-header, add its height to the form height
+        const formUserHeader = document.querySelector('.jfFormUser-header');
+        if (formUserHeader) {
+            height += formUserHeader.offsetHeight;
+        }
+
         // if this is a captcha verification page, set height to 350
         height = ( document.title === 'Please Complete' ) ? 350 : height;
 
@@ -1862,7 +1871,7 @@ var JotForm = {
         if (isEmbedForm) {
           var computedStyles = getComputedStyle(document.querySelector(".supernova.isEmbeded"));
           var backgroundImage = computedStyles.getPropertyValue("background-image");
-    
+
           if (backgroundImage && backgroundImage != 'none') {
             var backgroundStyles = new URLSearchParams();
             var properties = ["background-image", "background-size", "background-position", "background-repeat", "background-attachment", "background-color"];
@@ -1872,8 +1881,8 @@ var JotForm = {
             window.parent.postMessage('backgroundStyles:' + backgroundStyles.toString() + ':' + form.id, '*');
           }
 
-          /* reset greacaptcha on first height calculation. 
-           * some users are hiding the form initially and showing it later. 
+          /* reset greacaptcha on first height calculation.
+           * some users are hiding the form initially and showing it later.
            * this causes grecaptcha to calculate their positions wrong. */
 
           JotForm.resetGRECaptcha();
@@ -2361,7 +2370,7 @@ var JotForm = {
             JotForm.loadScript(noSleepURL, function () {
                 loadingNoSleepScript = false;
             });
-      
+
             var toggleNoSleep = function () {
                 if (loadingNoSleepScript || typeof NoSleep === 'undefined') { return; }
                 var noSleep = new NoSleep();
@@ -2540,7 +2549,9 @@ var JotForm = {
                                 f.appendChild(uploadHiddenInput);
                             }
                             uploadHiddenInput.value = filename;
-
+                            if (JotForm.uploadServerURL) {
+                                uploadHiddenInput.value = filename + '#' + response.fileServer;
+                            }
                             if ($('draftID')) {
                                 var uploadedFiles = [];
                                 var uploadedFileID = ['uploadNewForSACL', qFolder].join('-');
@@ -2554,17 +2565,12 @@ var JotForm = {
                                 uploadedFiles.push(filename);
                                 uploadedFileInput.value = JSON.stringify(uploadedFiles);
                             }
-
                             var fileServerInput = document.getElementById('file_server');
                             if (!fileServerInput) {
                                 fileServerInput = createHiddenInputElement({ name: 'file_server', id: 'file_server' });
                                 f.appendChild(fileServerInput);
                             }
-                            if (JotForm.uploadServerURL && fileServerInput.value) {
-                                fileServerInput.value = fileServerInput.value + "|" + response.fileServer;
-                            } else {
-                                fileServerInput.value = response.fileServer;
-                            }
+                            fileServerInput.value = response.fileServer;
 
                             // This is needed for validations. Removes required message
                             parent.value = 'uploaded';
@@ -2701,7 +2707,7 @@ var JotForm = {
      * Hiddenly submits the form on backend
      */
     hiddenSubmit: function (frm, options) {
-        var checkPagesNumber = document.querySelectorAll('.form-section') || null;  
+        var checkPagesNumber = document.querySelectorAll('.form-section') || null;
         var currentPage = JotForm.currentSection.pagesIndex;
         var selectPageBreak = (JotForm.newDefaultTheme && checkPagesNumber.length === currentPage) ? '.form-pagebreak-back-container' : '.form-pagebreak';
 
@@ -2820,7 +2826,7 @@ var JotForm = {
                     if (allInputs[i].getAttribute('name') && allInputs[i].getAttribute('name').indexOf('other') > -1 && allInputs[i].value === '') {
                         allInputs[i].remove();
                     }
-                } 
+                }
             }
             xhr.send(new FormData(frm));
         }else{
@@ -3917,7 +3923,7 @@ var JotForm = {
                                         }
                                     }
                                 }
-                            } 
+                            }
                         }
                     }
                 }
@@ -4321,14 +4327,14 @@ var JotForm = {
 
                 var fuzzy = el.readAttribute('data-fuzzySearch') == 'Yes';
                 var matches;
-    
+
                 var string = word.toLowerCase();
                 matches = values.collect(function (v) {
                     if ((fuzzy && v.toLowerCase().include(string)) || v.toLowerCase().indexOf(string) == 0) {
                         return v;
                     }
                 }).compact();
-                
+
                 // If matches found
                 var maxMatches = el.readAttribute('data-maxMatches');
                 if (maxMatches > 0) matches = matches.slice(0, maxMatches);
@@ -4527,7 +4533,7 @@ var JotForm = {
                         break;
                     case /:\/\/submit.jotform/.test(this.url):
                         this.APIUrl = 'https://api.jotform.com';
-                        break;    
+                        break;
                     default:
                         this.APIUrl = this.url.replace(/\/$/, '') + '/API'
                         break;
@@ -4689,6 +4695,7 @@ var JotForm = {
                 input.setSliderValue(parseInt(pair.value));
                 return;
             }
+            var signatureFitbEl = n.indexOf('signature') > 0 && $$(n)[0];
 
             if (pair.key == "coupon-input" && $('coupon-input')) {
                 $('coupon-input').setValue(pair.value);
@@ -4807,7 +4814,7 @@ var JotForm = {
                                             .map(function(language) { return language[inp.value]; })
                                             .filter(function(translation) { return translation; });
                                         if (translatedValues.length > 0) {
-                                            return translatedValues.any(function(translatedValue) { 
+                                            return translatedValues.any(function(translatedValue) {
                                                 return valuesArray[i] === translatedValue;
                                             });
                                         }
@@ -4907,6 +4914,14 @@ var JotForm = {
                     console.log(e)
                 }
 
+            } else if (signatureFitbEl) {
+                var spanElement = signatureFitbEl.closest('span');
+                var imgElement = spanElement && spanElement.querySelector('.FITB-sign-image');
+
+                if (imgElement) {
+                    signatureFitbEl.value = pair.value;
+                    imgElement.src = pair.value;
+                }
             }
             $$('.form-textbox%s, .form-textarea%s, .form-hidden%s'.replace(/\%s/gim, n)).each(function (input) {
                 //simulate 'keyup' event to execute conditions upon prepopulation
@@ -4979,7 +4994,7 @@ var JotForm = {
                                 input.click(); //select other option
                             }
                         }
-        
+
                         if(disabled) setTimeout(function() { input.disable(); });
                     });
                 });
@@ -5151,7 +5166,7 @@ var JotForm = {
                     // Create lookup array
                     questions_by_name[question.name] = question.qid;
                     // Create type array in order to differentiate between inline field and multi-valued fields (address, fullname) when colon is used
-                    questions_by_type[question.name] = question.type;                   
+                    questions_by_type[question.name] = question.type;
                 }
             });
 
@@ -5190,7 +5205,7 @@ var JotForm = {
                               var seperator = question_name.indexOf(':') > -1 ? ':' : '[';
                               qname = questions_by_name[question_name.split(seperator)[0]];
                               qtype = questions_by_type[question_name.split(seperator)[0]];
-                              
+
                               // there may be a multiline question field in the question_name:
                               var multilineFieldRegex = /\[(.*?)\]/gi;
                               var multilineFieldResult = multilineFieldRegex.exec(question_name);
@@ -5370,7 +5385,7 @@ var JotForm = {
             }
         }
 
-        if (JotForm.getInputType(field) === 'html') { 
+        if (JotForm.getInputType(field) === 'html') {
             if ($('text_' + field).innerHTML.match(/google.*maps/gi)) { //google maps hack to get the iframe to redisplay in the right place
                 $('text_' + field).innerHTML = $('text_' + field).innerHTML;
             }
@@ -5489,7 +5504,7 @@ var JotForm = {
                         to: FormTranslation.to,
                         success: true
                     };
-                    XD.postMessage(JSON.stringify(message), referrer, frame); 
+                    XD.postMessage(JSON.stringify(message), referrer, frame);
                 }
             }
         }
@@ -5534,7 +5549,7 @@ var JotForm = {
             selfSubmittingPayments.push('sensepass');
         }
 
-        if (window.paymentType == 'subscription' && JotForm.payment === 'paypalcomplete') {
+        if (window.paymentType === 'subscription' && JotForm.payment === 'paypalcomplete') {
             selfSubmittingPayments.splice(selfSubmittingPayments.indexOf('paypalcomplete'), 1);
         }
 
@@ -5591,13 +5606,13 @@ var JotForm = {
 
                 if (paypalButton) {
                     var paypalButtonContainer = JotForm.getContainer(paypalButton);
-    
+
                     if (paypalButtonContainer) {
                         paypalButtonContainer.setAttribute('paypal-button-status', 'hide');
                     }
                 }
             }
-            
+
             if (JotForm.clearFieldOnHide == "enable" && !dontClear && !JotForm.ignoreInsertionCondition) {
                 try {
                     JotForm.clearField(field);
@@ -5611,7 +5626,7 @@ var JotForm = {
             } else {
                 element.hide();
             }
-            
+
             if (element.getAttribute('data-type') && element.getAttribute('data-type') == 'control_button' && element.getElementsBySelector('button').length > 1) {
                 // this means that the form has at least two of them (submit-save-clear-reset)
                 var submitButtonsElements = element.getElementsBySelector('button');
@@ -5635,10 +5650,10 @@ var JotForm = {
                             }
                         }
                     });
-    
-                }                    
+
+                }
             }
-            
+
             // if donation and has a source field
             if (JotForm.donationField && element.down('[data-component="paymentDonation"][data-custom-amount-field]')) {
                 JotForm.updateDonationAmount(0);
@@ -5819,7 +5834,7 @@ var JotForm = {
                     var newValue = (el.id in JotForm.defaultValues) ? JotForm.defaultValues[el.id] : "";
                     if (el.value !== newValue) {
                         el.value = newValue;
-                        el.triggerEvent("change");    
+                        el.triggerEvent("change");
                     }
                 }
             });
@@ -5908,7 +5923,7 @@ var JotForm = {
                 condValueOrg = condValueOrg.replace(/\{.*?\}/gi, function (match) {
                     var stripped = match.replace(/[\{\}]/g, "");
                     var elements = $$('input[name$="_' + stripped + '"], input[name$="_' + stripped + '[date]"], input[name$="_' + stripped + '[0]"]'); // updated to fetch emoji slider elements
-                    
+
                     elements = Array.from(elements);
                     if (elements.length > 0) {
                         var element = elements.first();
@@ -6267,10 +6282,10 @@ var JotForm = {
             case dataType === 'Yes No' && (operator == 'contains' || operator == 'notContains'):
                 let selector = "";
                 if (desktopVersion && currentVersion === 'desktop') {
-                    selector = '#id_' + questionID + ' input:not([disabled]):not([class*="jsMatrix-mobileNo"]:not([class*="jsMatrix-mobileYes"])';                               
+                    selector = '#id_' + questionID + ' input:not([disabled]):not([class*="jsMatrix-mobileNo"]:not([class*="jsMatrix-mobileYes"])';
                 }
-                if (mobileVersion && currentVersion === 'mobile') {     
-                    selector = '#id_' + questionID + ' input:not([disabled])[class*="jsMatrix-mobileNo"],[class*="jsMatrix-mobileYes"]';                                                            
+                if (mobileVersion && currentVersion === 'mobile') {
+                    selector = '#id_' + questionID + ' input:not([disabled])[class*="jsMatrix-mobileNo"],[class*="jsMatrix-mobileYes"]';
                 }
                 return Array.from(document.querySelectorAll(selector)).map(function(value) {
                     return checkedValues(value);
@@ -6370,7 +6385,7 @@ var JotForm = {
                             if (anotherField) {
                                 termValue = $('input_'+anotherField+'_state').value;
                             }
-                            inputValue = $('input_' + term.field + '_state').value 
+                            inputValue = $('input_' + term.field + '_state').value
                             if(inputValue) {
                                 if (term.operator == 'equalState') {
                                     if (inputValue == termValue) {
@@ -6520,14 +6535,14 @@ var JotForm = {
                                     return value;
                                 });
                             }
-                            
+
                             if (document.getElementById("matrix_" + term.field)){
                                 var checkedValue = JotForm.getMatrixValues(term.field, term.operator);
                                 if (checkedValue) {
                                     checkResult = JotForm.checkValueByOperator(term.operator, termValue, checkedValue);
                                 }
                             }
-                            
+
                             if (checkResult) {
                                 any = true;
                             } else {
@@ -6961,7 +6976,7 @@ var JotForm = {
                             JotForm.showOrHideMultipleFields(true, action.fields, true);
                         } else {
                             action.fields.each(function (field) {
-                                JotForm.showField(field, true);	
+                                JotForm.showField(field, true);
                             });
                         }
                     } else if (action.visibility.toLowerCase() == 'hidemultiple' && action.fields) {
@@ -7110,9 +7125,9 @@ var JotForm = {
                 calc.conditionTrue = true;
                 JotForm.checkCalculation(calc, sourceField, sourceEvent);
             } else {
-            
+
                 calc.conditionTrue = false;
-                
+
                 if (calc.resultFieldProp === 'startdate') {
                     JotForm.appointments[calc.resultField].forceStartDate();
                 }
@@ -7162,7 +7177,7 @@ var JotForm = {
         } else if (condition.type == 'url') {
             return (condition.link.toLowerCase() == 'any' && any) || (condition.link.toLowerCase() == 'all' && all);
         } else { // Page condition
-            
+
             var isConditionValid = (condition.link.toLowerCase() == 'any' && any) || (condition.link.toLowerCase() == 'all' && all);
             if($A(condition.action).length > 0 && condition.action.first().skipHide === 'hidePage') {
                 var action = condition.action.first();
@@ -7255,7 +7270,7 @@ var JotForm = {
                         nextQuestionIndex++;
                     }
                 }
-           
+
                 if (currentQuestionIndex < nextQuestionIndex) {
                     for (var i = currentQuestionIndex + 1; i < nextQuestionIndex; i++) {
                         var card = JotForm.getFieldFromID(allQuestions[i].id);
@@ -7287,7 +7302,7 @@ var JotForm = {
                 return;
             }
 
-            if (isConditionValid) {        
+            if (isConditionValid) {
                 if (window.FORM_MODE == 'cardform') {
                   if (action.skipTo == 'end') {
                     JotForm.nextPage = sections[sections.length - 1];
@@ -7312,7 +7327,7 @@ var JotForm = {
                                 var card = JotForm.getFieldFromID(allQuestions[i].id);
                                 if (card && !card.hasClassName('always-hidden')) {
                                     JotForm.hideField(allQuestions[i].id);
-                                    card.setAttribute('data-skipped-by', allQuestions[currentQuestionIndex].id); 
+                                    card.setAttribute('data-skipped-by', allQuestions[currentQuestionIndex].id);
                                 }
                             }
                         } else {
@@ -7614,6 +7629,11 @@ var JotForm = {
                     if (canEnabledDisabledWidget) {
                         canEnabledDisabledWidget.setStyle({ 'pointer-events': '' });
                     }
+
+                    // https://www.jotform.com/answers/15761281
+                    if (input.readAttribute('data-component') === 'calculation' && JotForm.accessible) {
+                        input.setAttribute("readonly", "false");
+                    }
                     if (!JotForm.isEditMode()) {
                         input.enable();
                         // needs to call parent div of star rating input to enable
@@ -7638,7 +7658,7 @@ var JotForm = {
                             });
                             break;
                         case 'TEXTAREA':
-                            if(isDataRichText) { 
+                            if(isDataRichText) {
                                 var richTextArea = input.parentElement.querySelector(".nicEdit-main");
                                 if (richTextArea) { richTextArea.setAttribute("contenteditable", "true") };
                             }
@@ -7665,7 +7685,12 @@ var JotForm = {
                     if (input.classList.contains('form-star-rating-star')) {
                         input.parentNode.disable();
                     }
-                    
+
+                    // https://www.jotform.com/answers/15761281
+                    if (input.readAttribute('data-component') === 'calculation' && JotForm.accessible) {
+                        input.enable();
+                        input.setAttribute("readonly", "true");
+                    }
                     if (isActiveSlot) {
                         input.setStyle({'pointer-events': 'none'});
                     } else if (isDataRichText) {
@@ -7690,7 +7715,7 @@ var JotForm = {
                             input.disable();
                         }
                     case 'TEXTAREA':
-                        if(isDataRichText) { 
+                        if(isDataRichText) {
                             var richTextArea = input.parentElement.querySelector(".nicEdit-main");
                             if (richTextArea) { richTextArea.setAttribute("contenteditable", "false") };
                         }
@@ -7957,7 +7982,7 @@ var JotForm = {
         if (!calc.resultField || (calc.hasOwnProperty('conditionTrue') && !calc.conditionTrue)) {
             return '';
         }
-        
+
         if(JotForm.ignoreInsertionCondition && !JotForm.replaceTagTest){
             return;
         }
@@ -8088,7 +8113,7 @@ var JotForm = {
                 case 'payjunction':
                 case 'payment':
                 case 'paysafe':
-                case 'iyzico':    
+                case 'iyzico':
                 case 'sensepass':
                 case 'paypal':
                 case 'paypalexpress':
@@ -8242,7 +8267,7 @@ var JotForm = {
                         if (isDate) {
                             var date = new Date(combinedObject['year_' + qid + '-date'], combinedObject['month_' + qid + '-date'] - 1, combinedObject['day_' + qid + '-date']);
                             val = date / 60 / 60 / 24 / 1000;
-                        } 
+                        }
                         if (isTime) {
                             var millis = Date.UTC('1970', '0', '1', combinedObject['hourSelect_' + qid + '_time'],combinedObject['minuteSelect_' + qid + '_time']);
                             val = millis / 60 / 60 / 1000;
@@ -8317,7 +8342,7 @@ var JotForm = {
                                 var splittedID = el.id.split("_");
                                 var id = JotForm.isTimeObject(el.id) ? splittedID[splittedID.length - 1] : el.id.replace(/_.*/, "");
                                 if (['hourSelect', 'minuteSelect', 'ampm'].indexOf(id) > -1) {
-                                    valArr.push(el.value);                         
+                                    valArr.push(el.value);
                                 }
                             });
                         }
@@ -8341,11 +8366,11 @@ var JotForm = {
                                     var id = JotForm.isTimeObject(el.id) ? splittedID[splittedID.length - 1] : el.id.replace(/_.*/, "");
                                     combinedObject[id] = el.value;
                                     if (['hourSelect', 'minuteSelect', 'ampm'].indexOf(id) > -1) {
-                                        valArr.push(el.value);                         
+                                        valArr.push(el.value);
                                     }
                                 }
                             });
-                        }                        
+                        }
                     }
 
                     //if numeric calculation calculate the number of days in epoch
@@ -8412,7 +8437,7 @@ var JotForm = {
                             }
                         } else {
                             var res = JotForm.displayTimeRangeDuration(data, true);
-                            if(res){ 
+                            if(res){
                                 var hours = res[0] || 0;
                                 var mins = res[1] || 0;
                                 var millis = Date.UTC('1970', '0', '1', hours, mins);
@@ -8713,7 +8738,7 @@ var JotForm = {
                             break;
 
                         case 'checklist':
-                            var checked = JotForm.getChecklistWidgetValues(data).checked; 
+                            var checked = JotForm.getChecklistWidgetValues(data).checked;
                             return checked;
                         default:
                             val = $('input_' + data).hasAttribute('data-calc') ? $('input_' + data).getAttribute('data-calc') : $('input_' + data).value;
@@ -8987,7 +9012,7 @@ var JotForm = {
                                 }
                                 if(!isValidDate(date)) {
                                     return;
-                                }                               
+                                }
                                 if(JotForm.getInputType(calc.resultField) !== "datetime") {
                                     out += getStringDate(date);
                                 } else {
@@ -9045,7 +9070,7 @@ var JotForm = {
         }
 
         var resultFieldType = calc.isLabel ? "html" : JotForm.calculationType(result);
-        
+
         if(JotForm.ignoreInsertionCondition && JotForm.replaceTagTest && (resultFieldType !== 'html' && resultFieldType !== 'inline')) {
             return;
         }
@@ -9081,7 +9106,7 @@ var JotForm = {
                     if (!hasCombinedField && resultFields[0]) {
                         if (resultFields[0].parentNode.getAttribute("data-type") === "datebox") {
                             var date = new Date(output * 60 * 60 * 24 * 1000);
-                            JotForm.formatDate({ date: date, dateField: $("lite_mode_" + qid + "-date-" + fieldId) });                        
+                            JotForm.formatDate({ date: date, dateField: $("lite_mode_" + qid + "-date-" + fieldId) });
                         }
                         else if (resultFields[0].value !== output) {
                             resultFields[0].value = output;
@@ -9112,7 +9137,7 @@ var JotForm = {
                                         fieldInputElement = value;
                                     }
                                 });
-                            } 
+                            }
                             fieldInputElement.value = combinedObject[inputId];
                             if(resultFieldType == 'address' &&  window.FORM_MODE == 'cardform'){
                               var parentElement = fieldInputElement.parentElement;
@@ -9193,16 +9218,16 @@ var JotForm = {
                         } else {
                             for (var inputId in combinedObject) {
                                 if (JotForm.isTimeObject(inputId)) {
-        
+
                                     var ndtTimeQuery = $('id_' + result).select('input[id*=input_' + result + '_' + inputId + '], select[id*=input_' + result + '_' + inputId + ']');
                                     var targetTimeObject = JotForm.newDefaultTheme && ndtTimeQuery.length > 0 ? ndtTimeQuery.first() : '';
-        
+
                                     var ldtTimeQuery = $('id_' + result).select('input[id*=' + inputId + '], select[id*=' + inputId + ']');
                                     targetTimeObject = !JotForm.newDefaultTheme && ldtTimeQuery.length > 0 ? ldtTimeQuery.first() : targetTimeObject;
-        
+
                                     var cardFormTimeQuery = $('id_' + result).select('input[id*=' + inputId + '_' + result + '], select[id*=' + inputId + '_' + result + ']');
                                     targetTimeObject = window.FORM_MODE == 'cardform' && cardFormTimeQuery.length > 0 ? cardFormTimeQuery.first() : targetTimeObject;
-        
+
                                     targetTimeObject.value = combinedObject[inputId];
 
                                     if(inputId === 'duration-ampmRange') {
@@ -9210,13 +9235,13 @@ var JotForm = {
                                         var durationAmpmRangeQuery = $('id_' + result).select('input[id*=' + durationSplittedIds[0] + '_'  + result  + '_' + durationSplittedIds[1] +'], select[id*=' + durationSplittedIds[0] + '_' + result + '_' + durationSplittedIds[1] + ']');
                                         targetTimeObject = JotForm.newDefaultTheme && durationAmpmRangeQuery.length > 0 ? durationAmpmRangeQuery.first() : targetTimeObject;
                                         targetTimeObject.value = combinedObject[inputId];
-                                        JotForm.displayTimeRangeDuration(result, false);                                        
+                                        JotForm.displayTimeRangeDuration(result, false);
                                     }
-        
+
                                     if (window.FORM_MODE == 'cardform') {
                                         var tempInputID = inputId.indexOf('Range') >= 0 ? inputId.replace('Range', '') + '-range' : inputId;
                                         tempInputID = tempInputID.indexOf('Select') >= 0 ? tempInputID.replace('Select', '') : tempInputID;
-        
+
                                         var dataType = resultFieldType === 'time' ? 'data-type*="' + 'time-' + tempInputID + '"' : 'data-type*="' + inputId + '"';
                                         var dateQuery = $('id_' + result).select('div[class*=jfField][' + dataType + ']');
                                         for (var i = 0; i < dateQuery.length; i++) {
@@ -9228,7 +9253,7 @@ var JotForm = {
                                     var targetDateEl = dateQuery.length > 0 ? dateQuery.first() : '';
                                     targetDateEl.value = combinedObject[inputId];
                                 }
-                            }    
+                            }
                         }
                     }
                 } else {
@@ -9348,9 +9373,9 @@ var JotForm = {
                             Get the calculation values of the calculations which has the same base & result fields with calc.
                             Collect those values into the array calcBaseInputValues
                         Filter the checks by using the calcBaseInputValues and assign to variable toBeChecked
-                    
+
                 Standart flow with $A(checks).each(function (chk)
-                    
+
                 Make the necessary recheckings if there are any.
                 */
                 var toBeChecked = [];
@@ -9380,11 +9405,11 @@ var JotForm = {
                     if (!JotForm.defaultValues[chk.id]) {
                         chk.checked = false;
                     }
-                    
+
                     if (typeof outputs === 'string' && calcBaseIsRadio && outputs === chk.value) {
                         /*
-                            Make sure to include a check where you not only find if a value contains another value, 
-                            but also confirm that they are exactly the same. 
+                            Make sure to include a check where you not only find if a value contains another value,
+                            but also confirm that they are exactly the same.
                             For instance, if you're condition like these options:
                                 Radio  "type option1"
                                 Checkbox "type option" and "type option1"
@@ -9707,7 +9732,7 @@ var JotForm = {
         var val = $('input_' + data).value;
         var itemLines = val.split(/\r\n|\r|\n/g);
         var checklistValue = itemLines.reduce(function(result, line) {
-            line = line.trim();        
+            line = line.trim();
             if (line.indexOf(checkedPrefix) === 0) {
                 result.checked.push(line.slice(checkedPrefix.length));
             } else if (line.indexOf(uncheckedPrefix) === 0) {
@@ -10510,7 +10535,7 @@ var JotForm = {
         var selectArea = dropdown.querySelector('.select-area');
         var selectedValueArea = selectArea.querySelector('.selected-values');
         var options = dropdown.querySelectorAll('.option');
-        var dropdownHint = selectArea.querySelector('.dropdown-hint');        
+        var dropdownHint = selectArea.querySelector('.dropdown-hint');
 
         options.forEach(function(option){
             option.addEventListener('click', function(event){
@@ -10696,15 +10721,16 @@ var JotForm = {
      */
     checkEmbed: function () {
         if (window !== window.top) {
-            appendHiddenInput('embedUrl', document.referrer)
+            const embedUrl = document.get !== undefined && document.get.jsForm === 'true' && document.get.parentURL ? document.get.parentURL : document.referrer;
+            appendHiddenInput('embedUrl', embedUrl);
             if (JotForm.debug) {
-                console.log(document.referrer);
+                console.log(embedUrl);
             }
         }
     },
     /*
      * Checks whether form is opened within a pwa or not
-     * Sends pwa id 
+     * Sends pwa id
      * @returns {undefined}
      */
     checkPwa: function() {
@@ -10834,33 +10860,33 @@ var JotForm = {
       JotForm.stripeACH =  __stripeACH;
       JotForm.stripeACH.init();
     },
-    
+
     handleMollie: function () {
       if (JotForm.isEditMode()) return;
-      
+
       if (typeof __mollie === "undefined") {
         alert("Mollie script didn't work properly. Form will be reloaded. ");
         location.reload();
         return;
       }
-      
+
       JotForm.mollie =  __mollie;
       JotForm.mollie.init();
     },
-  
+
     handleBluepay: function () {
       if (JotForm.isEditMode()) return;
-      
+
       if (typeof __bluepay === "undefined") {
         alert("Bluepay script didn't work properly. Form will be reloaded. ");
         location.reload();
         return;
       }
-      
+
       JotForm.bluepay =  __bluepay;
       JotForm.bluepay.init();
     },
-  
+
     handlePaypalSPB: function () {
       JotForm.paypalSPB = __paypalSPB;
       try {
@@ -11699,18 +11725,18 @@ var JotForm = {
                     const amountsContainer = new Element('div', { 'class': 'form-payment-amount' });
                     let discountsHTML = '';
                     let amountsHTML = '';
-                    
-                    //* first payment discount 
+
+                    //* first payment discount
                     if(firstPaymentDiscount){
                         discountsHTML += getHTML('First Payment Discount', firstPaymentDiscount, true, 'discount')
                     }
 
-                    //* recurring payment discount 
+                    //* recurring payment discount
                     if(recurPaymentDiscount){
                         discountsHTML += getHTML(firstPaymentDiscount ? 'Recurring Payment Discount' : 'Discount', recurPaymentDiscount, true, 'discount')
                     }
 
-                    //* recurrence interval 
+                    //* recurrence interval
                     if(pair.value.recurrence_interval){
                         discountsHTML += getHTML('Recurrence', pair.value.recurrence_interval, false, 'discount')
                     }
@@ -11721,11 +11747,11 @@ var JotForm = {
                     }
 
                     if(pair.value.recurring){
-                        //* first payment amount 
+                        //* first payment amount
                         amountsHTML +=  getHTML('First Payment Amount', subTotal, true, 'amount')
                     }
 
-                    //* recurring payment amount 
+                    //* recurring payment amount
                     amountsHTML +=  getHTML(isSetupFee ? 'Recurring Payment Amount':'Total', recurringVal, true, 'amount')
 
 
@@ -11947,7 +11973,7 @@ var JotForm = {
                 return price;
             }
             return parseFloat(parseFloat(price).formatMoney(decimal || 2, dSeparator, ""));
-        } 
+        }
     },
     prices: {},
 
@@ -11959,8 +11985,8 @@ var JotForm = {
     * @param decimalPlaces
     * @returns {string}
     */
-    morePreciseToFixed: function(num, decimalPlaces) { 
-        decimalPlaces = typeof decimalPlaces == 'undefined' ? 2 : decimalPlaces;   
+    morePreciseToFixed: function(num, decimalPlaces) {
+        decimalPlaces = typeof decimalPlaces == 'undefined' ? 2 : decimalPlaces;
         var num_sign = num >= 0 ? 1 : -1;
         return (Math.round((num * Math.pow(10, decimalPlaces)) + (num_sign * 0.0001)) / Math.pow(10, decimalPlaces)).toFixed(decimalPlaces);
     },
@@ -12133,7 +12159,7 @@ var JotForm = {
                             } else {
                                 if($(pair.key)){
                                     $(pair.key).checked = !($(pair.value.quantityField).getValue() <= 0);
-                                    var productValue = pair.key.split('_'); 
+                                    var productValue = pair.key.split('_');
                                     productValue.splice(-1, 2);
                                     productValue = productValue.join('_');
                                     JotForm.runConditionForId(productValue);
@@ -12221,7 +12247,7 @@ var JotForm = {
                         if ($(pair.value.specialPriceField).tagName !== 'SELECT' || $(pair.value.specialPriceField).getSelected().index > 0) {
                           if($(pair.key)){
                             $(pair.key).checked = true;
-                            var productValue = pair.key.split('_'); 
+                            var productValue = pair.key.split('_');
                             productValue.splice(-1, 2);
                             productValue = productValue.join('_');
                             JotForm.runConditionForId(productValue);
@@ -12337,7 +12363,7 @@ var JotForm = {
                 }else{
                     productItem.classList.add('sub_product');
                     productItem.classList.remove('show_sub_product');
-                }    
+                }
             }
 
             function refreshRelatedCategoryProductCount(product_item){
@@ -12487,9 +12513,9 @@ var JotForm = {
                 if ($(connected_product_item)) {
                     var isSubproduct = !!$(connected_product_item).down('.form-product-has-subproducts');
                     var pairedMainProductPid = products[connectedProductPid];
-    
+
                     var inputs = $(connected_product_item).select('input,select');
-    
+
                     $A(inputs).each(function(input) {
                         if (JotForm.newDefaultTheme || JotForm.newPaymentUI) {
                             $(input).observe('change', function() {
@@ -12945,7 +12971,7 @@ var JotForm = {
                     console.log('Stripe V3 loaded');
                 } else {
                     if (scaTemplate) { scaTemplate.remove(); }
-        
+
                     if (oldTemplate) {
                         $$('.stripe-old-template input').forEach(function(input) {
                             input.setAttribute('disabled', true);
@@ -13297,7 +13323,7 @@ var JotForm = {
         }
 
         //exception for rich text editor because element is never visible
-        if (element.classList.contains("form-textarea") && element.parentNode.querySelector('.nicEdit-main') 
+        if (element.classList.contains("form-textarea") && element.parentNode.querySelector('.nicEdit-main')
             && ( element.closest('.form-line') && JotForm.isVisible(element.closest('.form-line')))) {
             return true;
         }
@@ -13383,7 +13409,7 @@ var JotForm = {
             b.oldText = b.innerHTML;
             b.ariaLive = 'polite';
             b.disabled = false; // enable previously disabled button
-            
+
             //Emre: to provide sending form with with clicking "enter" button in Multi-page forms
             //JotForm.enableDisableButtonsInMultiForms();
             if (getQuerystring('qp') === "") {
@@ -13621,7 +13647,7 @@ var JotForm = {
      * - Handles the print button
      */
     setButtonActions: function () {
-        this.setSubmitButtonActions();        
+        this.setSubmitButtonActions();
         this.setResetButtonActions();
         this.setPrintButtonActions();
     },
@@ -13630,12 +13656,12 @@ var JotForm = {
         var minTotalOrderAmountHiddenField = document.getElementsByName('minTotalOrderAmount');
         var hasMinTotalOrderAmount = typeof minTotalOrderAmountHiddenField !== 'undefined' && minTotalOrderAmountHiddenField.length > 0;
         var minTotalOrderAmount = hasMinTotalOrderAmount === true ? minTotalOrderAmountHiddenField[0].value : '0';
-        
+
         JotForm.minTotalOrderAmount = minTotalOrderAmount;
-        
+
         return hasMinTotalOrderAmount;
     },
-  
+
     isValidMinTotalOrderAmount: function () {
         if (JotForm.hasMinTotalOrderAmount() && parseInt(JotForm.minTotalOrderAmount) > 0) {
 
@@ -13729,7 +13755,7 @@ var JotForm = {
                     return JotForm.corrected(item);
                 }
             }
-            
+
             //register a blur event to validate the
             item.addEventListener('blur', () => {
                 item.validateGradingInputs();
@@ -13804,7 +13830,7 @@ var JotForm = {
     },
 
     /**
-     * 
+     *
      */
     initTestEnvForNewDefaultTheme: function () {
         if (
@@ -13918,11 +13944,11 @@ var JotForm = {
         }
     },
     renderTermsAndConditions: function(settings) {
-      if (settings.data.data === 'termsAndConditions') { 
+      if (settings.data.data === 'termsAndConditions') {
 
         var main = document.querySelector('.form-all');
         var container = document.createElement('div');
-        
+
         container.id ='terms_conditions_modal';
         container.style.display ='block';
 
@@ -13988,7 +14014,7 @@ var JotForm = {
           return link;
         }
     },
-    
+
     getMessageFormTermsAndCondition: function(){
         if (window.location.href.indexOf('ndt=1') === -1) return;
         window.addEventListener('message', this.renderTermsAndConditions, true);
@@ -14003,14 +14029,14 @@ var JotForm = {
                 $(widgetsFrames[i]).addClassName('frame-ready').store('frame-ready', true);
                 XD.postMessage(JSON.stringify({type: 'ready' }), widgetsFrames[i].src, widgetsFrames[i]);
            }
-        } 
+        }
     },
 
     makeForceReloadWidgets: function (clientID, id) {
-        /* 
-            After calculation, the 'updateWidgetValue' function of the widget is not triggered. 
-            It only runs when the initialization function is called. 
-            Consequently, the calculation result is not reflected in the widget's value. 
+        /*
+            After calculation, the 'updateWidgetValue' function of the widget is not triggered.
+            It only runs when the initialization function is called.
+            Consequently, the calculation result is not reflected in the widget's value.
             The Turkey Widget Team is aware of this problem and has added it to their plans.
         */
         var widgetList = ['53201a2d6866be393e000028'/* Dynamic Dropdown */];
@@ -14018,7 +14044,7 @@ var JotForm = {
             JotForm.reloadWidget(id);
        }
     },
-    
+
     initDateV2Inputs: function() {
         function initDateV2LiteModeInputs() {
             const liteModeInputs = document.querySelectorAll('input[id*="lite_mode_"]');
@@ -14043,7 +14069,7 @@ var JotForm = {
                             const monthIndex = splittedDateFormat.indexOf("mm");
                             const yearIndex = splittedDateFormat.indexOf("yyyy");
                             const dayIndex = splittedDateFormat.indexOf("dd");
-    
+
                             const qid = e.target.getAttribute("id").split("_")[2];
                             const splittedDate = e.target.value.split(dateSeperator);
                             document.querySelector("#day_" + qid).value = splittedDate[dayIndex];
@@ -14119,7 +14145,7 @@ var JotForm = {
                 }
                 dropDownFields[i].addEventListener('change', function(e) {
                     if(e.target.value) {
-                        e.target.classList.add('is-active');       
+                        e.target.classList.add('is-active');
                     } else {
                         e.target.classList.remove('is-active');
                     }
@@ -14150,7 +14176,7 @@ var JotForm = {
                 container.classList.add('is-none');
                 input.value = '';
             }
-            
+
             const otherInputOption = container.parentNode.querySelector('input.form-radio-other') || container.parentNode.querySelector('input.form-checkbox-other');
             input.addEventListener("keydown", function(e) {
               const charCode = e.which || e.keyCode || e.charCode;
@@ -14160,7 +14186,7 @@ var JotForm = {
                 otherInputOption.focus();
               }
             });
-            
+
             input.addEventListener("keyup", function() {
               otherInputOption.value = input.value;
             });
@@ -14626,7 +14652,7 @@ var JotForm = {
                         if (!$this.noJump && window.parent && window.parent != window) {
                             window.parent.postMessage('scrollIntoView::'+form.id, '*');
                         }
-    
+
                         if(!JotForm.nextPage) {
                             var sections = [...document.querySelectorAll('.form-all > .page-section')];
                             for(var i=sections.indexOf(section); i<sections.length; i++) {
@@ -14637,32 +14663,32 @@ var JotForm = {
                                 break;
                             }
                         }
-    
+
                         if (JotForm.nextPage) {
                             JotForm.backStack.push(JotForm.hideFormSection(section)); // Hide current
                             JotForm.currentSection = JotForm.showFormSection(JotForm.nextPage);
                             JotForm.updateErrorNavigation(true);
-    
+
                             //Emre: to prevent page to jump to the top (55389)
                             if (!$this.noJump && (window.parent == window && JotForm.isFullSource !== true)) {
                                 scrollTo(0, 0);
                             }
-    
+
                             JotForm.enableDisableButtonsInMultiForms();
                         } else if (section.nextSiblings()[0]) { // If there is a next page
-    
+
                             JotForm.backStack.push(JotForm.hideFormSection(section)); // Hide current
                             // This code will be replaced with condition selector
                             JotForm.currentSection = JotForm.showFormSection(section.nextSiblings()[0]);
-    
+
                             //Emre
                             if (!$this.noJump && window.parent == window) {
                                 scrollTo(0, 0);
                             }
-    
+
                             JotForm.enableDisableButtonsInMultiForms();
                         }
-    
+
                         JotForm.nextPage = false;
                         if (JotForm.saveForm) {
                             if (window.JFFormUserHelper && window.JFFormUserHelper.SCLManager) {
@@ -14671,12 +14697,12 @@ var JotForm = {
                                 JotForm.hiddenSubmit(JotForm.getForm(section));
                             }
                         }
-    
+
                         JotForm.iframeHeightCaller();
                         JotForm.runAllCalculations(true);
-    
+
                         checkLanguageDropdownPage();
-    
+
                         if (JotForm.currentSection) {
                             JotForm.currentSection.querySelectorAll(".form-html").forEach(function (textEl) {
                                 if (textEl.innerHTML.match(/google.*maps/gi)) { //google maps hack to get the iframe to redisplay in the right place
@@ -14685,7 +14711,7 @@ var JotForm = {
                                 }
                             });
                         }
-    
+
                     } else {
                         try {
                             JotForm.updateErrorNavigation(true);
@@ -14696,7 +14722,7 @@ var JotForm = {
                                 if (JotForm.isSourceTeam) {
                                     return;
                                 }
-    
+
                                 var errorBox = document.createElement('div');
                                 errorBox.className = 'form-button-error';
                                 errorBox.append(JotForm.texts.generalPageError);
@@ -14706,7 +14732,7 @@ var JotForm = {
                             // couldnt find 'next button'
                         }
                     }
-    
+
                     JotForm.setPagePositionForError();
                 });
             });
@@ -14781,13 +14807,13 @@ var JotForm = {
             if (allSections.length > 0) {
                 last = allSections[allSections.length - 1];
             }
-        
+
             // if there is a last page
             if (last) {
                 last.pagesIndex = allSections.length;
                 pages.push(last); // add it with the other pages
                 last.style.display = 'none'; // hide it until we open it
-        
+
                 var mergeWithSubmit = false;
                 var targetSubmit = null;
                 if (JotForm.newDefaultTheme || JotForm.extendsNewTheme) {
@@ -14798,39 +14824,39 @@ var JotForm = {
                         targetSubmit.classList.add("form-pagebreak");
                     }
                 }
-        
+
                 var backCont = document.createElement('div');
                 backCont.className = 'form-pagebreak-back-container';
                 var backButtonContainers = document.querySelectorAll('.form-pagebreak-back-container');
                 var back = backButtonContainers[0].querySelector('button');
                 var penultimateBack = backButtonContainers[backButtonContainers.length - 1].querySelector('button');
                 var isHiddenButton =  penultimateBack.classList.contains('button-hidden');
-        
+
                 back.textContent = penultimateBack ? penultimateBack.textContent : back.textContent
-        
+
                 // This code removes the classes starting with "form-submit-button-" from the last button element. This is done to ensure that the button styles are inherited from the submit button.
                 back.className = back.className.replace(/\bform-submit-button-\S+/g, "");
-                
+
                 var submitButtonElement = document.querySelector('li[data-type="control_button"] .submit-button');
-                
+
                 if (submitButtonElement) {
                     if(isHiddenButton) {
                         submitButtonElement.classList.add('button-hidden');
                     }
-            
+
                     submitButtonElement.classList.forEach(cls => {
                       if(cls.startsWith('form-submit-button-') || cls == 'button-hidden'){
                         back.setAttribute("class", cls + " form-pagebreak-back jf-form-buttons")
                       }
                     });
                 }
-                
+
                 if(!isHiddenButton){
                   back.classList.remove('button-hidden');
                 }
 
                 backCont.append(back);
-        
+
                 if (mergeWithSubmit) {
                     targetSubmit.prepend(backCont);
                     // reorder buttons
@@ -14851,7 +14877,7 @@ var JotForm = {
                     li.append(cont);
                     last.append(li);
                 }
-        
+
                 back.addEventListener('click', function () {
                     if (JotForm.saving) {
                         return;
@@ -14926,7 +14952,7 @@ var JotForm = {
         if (collapseSection) {
             const hiddenWithStyles = collapseSection.style.display == "none" || collapseSection.style.visibility == "hidden";
             const hiddenWithClasses = collapseSection.classList.contains('always-hidden') || collapseSection.classList.contains('form-field-hidden');
-            
+
             if (hiddenWithStyles || hiddenWithClasses) {
                 return true;
             }
@@ -15169,7 +15195,7 @@ var JotForm = {
                 if(e.keyCode === 13) {
                     handleFormCollapseChecker();
                 }
-            });        
+            });
         })
     },
 
@@ -15513,10 +15539,10 @@ var JotForm = {
                 fitbInput.addEventListener('input', function() {
                   if(fitbInput.offsetWidth < getContWidth(fitbInput)) {
                     fitbInput.style.width = Math.max(getInputWidth(fitbInput) + 4, initWidth) + 'px';
-                  } 
+                  }
 
                   if(!fitbInput.style.maxWidth) {
-                   fitbInput.style.maxWidth = getContWidth(fitbInput) + 'px'; 
+                   fitbInput.style.maxWidth = getContWidth(fitbInput) + 'px';
                   }
                 });
             });
@@ -15699,13 +15725,13 @@ var JotForm = {
 
                             Cardinal.on("payments.validated", function (data) {
                                 var form = (JotForm.forms[0] == undefined || typeof JotForm.forms[0] == "undefined" ) ? $($$('.jotform-form')[0].id) : JotForm.forms[0];
-    
+
                                 JotForm.corrected($('creditCardTable'));
-    
+
                                 switch(data.ActionCode){
                                   case "SUCCESS":
                                   case "NOACTION":
-    
+
                                     var PAResStatus = createHiddenInputElement({ name: 'PAResStatus', value: data.Payment.ExtendedData.PAResStatus }); //Optional
                                     var Enrolled = createHiddenInputElement({ name: 'Enrolled', value: data.Payment.ExtendedData.Enrolled }); //Optional
                                     var CAVV = createHiddenInputElement({ name: 'CAVV', value: data.Payment.ExtendedData.CAVV !== undefined ? data.Payment.ExtendedData.CAVV : "" });
@@ -16158,7 +16184,7 @@ var JotForm = {
         if(JotForm.doubleValidationFlag()) {
             // if the section passed as scopeSelector, do the validation just for this section
             if (scopeSelector) return handleValidateAll(form, scopeSelector);
-            
+
             var isValid = true;
 
             document.querySelectorAll('ul.form-section:not([id^="section_"])').forEach(function(section) {
@@ -16229,7 +16255,7 @@ var JotForm = {
                 JotForm.errorNavigationMessages.push(errorMessage);
             }
         }
-        
+
         if (JotForm.isCollapsed(input)) {
 
             var collapse = JotForm.getCollapseBar(input);
@@ -16571,7 +16597,7 @@ var JotForm = {
                                     console.log('Captcha cannot be initialized')
                                     JotForm.enableButtons();
                                 })
-                                
+
                                 e.stop();
                                 return;
                             }
@@ -16703,7 +16729,7 @@ var JotForm = {
                     var currentForm = document.querySelector('form');
                     var formId = currentForm && currentForm.id ? currentForm.id : '';
                     var formName = currentForm && currentForm.name ? currentForm.name : '';
-                    
+
                     if (JotForm.autoFillDeployed && !JotForm.payment) {
                         var autofillFormInstance = AutoFill && AutoFill.getInstance(formId + formName);
                         autofillFormInstance && autofillFormInstance.stopSavingData();
@@ -16858,6 +16884,23 @@ var JotForm = {
             // Set on submit validation
             form.observe('submit', handleFormSubmit);
 
+            if (isAIAgentEmbedForm()) {
+                window.addEventListener("message", function (message) {
+                    try {
+                        if (message.data === 'submitDraft') {
+                            if (window.location.href.indexOf("chatID") > -1) {
+                                const queryParameters = new URLSearchParams(window.location.search);
+                                const chatID = queryParameters.get('chatID');
+                                trackChatIDForAIAgent(chatID);
+                                form.submit();
+                            }
+                        }
+                    } catch (e) {
+                        console.error('errorOnAIAgentMessage', e);
+                    }
+                }, false);
+            }
+
             /*
                 Empty Submission testing: Check if on submit handler was correctly mounted by checking prototype.js
                 registry. If it's missing, this will explain why validation isn't being run and why empty submissions are
@@ -16881,7 +16924,7 @@ var JotForm = {
 
             $$('#' + form.id + ' *[class*="form-address-table"] input').each(function (input) {
                 var dataComponentName=  input.getAttribute('data-component');
-               
+
                 if(dataComponentName ==='address_line_1' || dataComponentName ==='address_line_2') {
                     input.setAttribute("maxLength", 100);
                 } else if(dataComponentName === 'zip') {
@@ -16889,8 +16932,8 @@ var JotForm = {
                 } else {
                     input.setAttribute("maxLength", 60)
                 }
-            }); 
-            
+            });
+
             $$('.form-upload').each(function (upload) {
 
                 try {
@@ -17162,7 +17205,7 @@ var JotForm = {
             if (document.get.ignoreValidation && document.get.ignoreValidation === "true") {
                 return true;
             }
-            
+
             if (JotForm.doubleValidationFlag()) {
                 var alwaysHidden = JotForm.isInputAlwaysHidden(input);
                 if (alwaysHidden && !input.hasClassName('h-captcha-response')) {
@@ -17355,7 +17398,7 @@ var JotForm = {
 
                 if (year && month && day) {
                     birthDate = new Date(year, parseInt(month, 10) - 1, day);
-                } 
+                }
               }
               var age = today.getFullYear() - birthDate.getFullYear();
               var m = today.getMonth() - birthDate.getMonth();
@@ -17378,7 +17421,7 @@ var JotForm = {
                     var invalidLimits = function() {
                         input.addClassName("invalidLimits");
                         return JotForm.errored(input, JotForm.texts.dateLimited, dontShowMessage);
-                    } 
+                    }
 
                     if (typeof lim !== 'undefined' && lim !== false && !($("year_" + id).value == "" || $("month_" + id).value == "" || $("day_" + id).value == "")) {
 
@@ -17417,13 +17460,13 @@ var JotForm = {
                                 if(range[0].indexOf("{") > -1) {
                                     startDate = JotForm.dateFromField(range[0]);
                                 } else {
-                                    JotForm.browserIs.safari() && !JotForm.browserIs.chrome() ? startDate = new Date(range[0]+'T00:00') : startDate = new Date(range[0].split('-'));   
+                                    JotForm.browserIs.safari() && !JotForm.browserIs.chrome() ? startDate = new Date(range[0]+'T00:00') : startDate = new Date(range[0].split('-'));
                                 }
                                 var endDate;
                                 if(range[1].indexOf("{") > -1) {
                                     endDate = JotForm.dateFromField(range[1]);
                                 } else {
-                                    JotForm.browserIs.safari() && !JotForm.browserIs.chrome() ? endDate = new Date(range[1]+'T00:00') : endDate = new Date(range[1].split('-'));   
+                                    JotForm.browserIs.safari() && !JotForm.browserIs.chrome() ? endDate = new Date(range[1]+'T00:00') : endDate = new Date(range[1].split('-'));
                                 }
                                 if(endDate) {
                                     if (date.getTime() >= startDate.getTime() && date.getTime() <= endDate.getTime()) {
@@ -17615,11 +17658,11 @@ var JotForm = {
                         return isInputTypeRadioOrCheckbox(el) ? el.checked : (!!el.value && !el.value.strip(" ").empty());
                     }
 
-                    var matrixElement = input.up('table') ? input.up('table') : input.up('.jfMatrix');                    
+                    var matrixElement = input.up('table') ? input.up('table') : input.up('.jfMatrix');
                     var allCells = Array.from(matrixElement.querySelectorAll('input,select'));
 
                     function getElementsInRow(row) {
-                        return Array.from(row.querySelectorAll('input,select'));
+                        return Array.from(row.querySelectorAll('input:not(.jfDropdown-search),select'));
                     }
 
                     function anyRowElementsFilled(rowElements) {
@@ -18018,7 +18061,7 @@ var JotForm = {
                         if (input.value.startsWith('www.')) {
                             checkUrlValue = 'https://' + input.value;
                         }
-                        new URL(checkUrlValue); 
+                        new URL(checkUrlValue);
                     } catch (error) {
                         return JotForm.errored(input, JotForm.texts.url, dontShowMessage);
                     }
@@ -18057,7 +18100,7 @@ var JotForm = {
                 var inputContainer = $this.getContainer(input);
                 var requiredFields = inputContainer.select('[class*=validate]');
                 var lastRequiredField = requiredFields[requiredFields.length - 1];
-                
+
                 var isLastRequiredField = ($this.lastFocus ? ($this.getContainer($this.lastFocus) == $this.getContainer(input) && lastRequiredField == input) : false);
                 var isPrefix = input && input.getAttribute('data-component') === 'prefix';
 
@@ -18080,7 +18123,7 @@ var JotForm = {
                 }
                 // else if (inputContainer.dataset.type === 'control_address') {
                 //     input.validateInput();  // always validate address fields on blur
-                // } 
+                // }
                 else if (input.hasClassName("form-textarea") && input.up('div').down('.nicEdit-main')) {
                     input.validateInput();  // validate rich text area
                 } else if (input.hasClassName("pad")) {
@@ -18144,7 +18187,7 @@ var JotForm = {
                 })
             }
 
-            
+
             var otherInput = JotForm.getOptionOtherInput(input);
             if (otherInput) {
                 otherInput.observe('blur', function() {
@@ -18315,7 +18358,7 @@ var JotForm = {
     bringOldFBSubmissionBack: function (id) {
 
         var formIDField = $$('input[name="formID"]')[0];
-        
+
         if(formIDField && formIDField.value){
             new Ajax.Jsonp(JotForm.url + 'server/bring-old-fbsubmission-back', {
                 parameters: {
@@ -18330,7 +18373,7 @@ var JotForm = {
                     }
                 }
             });
-        }    
+        }
     },
 
     setCustomHint: function (elem, value) {
@@ -18843,7 +18886,7 @@ var JotForm = {
 
                     // Correct matching of inline field's subfield name with combinedObject's one
                     subfield = qid + '_' + subfield.split('-')[0];
-                } 
+                }
                 if(subfield in combinedObject) {
                     output = combinedObject[subfield];
                 }
@@ -19252,11 +19295,11 @@ var JotForm = {
                                 return {
                                     caret: caretPos
                                 }
-                            }    
+                            }
                         }
                     }
                 }).mask(maskedInput);
-    
+
                 maskedInput.setAttribute('maskValue', maskValue);
                 maskedInput.addEventListener('input', e => e.target.dispatchEvent(new Event('change')));
 
@@ -19593,13 +19636,13 @@ var JotForm = {
     setMatrixLayout: function(id, passive, mobileActiveQuestionOrder) {
         //check if the element is visible
         //if it is in Form Builder, setMatrixLayout function will continue.
-        //if it is in Publish, setMatrixLayout function won't continue for hidden questions. 
+        //if it is in Publish, setMatrixLayout function won't continue for hidden questions.
         //When the question will be visible, setMatrixLayout function will continue.
 
-        if(!passive && !JotForm.isVisible('id_' + id)){  
+        if(!passive && !JotForm.isVisible('id_' + id)){
             return;
         }
-               
+
         var matrix = document.getElementById("matrix_" + id);
         if (!$(matrix)) return;
         var desktopVersion = $(matrix).select('.forDesktop')[0];
@@ -20041,7 +20084,7 @@ var JotForm = {
     },
 
     setRatingClickTransfer: function() {
-      
+
     },
 
     getScrollbarWidth: function(matrix) {
@@ -20071,7 +20114,7 @@ var JotForm = {
         if (!option || !option.classList.contains('form-' + option.type + '-other')) {
             return null;
         }
-        
+
         const otherInputSelector = '.form-' + option.type + '-item';
         const parentWrapper = option.closest(otherInputSelector);
         if (parentWrapper) {
@@ -20346,7 +20389,7 @@ var JotForm = {
                     var possibleZeroIndexElement  = idStringSections.join("_");
                     field = $(possibleZeroIndexElement);
 
-                    if(field === null){   
+                    if(field === null){
                         var qid = '';
                         if (pair.key.indexOf('hour_') > -1) {
                             qid = pair.key.replace('hour_', '');
@@ -20401,7 +20444,7 @@ var JotForm = {
                     if (timeInput) {
                         var hour = line.down('input[id*="_hourSelect"]').value;
                         var min = line.down('input[id*="_minuteSelect"]').value;
-    
+
                         if (hour && min) {
                             var calculatedHour = hour.toString().length === 1 ? '0' + hour : hour;
                             timeInput.value = calculatedHour + ':' + min;
@@ -20455,7 +20498,7 @@ var JotForm = {
                                 }
                                 return acc;
                             }, []);
-                            
+
                             if (unusedValues.length === 0) return;
 
                             var isOtherOptionDisabled = otherOption.disabled ? !!(otherOption.enable()) : false;
@@ -20486,7 +20529,7 @@ var JotForm = {
                                 setTimeout(function waitForTransition() {
                                     nicContentEditable.innerHTML = pair.value;
                                 }, 1000)
-                            }  
+                            }
                         }
                         field.disable();
                         field.setAttribute('autocomplete', _name);
@@ -20615,6 +20658,21 @@ var JotForm = {
             btn.setStyle({ 'pointer-events': 'none', 'opacity': '0.3' });
         });
 
+        function getSelectValues(select) {
+            var result = [];
+            var options = select && select.options;
+            var opt;
+
+            for (var i = 0, iLen = options.length; i < iLen; i++) {
+                opt = options[i];
+
+                if (opt.selected) {
+                    result.push(opt.value || opt.text);
+                }
+            }
+            return result;
+        }
+
         window.addEventListener('message', function(event) {
             if (event.data.source !== 'jfManual_prefill') return;
 
@@ -20643,6 +20701,12 @@ var JotForm = {
                         if (fieldType === 'control_checkbox') {
                             tempKey = tempKey || input.id;
                             tempValue.push(inputValue);
+                            return;
+                        }
+
+                        if (input.classList.contains('form-dropdown') && input.hasAttribute('multiple')) {
+                            tempKey = tempKey || input.id;
+                            tempValue = getSelectValues(input);
                             return;
                         }
 
@@ -20705,7 +20769,7 @@ var JotForm = {
         } catch(e) {
             console.log('Error adjusting wf variables', e);
         }
-    }, 
+    },
 
     onTranslationsFetch: function(callback) {
         if (typeof FormTranslation !== 'undefined' && FormTranslation.version !== 1 && !FormTranslation.to) {
@@ -20788,7 +20852,7 @@ var JotForm = {
      */
     setDataCSSSelector: function () {
         const formLineElements = document.querySelectorAll('li.form-line, li.form-input-wide');
-    
+
         if (formLineElements && formLineElements.length > 0) {
             formLineElements.forEach( el => {
                 const elementID = el.getAttribute('id');
@@ -20900,7 +20964,7 @@ function onProductImageClicked(pid, isEmbeddedwithIframe) {
     }
 
     // If the cache is remove but the image hasn't added yet.
-    if (isNewUi && imageUrls.length === 0) { 
+    if (isNewUi && imageUrls.length === 0) {
         imageUrls.push(document.querySelectorAll('.form-overlay-item img')[index].src);
     }
 
@@ -20920,7 +20984,7 @@ function onProductImageClicked(pid, isEmbeddedwithIframe) {
     divOverlay.appendChild(divOverlayContent);
     divOverlayContent.appendChild(divImgWrapper);
     divOverlayContent.appendChild(divSliderNavigation);
-    
+
     if (isNewUi) {
         divSliderNavigation.appendChild(divThumbnail);
     }
@@ -20957,7 +21021,7 @@ function onProductImageClicked(pid, isEmbeddedwithIframe) {
         images[visibleIndex].style.display = 'block';
         divThumbnail.childElements()[index].classList.add('selected');
     }
-    
+
     images.each(function(p, index) {
         divImgWrapper.appendChild(p);
 
@@ -20972,11 +21036,11 @@ function onProductImageClicked(pid, isEmbeddedwithIframe) {
             if (index === 0) {
                 listItem.className = "selected";
             }
-    
+
             divThumbnail.appendChild(listItem);
         }
     });
-    
+
     var displayPrevious = function() {
         images[visibleIndex].style.display = 'none';
         visibleIndex -= 1;
@@ -21068,6 +21132,14 @@ function callIframeHeightCaller() {
 
     JotForm.iframeHeightCaller();
 };
+
+function isAIAgentEmbedForm() {
+    try {
+        return ((window.self !== window.top) && (window.location.href.indexOf("isAIAgentEmbed") > -1));
+    } catch (e) {
+        return false;
+    }
+}
 
 if(isIframeEmbedForm()) {
     document.querySelector('html').addClassName('isIframeEmbed');
@@ -21354,6 +21426,20 @@ function trackSubmitSource(value) {
             } else {
                 // If the input was somehow removed, create a new input and set original event
                 appendHiddenInput('submitSource', value);
+            }
+        }
+    });
+}
+
+function trackChatIDForAIAgent(value) {
+    $A(document.forms).each(function (form) {
+        if (form.name === "form_" + form.id) {
+            var chatIDTrackerElement = form.querySelector('[name="chatID"]');
+            if (chatIDTrackerElement) {
+                chatIDTrackerElement.value = value;
+            } else {
+                // If the input was somehow removed, create a new input and set original event
+                appendHiddenInput('chatID', value);
             }
         }
     });

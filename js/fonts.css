@@ -1,0 +1,24 @@
+@font-face {
+    font-family: "Cardo";
+    src: url(https://cdn.jotfor.ms/fonts/Cardo/fonts/Cardo-RegularItalic.woff2) format("woff2"), url(https://cdn.jotfor.ms/fonts/Cardo/fonts/Cardo-RegularItalic.woff) format("woff");
+    font-display: swap;
+    font-style: italic;
+    font-weight: 400;
+   }
+   
+   @font-face {
+    font-family: "Cardo";
+    src: url(https://cdn.jotfor.ms/fonts/Cardo/fonts/Cardo-Regular.woff2) format("woff2"), url(https://cdn.jotfor.ms/fonts/Cardo/fonts/Cardo-Regular.woff) format("woff");
+    font-display: swap;
+    font-style: normal;
+    font-weight: 400;
+   }
+   
+   @font-face {
+    font-family: "Cardo";
+    src: url(https://cdn.jotfor.ms/fonts/Cardo/fonts/Cardo-Bold.woff2) format("woff2"), url(https://cdn.jotfor.ms/fonts/Cardo/fonts/Cardo-Bold.woff) format("woff");
+    font-display: swap;
+    font-style: normal;
+    font-weight: 700;
+   }
+   

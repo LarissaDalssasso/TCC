@@ -9,7 +9,8 @@ body {
     background: linear-gradient(to top, #bc8b6fe8 50%, #c2774b 90%) no-repeat;
     overflow: hidden;
     margin: 0; /* Removendo margens padrão do body */
-    padding: 0; }
+    padding: 0; 
+}
 
 .container {
     margin: 50px auto

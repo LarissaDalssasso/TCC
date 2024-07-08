@@ -17,6 +17,7 @@
 //   www.dynarch.com/projects/calendar
 //
 
+
 var Calendar = Class.create();
 
 //------------------------------------------------------------------------------
@@ -124,10 +125,12 @@ Calendar.handleMouseUpEvent = function(event)
   {
     if (calendar.currentDateElement) {
       Element.removeClassName(calendar.currentDateElement, 'selected');
+      calendar.currentDateElement.setAttribute('tabindex', -1);
       Element.addClassName(el, 'selected');
+      el.setAttribute('tabindex', 0);
       calendar.shouldClose = (calendar.currentDateElement == el);
       if (!calendar.shouldClose) {
-          calendar.currentDateElement = el;
+        calendar.currentDateElement = el;
       }
     }
     calendar.date.setDateOnly(el.date);
@@ -135,8 +138,9 @@ Calendar.handleMouseUpEvent = function(event)
     calendar.shouldClose = !el.hasClassName('otherDay');
     var isOtherMonth     = !calendar.shouldClose;
     if (isOtherMonth) {
-        calendar.update(calendar.date);
+      calendar.update(calendar.date);
     }
+    calendar.triggerElement.focus();
   }
 
   // Clicked on an action button
@@ -290,6 +294,12 @@ function handlePopupUI(calendar, style) {
     newMonthNode.appendChild(prevMonth);
     newMonthNode.appendChild(nextMonth);
 
+    nextMonth.setAttribute('aria-label', 'Current month is '+month+ ', Next Month')
+    prevMonth.setAttribute('aria-label', 'Current month is '+month+ ', Previous Month')
+
+    nextYear.setAttribute('aria-label', 'Current year is '+year+ ', Next Year')
+    prevYear.setAttribute('aria-label', 'Current year is '+year+ ', Previous Year')
+
     newYearNode.appendChild(prevYear);
     newYearNode.appendChild(nextYear);
 
@@ -325,6 +335,14 @@ Calendar.setup = function(params)
 
   var targetElem = triggerElement.parentElement;
   var isLiteModeCalendar = triggerElement.className.indexOf('icon-liteMode') > -1;
+
+  // Add roles and aria-label for the trigger image
+  if (isLiteModeCalendar) {
+    triggerElement.setAttribute('aria-label', 'Choose Date');
+    triggerElement.setAttribute('aria-hidden', false);
+    triggerElement.setAttribute('role', 'button');
+    triggerElement.setAttribute('tabindex', 0);
+  }
 
   if (!isLiteMode || isAllowTime) {
     targetElem = targetElem.parentElement;
@@ -428,6 +446,13 @@ Calendar.setup = function(params)
     }
 
     triggerElement.onclick = triggerCalender;
+    
+    triggerElement.addEventListener('keydown', (e) => {
+      e.stopPropagation();
+      if (e.key === 'Enter') {
+        triggerCalender(e);
+      }
+    });
 
     // open the calendar by clicking the date input (just for the liteMode = off)
     var isLiteMode = triggerElement.className.indexOf('seperatedMode') > -1;
@@ -469,6 +494,11 @@ Calendar.setup = function(params)
       if (isNewTheme) {
         window.onorientationchange = isCalendarOpen;
       }
+
+      var selectedDate = calendar.container.querySelector('td.selected');
+      selectedDate.setAttribute('tabindex', 0);
+      selectedDate.focus();
+
       return calendar;
     };
 
@@ -701,9 +731,13 @@ Calendar.prototype = {
             cell.date = new Date(date);
             cell.update(day);
 
+            var cellAria = cell.date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            cell.setAttribute('aria-label', cellAria);
+            cell.setAttribute('data-date', cell.date.toLocaleDateString("en-US"));
+            cell.setAttribute('tabindex', -1);
             // Account for days of the month other than the current month
             if (!isCurrentMonth){
-              cell.addClassName('otherDay');                
+              cell.addClassName('otherDay');
             }
             else{
               rowHasDays = true;                
@@ -712,6 +746,8 @@ Calendar.prototype = {
             // Ensure the current day is selected
             if (isCurrentMonth && day == dayOfMonth) {
               cell.addClassName('selected');
+              cell.setAttribute('tabindex', 0)
+
               calendar.currentDateElement = cell;
             }
             
@@ -725,6 +761,7 @@ Calendar.prototype = {
 
               cell.setOpacity(0.5);
               cell.addClassName("unselectable");
+              cell.removeAttribute('tabindex');
             };
 
             var makeSelectable = function() {
@@ -964,8 +1001,7 @@ Calendar.prototype = {
     }
 
     // Calendar Table
-    var table = this.table ? this.table.update("") : new Element('table');
-    table.setAttribute('summary','Datepicker Popup');
+    var table = this.table ? this.table.update("") : new Element('table', { role: 'grid' });
     this.table = table;
 
     // Calendar Header
@@ -982,75 +1018,21 @@ Calendar.prototype = {
 
     // Calendar Navigation
     row = new Element('tr');
-    if (JotForm.isSourceTeam) {
-      this._drawButtonCell(row, '&#x2039;', 1, Calendar.NAV_PREVIOUS_MONTH, 'previousMonth');
-      var titleMonthTd = new Element('td');
-      titleMonthTd.setAttribute('colspan', 2);
-      var titleMonth = new Element('div');
-      titleMonth.addClassName('titleMonth');
-      titleMonthTd.appendChild(titleMonth);
-      row.appendChild(titleMonthTd);
-      this._drawButtonCell(row, '&#x203a;', 1, Calendar.NAV_NEXT_MONTH, 'nextMonth');
 
-      this._drawButtonCell(row, '&#x2039;', 1, Calendar.NAV_PREVIOUS_YEAR, 'previousYear');
-      var titleYearTd = new Element('td');
-      var titleYear = new Element('div');
-      titleYear.addClassName('titleYear');
-      titleYearTd.appendChild(titleYear);
-      row.appendChild(titleYearTd);
-      this._drawButtonCell(row, '&#x203a;', 1, Calendar.NAV_NEXT_YEAR, 'nextYear');
-    } else if (JotForm.isMarvelTeam) {
-      var calendarTd = new Element('td');
-      calendarTd.setAttribute('colspan', 7);
-      var calendarDiv = new Element('div');
-      calendarDiv.addClassName('calendarWrapper');
-  
-      var monthDiv = new Element('div');
-      monthDiv.addClassName('monthWrapper');
-
-      var titleMonth = new Element('div');
-      titleMonth.addClassName('titleMonth');
-      monthDiv.appendChild(titleMonth);
-      calendarDiv.appendChild(monthDiv);
-
-      var monthDirectionDiv = new Element('div');
-      monthDirectionDiv.addClassName('controlWrapper-month')
-      this._drawButtonCellasDiv(monthDirectionDiv, '&#xfe3f;', 1, Calendar.NAV_PREVIOUS_MONTH, 'previousMonth');
-      this._drawButtonCellasDiv(monthDirectionDiv, '&#xfe40;', 1, Calendar.NAV_NEXT_MONTH, 'nextMonth');
-      monthDiv.appendChild(monthDirectionDiv);
-
-      var yearDiv = new Element('div');
-      yearDiv.addClassName('yearWrapper');
-
-      var titleYear = new Element('div');
-      titleYear.addClassName('titleYear');
-      yearDiv.appendChild(titleYear);
-      calendarDiv.appendChild(yearDiv);
-
-      var yearDirectionDiv = new Element('div');
-      yearDirectionDiv.addClassName('controlWrapper-year')
-      this._drawButtonCellasDiv(yearDirectionDiv, '&#xfe3f;', 1, Calendar.NAV_PREVIOUS_YEAR, 'previousYear');
-      this._drawButtonCellasDiv(yearDirectionDiv, '&#xfe40;', 1, Calendar.NAV_NEXT_YEAR, 'nextYear');
-      yearDiv.appendChild(yearDirectionDiv);
-
-      row.appendChild(calendarTd);
-      calendarTd.appendChild(calendarDiv);
+    var checkLegacyForm = document.querySelectorAll('.calendar.popup[data-version="v2"]');
+    if (checkLegacyForm && checkLegacyForm.length > 0) {
+      this._drawButtonCell(row, '&#x00ab;<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-32 h-32"><path fill-rule="evenodd" d="M4.293 8.293a1 1 0 0 1 1.414 0L12 14.586l6.293-6.293a1 1 0 1 1 1.414 1.414l-7 7a1 1 0 0 1-1.414 0l-7-7a1 1 0 0 1 0-1.414Z" clip-rule="evenodd"></path></svg>', 1, Calendar.NAV_PREVIOUS_YEAR, "previousYear");
+      this._drawButtonCell(row, '&#x2039;<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-32 h-32"><path fill-rule="evenodd" d="M4.293 8.293a1 1 0 0 1 1.414 0L12 14.586l6.293-6.293a1 1 0 1 1 1.414 1.414l-7 7a1 1 0 0 1-1.414 0l-7-7a1 1 0 0 1 0-1.414Z" clip-rule="evenodd"></path></svg>', 1, Calendar.NAV_PREVIOUS_MONTH, "previousMonth");
+      this._drawButtonCell(row, Calendar.TODAY, 3, Calendar.NAV_TODAY, "todayButton");
+      this._drawButtonCell(row, '&#x203a;<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-32 h-32"><path fill-rule="evenodd" d="M11.293 7.293a1 1 0 0 1 1.414 0l7 7a1 1 0 0 1-1.414 1.414L12 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414l7-7Z" clip-rule="evenodd"></path></svg>', 1, Calendar.NAV_NEXT_MONTH, "nextMonth");
+      this._drawButtonCell(row, '&#x00bb;<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-32 h-32"><path fill-rule="evenodd" d="M11.293 7.293a1 1 0 0 1 1.414 0l7 7a1 1 0 0 1-1.414 1.414L12 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414l7-7Z" clip-rule="evenodd"></path></svg>', 1, Calendar.NAV_NEXT_YEAR, "nextYear");
+      table && table.addClassName('calendar-new-header-withSVG');
     } else {
-      var checkLegacyForm = document.querySelectorAll('.calendar.popup[data-version="v2"]');
-      if (checkLegacyForm && checkLegacyForm.length > 0) {
-        this._drawButtonCell(row, '&#x00ab;<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-32 h-32"><path fill-rule="evenodd" d="M4.293 8.293a1 1 0 0 1 1.414 0L12 14.586l6.293-6.293a1 1 0 1 1 1.414 1.414l-7 7a1 1 0 0 1-1.414 0l-7-7a1 1 0 0 1 0-1.414Z" clip-rule="evenodd"></path></svg>', 1, Calendar.NAV_PREVIOUS_YEAR, "previousYear");
-        this._drawButtonCell(row, '&#x2039;<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-32 h-32"><path fill-rule="evenodd" d="M4.293 8.293a1 1 0 0 1 1.414 0L12 14.586l6.293-6.293a1 1 0 1 1 1.414 1.414l-7 7a1 1 0 0 1-1.414 0l-7-7a1 1 0 0 1 0-1.414Z" clip-rule="evenodd"></path></svg>', 1, Calendar.NAV_PREVIOUS_MONTH, "previousMonth");
-        this._drawButtonCell(row, Calendar.TODAY, 3, Calendar.NAV_TODAY, "todayButton");
-        this._drawButtonCell(row, '&#x203a;<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-32 h-32"><path fill-rule="evenodd" d="M11.293 7.293a1 1 0 0 1 1.414 0l7 7a1 1 0 0 1-1.414 1.414L12 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414l7-7Z" clip-rule="evenodd"></path></svg>', 1, Calendar.NAV_NEXT_MONTH, "nextMonth");
-        this._drawButtonCell(row, '&#x00bb;<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-32 h-32"><path fill-rule="evenodd" d="M11.293 7.293a1 1 0 0 1 1.414 0l7 7a1 1 0 0 1-1.414 1.414L12 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414l7-7Z" clip-rule="evenodd"></path></svg>', 1, Calendar.NAV_NEXT_YEAR, "nextYear");
-        table && table.addClassName('calendar-new-header-withSVG');
-      } else {
-        this._drawButtonCell(row, '&#x00ab;', 1, Calendar.NAV_PREVIOUS_YEAR, "previousYear");
-        this._drawButtonCell(row, '&#x2039;', 1, Calendar.NAV_PREVIOUS_MONTH, "previousMonth");
-        this._drawButtonCell(row, Calendar.TODAY, 3, Calendar.NAV_TODAY, "todayButton");
-        this._drawButtonCell(row, '&#x203a;', 1, Calendar.NAV_NEXT_MONTH, "nextMonth");
-        this._drawButtonCell(row, '&#x00bb;', 1, Calendar.NAV_NEXT_YEAR, "nextYear");
-      }
+      this._drawButtonCell(row, '&#x00ab;', 1, Calendar.NAV_PREVIOUS_YEAR, "previousYear", 'Previous Yeaer');
+      this._drawButtonCell(row, '&#x2039;', 1, Calendar.NAV_PREVIOUS_MONTH, "previousMonth", 'Previous Month');
+      this._drawButtonCell(row, Calendar.TODAY, 3, Calendar.NAV_TODAY, "todayButton", 'Today');
+      this._drawButtonCell(row, '&#x203a;', 1, Calendar.NAV_NEXT_MONTH, "nextMonth", 'Next Month');
+      this._drawButtonCell(row, '&#x00bb;', 1, Calendar.NAV_NEXT_YEAR, "nextYear", 'Next Year');
     }
 
     thead.appendChild(row);
@@ -1082,7 +1064,7 @@ Calendar.prototype = {
       row = tbody.appendChild(new Element('tr'));
       row.addClassName('days');
       for (var j = 7; j > 0; --j) {
-        cell = row.appendChild(new Element('td'));
+        cell = row.appendChild(new Element('td', { tabindex: -1 }));  
         cell.calendar = this;
       }
     }
@@ -1092,7 +1074,12 @@ Calendar.prototype = {
     // Calendar Container (div)
     this.container = new Element('div');
     this.container.setAttribute('aria-hidden', true);
+    this.container.setAttribute('role', 'dialog');
+    this.container.setAttribute('aria-modal', true);
+    this.container.setAttribute('tabindex', -1);
+    this.container.setAttribute('aria-label', 'Choose Date');
     this.container.addClassName('calendar');
+  
     if (this.isPopup) {
       this.container.setStyle({ position: 'absolute', display: 'none' });
       this.container.addClassName('popup');
@@ -1110,12 +1097,11 @@ Calendar.prototype = {
 
     // Append to parent element
     parent.appendChild(this.container);
-
   },
 
-  _drawButtonCell: function(parent, text, colSpan, navAction, extraClass)
+  _drawButtonCell: function(parent, text, colSpan, navAction, extraClass, ariaLabel = '')
   {
-    var cell          = new Element('td');
+    var cell          = new Element('button');
     if (colSpan > 1) {
         cell.colSpan = colSpan;
     }
@@ -1123,6 +1109,7 @@ Calendar.prototype = {
     cell.calendar     = this;
     cell.navAction    = navAction;
     cell.innerHTML    = text;
+    cell.ariaLabel    = ariaLabel;
     cell.unselectable = 'on'; // IE
     parent.appendChild(cell);
     return cell;
@@ -1175,11 +1162,77 @@ Calendar.prototype = {
   // Calendar Display Functions
   //------------------------------------------------------------------------------
 
+  // Handle Keyboard Events
+  handleDayKeydown: function(e) {
+    var activeDay = document.activeElement?.getAttribute('data-date');
+    var calendarNode = this.container;
+    var isButtonActiveElement = document.activeElement.closest('.calendar-new-header') ? document.activeElement : false;
+
+    var days = calendarNode.querySelectorAll('.days td:not(.unslectable)');
+    var index =  Array.from(days).findIndex(d => d.getAttribute('data-date') === activeDay); 
+
+    if (!calendarNode) {
+      return;
+    }
+
+    if (e.key === 'Escape') {
+      this.triggerElement.focus();
+      this.hide();
+      return;
+    }
+
+    if (e.key ===  'Tab' && calendarNode && activeDay) {
+      calendarNode.focus();
+    }
+    
+    if (e.key === 'Enter' || e.key === 'Space') {
+      if (activeDay) {
+        this.triggerElement.focus();
+        // triggerElement.setAttribute('aria-label', 'Change date, '+ new Date(activeDay).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
+        this.hide();
+      }
+    
+      Calendar.handleMouseUpEvent(e);
+  
+      if (isButtonActiveElement) {
+        isButtonActiveElement.focus();
+      }
+    }
+
+    // day navigation with arrow keys
+    var keyMap = {
+      ArrowRight: [index + 1, 0],
+      ArrowDown: [index + 7, 0],
+      ArrowLeft: [index - 1, days.length - 1],
+      ArrowUp: [index - 7, days.length - 1],
+    };
+
+    if (!keyMap[e.key] || !activeDay) return;
+  
+    var key = keyMap[e.key];
+    var nextDay = key[0];
+    var defaultDay = key[1];
+    days[nextDay] ? days[nextDay].focus() : days[defaultDay].focus();
+  },
+
+  makeAccessible: function() {
+    this.container.setAttribute('aria-hidden', false);
+    this.update(this.date);
+
+    var selectedDate = document.querySelector('td.selected');
+    selectedDate.setAttribute('aria-label', this.date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) + ' selected');
+    document.addEventListener('keydown', this.handleDayKeydown)
+  },
+
   // Shows the Calendar
   show: function()
   {
     // this.create();
     this.container.show();
+    this.handleDayKeydown = this.handleDayKeydown.bind(this);
+    this.makeAccessible = this.makeAccessible.bind(this);
+    
+    this.makeAccessible();
     if (this.isPopup) {
       window._popupCalendar = this;
       Event.observe(document, 'mousedown', Calendar._checkCalendar);
@@ -1223,7 +1276,10 @@ Calendar.prototype = {
       Event.stopObserving(document, 'mousedown', Calendar._checkCalendar);        
       Event.stopObserving(document, 'touchstart', Calendar._checkCalendar);
     }
+
+    document.removeEventListener('keydown', this.handleDayKeydown);
     this.container.hide();
+    this.container.setAttribute('aria-hidden', true);
   },
 
 
