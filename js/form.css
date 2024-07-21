@@ -184,35 +184,3 @@
 .forEditSubmissionAlert .warning-cta .forCreate:hover {
     color: #0066c3
 }
-
-@media print {
-    * {
-        print-color-adjust: economy;
-        -webkit-print-color-adjust: exact !important;
-    }
-
-    .form-section {
-        display: inline !important
-    }
-
-    .form-pagebreak {
-        display: none !important
-    }
-
-    .form-section-closed {
-        height: auto !important
-    }
-
-    .page-section {
-        position: initial !important
-    }
-}
-
-.form-label.form-label-auto {
-
-    display: block;
-    float: none;
-    text-align: left;
-    width: 100%;
-
-}

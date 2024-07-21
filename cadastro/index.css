@@ -15,7 +15,10 @@ body {
 .container {
     margin: 50px auto
 }
-
+.row{
+    margin: auto;
+    align-items: auto;
+}
 .panel-heading {
     text-align: center;
     margin-bottom: 10px
