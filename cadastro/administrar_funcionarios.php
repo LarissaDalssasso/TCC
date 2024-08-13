@@ -28,7 +28,8 @@ include 'config.php';
                     <th>Ações</th>
                 </tr>
             </thead>
-            
+
+            <body>
                 <?php
                 $sql = "SELECT * FROM funcionario";
                 $result = $conn->query($sql);
@@ -51,7 +52,9 @@ include 'config.php';
                     echo "<tr><td colspan='6'>Nenhum funcionário encontrado</td></tr>";
                 }
                 ?>
+            </body>    
         </table>
+        
          <div class="mt-3">
                 <a href="cadastro.php" class="btn btn-primary">Voltar</a>
             </div>

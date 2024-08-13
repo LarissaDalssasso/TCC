@@ -518,9 +518,9 @@ button.form-pagebreak-next.jf-form-buttons,
 button.form-submit-button.jf-form-buttons, 
 li[data-type="control_button"] button.form-submit-button-image-20.form-sacl-button.jf-form-buttons,
 li[data-type="control_button"] div button.form-submit-button-image-20.form-submit-print.jf-form-buttons {
-    font-family : "Lobster", sans-serif;
+    font-family : "Cardo, sans-serif", sans-serif;
     border-radius : 50%;
-    transform : rotate(-18deg);
+    
     background-color : #894200;
     color : #ffffff;
     border : 4px solid;
