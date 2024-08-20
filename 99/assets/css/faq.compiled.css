@@ -8,13 +8,16 @@ body {
   line-height: 1.6;
 }
 
-summary{ list-style: none }
+summary {
+  list-style: none;
+}
+
 summary::-webkit-details-marker,
-summary::marker{
+summary::marker {
   display: none;
 }
 
-.container{
+.container {
   margin: 40px;
 }
 
@@ -69,7 +72,6 @@ summary::marker{
 .accordion .lab_accordion__title span:before {
   top: 0;
   left: 50%;
-    
   width: 4px;
   height: 100%;
   margin-left: -22px;
@@ -97,17 +99,14 @@ summary::marker{
 .accordion .accordion__content {
   text-align: left;
   padding: 10px;
-    color: #c3c3c3
-
+  color: #c3c3c3;
 }
 
 @supports (-webkit-touch-callout: none) {
-  
-.accordion .accordion__title span:before,
-.accordion .accordion__title span:after,
-.accordion .lab_accordion__title span:before,
-.accordion .lab_accordion__title span:after {
-      transition:none;      
-    }
-
+  .accordion .accordion__title span:before,
+  .accordion .accordion__title span:after,
+  .accordion .lab_accordion__title span:before,
+  .accordion .lab_accordion__title span:after {
+    transition: none;
+  }
 }
