@@ -2,15 +2,18 @@
 body {
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
-    background: linear-gradient(to top, #bc8b6fe8 50%, #c2774b 50%) no-repeat;
+    background: linear-gradient(to top, #ff0000e8 50%, #c2774b 50%) no-repeat;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     -moz-osx-font-smoothing: grayscale;
-    background: linear-gradient(to top, #bc8b6fe8 50%, #c2774b 90%) no-repeat;
+    background: linear-gradient(to top, #000000e8 50%, #ff5e00 90%) no-repeat;
     overflow: hidden;
-    margin: 0; /* Removendo margens padrão do body */
-    padding: 0; /* Removendo padding padrão do body */
+    margin: 0;
+    /* Removendo margens padrão do body */
+    padding: 0;
+    /* Removendo padding padrão do body */
 }
+
 .container {
     max-width: 1100px;
     margin: auto;
@@ -95,8 +98,10 @@ body {
     box-shadow: none;
     align-items: center;
     margin-top: 16px;
-    min-width: 100px; /* Largura mínima para garantir consistência */
-    width: auto; /* Tamanho automático para o conteúdo */
+    min-width: 100px;
+    /* Largura mínima para garantir consistência */
+    width: auto;
+    /* Tamanho automático para o conteúdo */
 }
 
 .btn-primary:hover,
@@ -114,17 +119,22 @@ body {
     outline: none;
     border: 0px;
     box-shadow: none;
-    min-width: 100px; /* Largura mínima para garantir consistência */
-    width: auto; /* Tamanho automático para o conteúdo */
-    color:#f2f2f2
+    min-width: 100px;
+    /* Largura mínima para garantir consistência */
+    width: auto;
+    /* Tamanho automático para o conteúdo */
+    color: #f2f2f2
 }
+
 .btn-danger {
     background-color: #794526c1;
     outline: none;
     border: 0px;
     box-shadow: none;
-    min-width: 100px; /* Largura mínima para garantir consistência */
-    width: auto; /* Tamanho automático para o conteúdo */
+    min-width: 100px;
+    /* Largura mínima para garantir consistência */
+    width: auto;
+    /* Tamanho automático para o conteúdo */
 }
 
 .btn-update:hover,
@@ -196,7 +206,8 @@ body {
 .table {
     width: 100%;
     border-collapse: collapse;
-    background-color: #dbdbdb; /* Cor de fundo para toda a tabela */
+    background-color: #dbdbdb;
+    /* Cor de fundo para toda a tabela */
     margin-top: 20px;
 }
 
@@ -232,9 +243,10 @@ body {
 .btn-group .btn {
     margin-right: 10px;
 }
-td>a{
+
+td>a {
     justify-content: center;
-    margin:  0px 2px 0px;
-    color:#f2f2f2;
+    margin: 0px 2px 0px;
+    color: #f2f2f2;
     align-items: center;
 }
