@@ -40,7 +40,7 @@
     <div class="container">
         <div class="card">
             <div class="card-body">
-                <h3 class="card-title">Registre-se</h3>
+                <h3 class="card-title">Cadastre-se</h3>
                 <form class="requires-validation" novalidate action="salvar_funcionario.php" method="post">
                     <div class="mb-3">
                         <input class="form-control" type="text" name="nome" placeholder="Nome Completo" required>
