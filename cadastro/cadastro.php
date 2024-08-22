@@ -90,12 +90,12 @@
                     </div>
 
                     <div class="mb-3 button-group">
-                        <button id="submit" type="submit" class="btn btn-primary">Registrar</button>
-                        <button id="clean" type="reset" class="btn btn-secondary">Limpar</button>
+                        <button id="submit" type="submit" class="btn btn-primary botao" >Registrar</button>
+                        <button id="clean" type="reset" class="btn btn-secondary botao">Limpar</button>
                     </div>
 
                     <div class="mt-3 button-group"  >
-                        <a href="administrar_funcionarios.php" class="btn btn-primary" id="adm">Administrar Funcionários</a>
+                        <button href="administrar_funcionarios.php" class="btn btn-primary botao" id="adm">Administrar Funcionários</button>
                     </div>
                 </form>
             </div>
