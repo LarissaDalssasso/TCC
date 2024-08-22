@@ -63,3 +63,7 @@ accordion__title {
   align-items: center;
 }
 
+a:focus, a:hover {
+  color: #183a0f;
+}
+
