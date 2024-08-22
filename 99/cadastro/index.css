@@ -148,3 +148,9 @@ img {
 .btn-primary {
     border: none;
 }
+.btn-primary:focus{
+    background-color: #102208c5;
+    outline: none;
+    border: none;
+    box-shadow: 0 0 0 0 black;
+}

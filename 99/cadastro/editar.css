@@ -91,3 +91,10 @@ a:hover {
     gap: 10px;
     /* Espaço entre os botões */
 }
+
+.btn-primary:hover{
+    background-color: #102208c5;
+    outline: none;
+    border: none;
+    box-shadow: 0 0 0 0 !important;
+}
