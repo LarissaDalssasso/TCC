@@ -10,8 +10,7 @@ include 'config.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrar Funcionários</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./Style.css">
-
+    <link rel="stylesheet" href="./Index.css">
 </head>
 
 <body>
@@ -28,8 +27,7 @@ include 'config.php';
                     <th>Ações</th>
                 </tr>
             </thead>
-
-            <body>
+            <tbody>
                 <?php
                 $sql = "SELECT * FROM funcionario";
                 $result = $conn->query($sql);
@@ -52,13 +50,14 @@ include 'config.php';
                     echo "<tr><td colspan='6'>Nenhum funcionário encontrado</td></tr>";
                 }
                 ?>
-            </body>    
+            </tbody>
         </table>
         
-         <div class="mt-3">
-                <a href="cadastro.php" class="btn btn-primary">Voltar</a>
-            </div>
+        <div class="mt-3">
+            <a href="cadastro.php" class="btn btn-primary">Voltar</a>
+        </div>
     </div>
+
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
