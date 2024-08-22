@@ -6,7 +6,7 @@ body {
     text-rendering: optimizeLegibility;
     -moz-osx-font-smoothing: grayscale;
     background-color: #446442;
-    margin: 0; 
+    margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
@@ -18,8 +18,7 @@ body {
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    min-width: 400px;
+    max-width: 400px;
     width: 100%;
 }
 
@@ -33,6 +32,8 @@ body {
     min-width: 100px;
     margin-left: auto;
     text-decoration: none;
+    font-weight: bold;
+    color: #183a0f;
 }
 
 a:hover {
@@ -51,10 +52,14 @@ a:hover {
     border-radius: 5px;
     background-color: #183a0f;
     color: #ffffff;
+    transition: background-color 0.3s ease;
+}
+
+.btn.btn-primary:hover {
+    background-color: #145a12;
 }
 
 .panel {
-    min-height: 380px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
 }
@@ -64,16 +69,19 @@ a:hover {
     padding: 10px;
     display: flex;
     align-items: center;
-    cursor: pointer;
     border: 1px solid #ddd;
     color: #011102;
+    transition: border-color 0.3s ease;
+}
+
+.input-field:hover {
+    border-color: #183a0f;
 }
 
 input[type='text'],
 input[type='password'] {
     border: none;
     outline: none;
-    box-shadow: none;
     width: 100%;
     padding: 10px;
     color: #011102;
@@ -83,6 +91,7 @@ input[type='password'] {
     border: none;
     outline: none;
     box-shadow: none;
+    cursor: pointer;
 }
 
 img {
@@ -91,11 +100,6 @@ img {
     object-fit: cover;
     border-radius: 50%;
     position: relative;
-}
-
-a[target='_blank'] {
-    position: relative;
-    transition: all 0.1s ease-in-out;
 }
 
 .bordert {
@@ -107,20 +111,24 @@ a[target='_blank'] {
     content: "ou conecte-se com";
     position: absolute;
     top: -13px;
-    left: 33%;
+    left: 50%;
+    transform: translateX(-50%);
     background-color: #ebf0eb;
-    padding: 0px 8px;
+    padding: 0 8px;
     color: #011102;
 }
-.btn-update{
+
+.btn-update {
     background-color: #3073499c;
     margin-bottom: 5%;
     color: #ffffff;
 }
+
 @media(max-width: 360px) {
     #forgot {
         margin-left: 0;
         padding-top: 10px;
+        font-size: 14px;
     }
 
     body {
@@ -132,6 +140,11 @@ a[target='_blank'] {
     }
 
     .bordert:after {
-        left: 25%;
+        left: 50%;
+        transform: translateX(-50%);
     }
+}
+
+.btn-primary {
+    border: none;
 }
