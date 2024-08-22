@@ -95,7 +95,7 @@
                     </div>
 
                     <div class="mt-3 button-group"  >
-                        <button href="administrar_funcionarios.php" class="btn btn-primary botao" id="adm">Administrar Funcionários</button>
+                        <a href="administrar_funcionarios.php" class="btn btn-primary botao" id="adm">Administrar Funcionários</a>
                     </div>
                 </form>
             </div>

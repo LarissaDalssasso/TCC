@@ -77,11 +77,6 @@ input[type="submit"]:hover {
     color: #011102 !important;
 }
 
-a:hover {
-    text-decoration: underline;
-    background-color: #2c5b19;
-}
-
 .btn-primary {
     background-color: #2c5b19;
     border: #2c5b19;
@@ -104,8 +99,16 @@ a:hover {
     border-color: #2c5b1990;
 }
 
-
 .botao:focus{
+    background-color: #102208c5;
+    outline: none;
+    border: none;
+    box-shadow: 0 0 0 0 black;
+}
+#adm{
+    background-color: #2c5b19;  
+}
+a:hover{
     background-color: #102208c5;
     outline: none;
     border: none;
