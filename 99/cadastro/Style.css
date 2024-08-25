@@ -114,3 +114,7 @@ a:hover{
     border: none;
     box-shadow: 0 0 0 0 black;
 }
+#adm:focus {
+    background-color: #183a0f;
+    color: #011102;
+}

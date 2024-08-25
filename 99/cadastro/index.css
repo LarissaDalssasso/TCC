@@ -160,3 +160,7 @@ background-color: #ebf0eb;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     width: auto;
 }
+tr>td>a{
+    align-items: center;
+    padding-top: 0;
+}
