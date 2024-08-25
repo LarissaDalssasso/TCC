@@ -74,3 +74,15 @@ div {
   box-shadow: 0 0 0 0;
 }
 
+.btn:hover {
+  color: var(--bs-btn-hover-color);
+  background-color: var(--bs-btn-bg);
+  border-color: var(--bs-btn-bg);
+}
+
+.btn-check:checked + .btn, :not(.btn-check) + .btn:active, .btn:first-child:active, .btn.active, .btn.show {
+  color: var(--bs-btn-active-color);
+  background-color: var(--bs-btn-bg);
+  border-color: var(--bs-btn-bg);
+}
+
