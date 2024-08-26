@@ -75,7 +75,7 @@
   z-index: 1;
 }
 
-.snip1527:hover img, .snip1527.hover img {
+.snip1527:hover img, .snip1527.hover img{
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }
