@@ -1667,7 +1667,7 @@ li[data-type=control_datetime] .extended .allowTime-container + .form-sub-label-
 
 .form-number-input {
   min-width: 100%;
-  -moz-appearance: textfield;
+  --moz-appearance: textfield;
 }
 
 .form-number-input::-webkit-inner-spin-button, .form-number-input::-webkit-outer-spin-button {
@@ -1677,7 +1677,7 @@ li[data-type=control_datetime] .extended .allowTime-container + .form-sub-label-
 }
 
 .form-number-input:focus, .form-number-input:hover {
-  -moz-appearance: number-input;
+  --moz-appearance: number-input;
 }
 
 .inputContainer {
@@ -2113,7 +2113,7 @@ li[data-type=control_time] .total-range-wrapper {
 }
 
 .form-address-table.payment-form-table input[type=number] {
-  -moz-appearance: textfield;
+  --moz-appearance: textfield;
 }
 
 .form-address-table.payment-form-table input[type=number]::-webkit-inner-spin-button, .form-address-table.payment-form-table input[type=number]::-webkit-outer-spin-button {
