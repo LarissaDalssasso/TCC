@@ -63,7 +63,6 @@ input[type="submit"] {
     transition: background-color 0.3s ease;
     display: inline-block;
     margin-right: 10px;
-    /* Espaçamento entre os botões */
 }
 
 button:hover,
@@ -89,12 +88,8 @@ a:hover {
 .button-group {
     display: flex;
     gap: 10px;
-    /* Espaço entre os botões */
 }
 
-.btn-primary:hover{
-    background-color: #102208c5;
-    outline: none;
-    border: none;
-    box-shadow: 0 0 0 0 !important;
+.btn-primary:hover {
+    background-color: #011102
 }

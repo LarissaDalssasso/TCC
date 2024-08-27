@@ -55,7 +55,6 @@ select {
 button,
 input[type="submit"] {
     padding: 8px 12px;
-    /* Menor padding */
     background-color: #6f8b6f;
     color: rgb(224, 224, 224);
     font-weight: bold;
@@ -64,11 +63,8 @@ input[type="submit"] {
     cursor: pointer;
     transition: background-color 0.3s ease;
     display: inline-block;
-    /* Para exibição lado a lado */
     margin-right: 10px;
-    /* Espaçamento entre os botões */
     flex: 1;
-    /* Faz com que os botões ocupem o mesmo espaço */
 }
 
 button:hover,
@@ -88,9 +84,7 @@ input[type="submit"]:hover {
 
 .button-group {
     display: flex;
-    /* Alinha os botões lado a lado */
     gap: 10px;
-    /* Espaço entre os botões */
 }
 
 .btn-secondary {
@@ -99,21 +93,24 @@ input[type="submit"]:hover {
     border-color: #2c5b1990;
 }
 
-.botao:focus{
+.botao:focus {
     background-color: #102208c5;
     outline: none;
     border: none;
     box-shadow: 0 0 0 0 black;
 }
-#adm{
+
+#adm {
     background-color: #2c5b19;  
 }
-a:hover{
+
+a:hover {
     background-color: #102208c5;
     outline: none;
     border: none;
     box-shadow: 0 0 0 0 black;
 }
+
 #adm:focus {
     background-color: #183a0f;
     color: #011102;
