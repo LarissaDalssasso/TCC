@@ -40,6 +40,7 @@ img, svg {
   margin-top: calc(var(--bs-gutter-y) * -1);
   margin-right: calc(var(--bs-gutter-x) / -2);
   margin-left: calc(var(--bs-gutter-x) / -2);
+  justify-content: center;
 }
 
 .row > * {
@@ -49,6 +50,7 @@ img, svg {
   padding-right: calc(var(--bs-gutter-x) / 2);
   padding-left: calc(var(--bs-gutter-x) / 2);
   margin-top: var(--bs-gutter-y);
+  justify-content: center;
 }
 
 @media (min-width: 576px) {
