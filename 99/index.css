@@ -1,0 +1,53 @@
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+    }
+    .site-heading {
+        text-align: center;
+    }
+}
+
+/* Estilos gerais */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: inherit;
+    margin-top: -42px;
+    padding: 0;
+    height: 2%;
+}
+
+.masthead {
+    background-image: url('assets/img/hansa.png');
+    background-size: cover;
+    margin-bottom: -105px;
+    padding-bottom: 106px;
+    text-align: center;
+}
+
+.site-heading h1 {
+    padding-top: 0;
+    margin-top: 70px;
+}
+
+.faq .accordion-item {
+    background: #344b2e;
+    border: 1px solid #c3c3c3;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .masthead {
+        padding-bottom: 50px;
+    }
+
+    .site-heading h1 {
+        font-size: 1.5rem;
+        margin-top: 20px;
+    }
+}
