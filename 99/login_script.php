@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Verifica se os campos estão vazios
     if (empty($user) || empty($pass)) {
-        header("Location: login.php?error=empty_fields");
+        header("Location: login.html?error=empty_fields");
         exit();
     }
 
@@ -51,15 +51,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit();
         } else {
             echo "Senha incorreta<br>";
-            header("Location: login.php?error=incorrect_password");
+            header("Location: login.html?error=incorrect_password");
             exit();
         }
     } else {
         echo "Usuário não encontrado<br>";
-        header("Location: login.php?error=user_not_found");
+        header("Location: login.html?error=user_not_found");
         exit();
     }
 }
 
 $conn->close();
-?>
