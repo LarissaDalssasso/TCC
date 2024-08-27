@@ -1,0 +1,181 @@
+/* Estilos Gerais */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #446442;
+    color: #f8f8f8;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar */
+.navbar {
+    background-color: inherit;
+    padding: 0;
+    height: auto;
+    margin: 0;
+}
+
+.navbar .navbar-brand {
+    color: #fff;
+}
+
+.navbar .nav-link {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.navbar .nav-link.active {
+    color: #fff;
+}
+
+/* Header */
+.masthead {
+    background-image: url('assets/img/hansa.png');
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    text-align: center;
+    padding: 70px 20px;
+}
+
+.masthead .site-heading h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 2rem;
+}
+
+.masthead .site-heading .subheading {
+    display: block;
+    font-size: 1rem;
+}
+
+/* Conteúdo Principal */
+.container-fluid {
+    padding: 0;
+    margin: 0 auto;
+}
+
+.col-lg-8 {
+    padding: 20px;
+    color: #f8f8f8;
+}
+
+.col-lg-8 h2 {
+    color: #f8f8f8;
+}
+
+.col-lg-8 p {
+    color: #f8f8f8;
+}
+
+/* FAQ */
+.accordion-item {
+    background: #344b2e;
+    border: 1px solid #c3c3c3;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.accordion__title {
+    color: #f8f8f8;
+}
+
+.accordion__content {
+    color: #f8f8f8;
+}
+
+/* Footer */
+footer {
+    padding: 20px 0;
+    background-color: #222;
+    color: #f8f8f8;
+    text-align: center;
+}
+
+footer .list-inline {
+    padding-left: 0;
+    margin: 0;
+}
+
+footer .list-inline-item a {
+    color: #f8f8f8;
+    text-decoration: none;
+}
+
+footer .list-inline-item a:hover {
+    text-decoration: underline;
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+    .masthead {
+        padding: 50px 15px;
+    }
+
+    .masthead .site-heading h1 {
+        font-size: 1.75rem;
+    }
+
+    .masthead .site-heading .subheading {
+        font-size: 0.875rem;
+    }
+
+    .col-lg-8 {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0;
+    }
+
+    .navbar .navbar-brand {
+        font-size: 1rem;
+    }
+
+    .navbar .nav-link {
+        font-size: 0.875rem;
+    }
+
+    .masthead {
+        padding: 40px 10px;
+    }
+
+    .masthead .site-heading h1 {
+        font-size: 1.5rem;
+    }
+
+    .masthead .site-heading .subheading {
+        font-size: 0.75rem;
+    }
+
+    .col-lg-8 {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar .navbar-brand {
+        font-size: 0.875rem;
+    }
+
+    .navbar .nav-link {
+        font-size: 0.75rem;
+    }
+
+    .masthead {
+        padding: 30px 5px;
+    }
+
+    .masthead .site-heading h1 {
+        font-size: 1.25rem;
+    }
+
+    .masthead .site-heading .subheading {
+        font-size: 0.625rem;
+    }
+
+    .col-lg-8 {
+        padding: 5px;
+    }
+}
