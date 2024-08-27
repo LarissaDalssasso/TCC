@@ -14226,11 +14226,10 @@ a {
 }
 
 header.masthead {
-    margin-bottom: 50px;
+
     background: no-repeat center center;
     background-color: #6c757d;
     background-attachment: scroll;
-    position: relative;
     background-size: cover;
     justify-content: center;
     text-align: center;
