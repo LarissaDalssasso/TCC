@@ -14111,16 +14111,16 @@ img::-moz-selection {
 }
 
 .btn-primary {
-    background-color: #0085a1;
-    border-color: #0085a1
+    background-color: #011b01be;
+border: none;
 }
 
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active {
     color: #fff;
-    background-color: #007b95 !important;
-    border-color: #007b95 !important
+    background-color: #007600be !important;
+    border: none;
 }
 
 .btn-lg,
