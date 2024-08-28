@@ -397,7 +397,7 @@ samp {
 }
 
 pre {
-    display: block;
+    display: flex;
     margin-top: 0;
     margin-bottom: 1rem;
     overflow: auto;
@@ -2411,7 +2411,7 @@ progress {
 }
 
 .form-control {
-    display: block;
+    display: flex;
     width: 100%;
     padding: .375rem .75rem;
     font-size: 1rem;
@@ -2457,7 +2457,7 @@ progress {
 }
 
 .form-control::-webkit-datetime-edit {
-    display: block;
+    display: flex;
     padding: 0
 }
 
@@ -2534,7 +2534,7 @@ progress {
 }
 
 .form-control-plaintext {
-    display: block;
+    display: flex;
     width: 100%;
     padding: .375rem 0;
     margin-bottom: 0;
@@ -3244,7 +3244,7 @@ textarea.form-control-lg {
 .was-validated :valid~.valid-tooltip,
 .is-valid~.valid-feedback,
 .is-valid~.valid-tooltip {
-    display: block
+    display: flex
 }
 
 .was-validated .form-control:valid,
@@ -14305,7 +14305,7 @@ header.masthead .post-heading .h1 {
 header.masthead .post-heading .meta,
 header.masthead .post-heading .subheading {
     line-height: 1.1;
-    display: block
+    display: flex
 }
 
 header.masthead .post-heading .subheading {
