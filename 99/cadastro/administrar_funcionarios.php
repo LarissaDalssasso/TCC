@@ -41,7 +41,7 @@ include 'config.php';
                         echo "<td>" . $row['area'] . "</td>";
                         echo "<td>" . $row['genero'] . "</td>";
                         echo "<td>";
-                        echo "<a href='editar_funcionario.php?id=" . $row['id'] . "' class='btn btn-sm btn-update'>Editar</a>";
+                        echo "<a href='editar_funcionario.php?id=" . $row['id'] . "' class='btn btn-sm btn-update' >Editar</a>";
                         echo "<a href='excluir_funcionario.php?id=" . $row['id'] . "' class='btn btn-sm btn-danger' onclick='return confirm(\"Tem certeza que deseja excluir este funcionário?\")'>Excluir</a>";
                         echo "</td>";
                         echo "</tr>";
