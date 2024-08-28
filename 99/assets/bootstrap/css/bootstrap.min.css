@@ -397,7 +397,7 @@ samp {
 }
 
 pre {
-    display: flex;
+    display: block;
     margin-top: 0;
     margin-bottom: 1rem;
     overflow: auto;
@@ -2411,7 +2411,7 @@ progress {
 }
 
 .form-control {
-    display: flex;
+    display: block;
     width: 100%;
     padding: .375rem .75rem;
     font-size: 1rem;
@@ -2457,7 +2457,7 @@ progress {
 }
 
 .form-control::-webkit-datetime-edit {
-    display: flex;
+    display: block;
     padding: 0
 }
 
@@ -2534,7 +2534,7 @@ progress {
 }
 
 .form-control-plaintext {
-    display: flex;
+    display: block;
     width: 100%;
     padding: .375rem 0;
     margin-bottom: 0;
@@ -3244,7 +3244,7 @@ textarea.form-control-lg {
 .was-validated :valid~.valid-tooltip,
 .is-valid~.valid-feedback,
 .is-valid~.valid-tooltip {
-    display: flex
+    display: block
 }
 
 .was-validated .form-control:valid,
@@ -14280,9 +14280,7 @@ header.masthead .site-heading .subheading {
     font-size: 24px;
     font-weight: 300;
     line-height: 1.1;
-    display: flex;
-    justify-content: center;
-    text-align: center;
+    display: block;
     margin: 10px 0 0;
     font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif
 }
@@ -14305,7 +14303,7 @@ header.masthead .post-heading .h1 {
 header.masthead .post-heading .meta,
 header.masthead .post-heading .subheading {
     line-height: 1.1;
-    display: flex
+    display: block
 }
 
 header.masthead .post-heading .subheading {
