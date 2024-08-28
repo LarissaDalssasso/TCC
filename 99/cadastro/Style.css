@@ -84,7 +84,9 @@ input[type="submit"]:hover {
 
 .button-group {
     display: flex;
+    justify-content: center;
     gap: 10px;
+
 }
 
 .btn-secondary {
@@ -94,24 +96,34 @@ input[type="submit"]:hover {
 }
 
 .botao:focus {
-    background-color: #102208c5;
+    background-color: #1b3d0dc5;
     outline: none;
     border: none;
-    box-shadow: 0 0 0 0 black;
+    box-shadow: 0 0 0 0 rgb(255, 255, 255);
 }
 
 #adm {
-    background-color: #2c5b19;  
+    background-color: #2c5b19;
 }
 
 a:hover {
     background-color: #102208c5;
     outline: none;
-    border: none;
+    border: id;
     box-shadow: 0 0 0 0 black;
 }
 
 #adm:focus {
+    background-color: #183a0f;
+    color: #ffffff;
+}
+
+
+#voltar:hover {
+    background-color: #2c5b19 !important
+}
+
+#voltar:focus {
     background-color: #183a0f;
     color: #011102;
 }
