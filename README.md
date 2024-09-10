@@ -1,3 +1,7 @@
 # TCC
 
-https://prod.liveshare.vsengsaas.visualstudio.com/join?259DADCBA06CE7366FABD68A6A3DD5486114
+ - Antes de inicializar o projeto precisa ser instalado XAMPP;
+ - Quando intalado, a parta TCC deve ser colocada dentro da pasta htdocs que se encontra nos arquivos xmpp;
+ - É necessario a criação do banco de dados, esse esta com o codigo na pasta cadastro, no arquivo banco.sql;
+ - Apos a criacão banco é nessesario abrir o xampp e colocar para rodar o "apache" para funcionar o php contido no codigo;
+ - Quando todos esses passos feitos, basta ir no navegador e pesquisar por http://localhost/tcc/99/ que o site ja iniciara;
