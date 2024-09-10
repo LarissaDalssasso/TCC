@@ -6,4 +6,4 @@
  - Apos a criacão banco é nessesario abrir o xampp e colocar para rodar o "apache" para funcionar o php contido no codigo;
  - Quando todos esses passos feitos, basta ir no navegador e pesquisar por http://localhost/tcc/99/ que o site ja iniciara;
 
-**Obs:** o meno se encontra no arquivo index.html na pasta 99, dento de TCC;
+**Obs:** o menu se encontra no arquivo index.html na pasta 99, dento de TCC;
