@@ -98,7 +98,7 @@
                         <a href="administrar_funcionarios.php" class="btn btn-primary botao" id="adm">Administrar
                             Funcionários</a> 
                             
-                            <a href="../index.html" class="btn btn-primary botao" id="adm">voltar</a>
+                            <a href="../index.html" class="btn btn-primary botao" id="adm">Voltar</a>
 
                     </div>
                     
