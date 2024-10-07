@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="pt-br" style="margin-top: -26px;margin-right: 0px;">
 
@@ -5,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no;">
     <title>Menu</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css?h=c024d0d0e453eded01a716413c455157">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/Cardo.css?h=54435dcaa177a916e3e63e7316171ab2">
     <link rel="stylesheet" href="assets/css/Lora.css?h=8d0d5802b74a1ea44811aa3318e6cda4">
     <link rel="stylesheet" href="assets/css/Open%20Sans.css?h=9e213a74de5b277830c6eb6bd5f5862d">
@@ -59,24 +61,35 @@
                     <li class="nav-item"><a class="nav-link" href="alas.html"><strong><span
                                     style="color: rgba(255, 255, 255, 0.8);">ALAS</span></strong></a></li>
                 </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link active" href="login.html"><strong><span
-                                    style="color: rgb(255, 255, 255);">LOGIN</span></strong></a></li>
-                    <li class="nav-item"></li>
-                    <li class="nav-item"></li>
-                </ul>
+                <?php if (isset($_SESSION['username'])) { ?>
+                    <li class="nav-item dropdown"> <!-- Não estava fechado corretamente -->
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false"
+                            style="font-size: 16px; font-weight: bold; color: #fff; text-decoration: none; padding-right: 0; margin-right: -10px; display: inline-block; width: fit-content;">
+                            <?php echo $_SESSION['username']; ?>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                        </ul>
+                    </li> <!-- Fechamento correto aqui -->
+                <?php } else { ?>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="login.html">
+                            <strong><span style="color: rgb(255, 255, 255);">LOGIN</span></strong>
+                        </a>
+                    </li> <!-- Fechar corretamente aqui -->
+                <?php } ?>
+
             </div>
         </div>
     </nav><!-- End: Fixed navbar starting with transparency -->
     <header class="masthead"
         style="background-image: url('assets/img/hansa.png?h=5546ece79416c8e49c598504f6269763');margin-bottom: -105px;padding-bottom: 106px;justify-content: center;align-items: center;justify-items: center;">
-        <div class="container"
-            style="align-items: center; margin: auto;justify-content: center;">
+        <div class="container" style="align-items: center; margin: auto;justify-content: center;">
             <div class="row" style="padding-right: 0px;margin: auto;">
                 <div class="col-10 col-md-10 col-lg-8 col-xl-10 mx-auto position-relative">
                     <div class="site-heading">
-                        <h1
-                            style="padding-top: 0px;margin-right: 0px;padding-right: 0px;margin-top: 70px;">
+                        <h1 style="padding-top: 0px;margin-right: 0px;padding-right: 0px;margin-top: 70px;">
                             Fundação do Esporte, Cultura e Turismo</h1><span class="subheading"
                             style="margin: auto;">Descubra mais sobre sua cidade</span>
                     </div>
@@ -174,8 +187,7 @@
 
     <footer class="text-center"
         style=" margin-left:auto;justify-content: center; margin-right: auto; padding-bottom: 0px;padding-top: 0px; align-items: center;">
-        <div class="container text-white py-4 py-lg-5"
-            style="padding: auto;margin: auto;">
+        <div class="container text-white py-4 py-lg-5" style="padding: auto;margin: auto;">
             <ul class="list-inline" style="padding-left: 0px;">
                 <li class="list-inline-item me-4"><a class="link-light" href="#">Larissa Dalssasso</a></li>
                 <li class="list-inline-item me-4"><a class="link-light" href="#">&amp;</a></li>

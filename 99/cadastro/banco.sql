@@ -13,14 +13,6 @@ CREATE TABLE funcionario (
 );
 
 
--- // Exemplo de como armazenar uma nova senha ao registrar um novo usuário
--- $senha = "sua_senha";
--- $hashed_password = password_hash($senha, PASSWORD_DEFAULT);
-
--- // Agora, insira $hashed_password no banco de dados
--- $stmt = $conn->prepare("INSERT INTO funcionario (nome, email, area, senha, genero) VALUES (?, ?, ?, ?, ?)");
--- $stmt->bind_param("sssss", $nome, $email, $area, $hashed_password, $genero);
--- $stmt->execute();
 
 CREATE TABLE projetos (
   id INT PRIMARY KEY,
