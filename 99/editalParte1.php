@@ -37,6 +37,8 @@
     <link rel="stylesheet" href="assets/css/Login-screen.css?h=a83d532a2ddb77352016bff7774f7e85">
     <link rel="stylesheet" href="assets/css/Navigation-Menu.css?h=587a88704dc45b107523dd7422062369">
 
+
+
 </head>
 
 <body>
@@ -86,8 +88,10 @@
         </div>
     </nav><!-- End: Fixed navbar starting with transparency -->
     <form id="form" action="salvar.php" method="post">
-        <h2>Identificação do Pessoa</h2>
+        <h1>Inscrições de Editais</h1>
+        <p></p>
         <div>
+        <label for="representante-social">Identificação da Pessoa</label> <p>
             <input type="radio" id="pessoa-juridica-sem-lucro" name="identificacao"
                 value="Pessoa Jurídica sem finalidade lucrativa">
             <label for="pessoa-juridica-sem-lucro">Pessoa Jurídica sem finalidade lucrativa</label>
