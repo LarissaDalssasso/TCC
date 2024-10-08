@@ -14,7 +14,7 @@ CREATE TABLE funcionario (
 
 
 
-CREATE TABLE projetos (
+CREATE TABLE editalParte1 (
   id INT PRIMARY KEY,
   identificacao VARCHAR(255),
   representante_social VARCHAR(255),
@@ -42,7 +42,12 @@ CREATE TABLE projetos (
   deficiencia VARCHAR(255),
   tipo_deficiencia VARCHAR(255),
   escolaridade VARCHAR(255),
-  curriculo TEXT,
+  curriculo TEXT
+
+);
+CREATE TABLE editalParte2 (
+
+
   nome_projeto VARCHAR(255),
   categoria VARCHAR(255),
   descricao_projeto TEXT,
@@ -60,7 +65,14 @@ CREATE TABLE projetos (
   recursos_financeiros TEXT,
   detalhe_recursos TEXT,
   venda_produtos_ingressos TEXT,
-  parametros_orcamentarios TEXT,
+  parametros_orcamentarios TEXT
+
+
+
+);
+CREATE TABLE editalParte2 (
+
+
   anexos TEXT,
   estatuto_social TEXT,
   ata_eleicao_pose TEXT,
