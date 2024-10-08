@@ -48,7 +48,7 @@
                         navigation</span><span class="navbar-toggler-icon"></span></button></div>
             <div class="collapse navbar-collapse" id="navcol-1"
                 style="padding-right: 0px;padding-top: 0px;padding-left: 0px;margin-bottom: -81px;padding-bottom: 85px;align-items: center;margin-top: 45px;">
-                <a class="navbar-brand" href="index.html" style="margin-right: 2px;"><strong><span
+                <a class="navbar-brand" href="index.php" style="margin-right: 2px;"><strong><span
                             style="color: rgb(255, 255, 255);">FECT</span></strong></a>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="cursos.html" style="padding-top: 0px;"><strong><span

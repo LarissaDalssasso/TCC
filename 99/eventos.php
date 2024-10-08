@@ -1,3 +1,4 @@
+<?php session_start(); ?> 
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="pt-br">
 
@@ -35,21 +36,46 @@
 
 <body>
     <!-- Start: Fixed navbar starting with transparency -->
-    <nav class="navbar navbar-expand-md fixed-top navbar-transparency navbar-light" style="background-color: inherit;justify-content: center;margin-top: -42px;padding-bottom: 0px;margin-bottom: 4px;padding-top: 0px;height: 2%;">
+    <nav class="navbar navbar-expand-md fixed-top navbar-transparency navbar-light"
+        style="background-color: inherit;margin-top: -42px;padding-bottom: 0px;margin-bottom: 4px;padding-top: 0px;height: 2%; justify-content: center;">
         <div class="container">
-            <div style="padding-top: 0px;"><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button></div>
-            <div class="collapse navbar-collapse" id="navcol-1" style="padding-right: 0px;padding-top: 0px;padding-left: 0px;margin-bottom: -81px;padding-bottom: 85px;align-items: center;margin-top: 45px;"><a class="navbar-brand" href="index.html" style="margin-right: 2px;"><strong><span style="color: rgb(255, 255, 255);">FECT</span></strong></a>
+            <div style="padding-top: 0px; margin-left:auto; margin-right: auto;"><button data-bs-toggle="collapse"
+                    class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle
+                        navigation</span><span class="navbar-toggler-icon"></span></button></div>
+            <div class="collapse navbar-collapse" id="navcol-1"
+                style="padding-right: 0px;padding-top: 0px;padding-left: 0px;margin-bottom: -81px;padding-bottom: 85px;align-items: center;margin-top: 45px;">
+                <a class="navbar-brand" href="index.php" style="margin-right: 2px;"><strong><span
+                            style="color: rgb(255, 255, 255);">FECT</span></strong></a>
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="cursos.html" style="padding-top: 0px;"><strong><span style="color: rgba(255, 255, 255, 0.8);">CURSOS</span></strong></a></li>
-                    <li class="nav-item"><a class="nav-link" href="edital.html" style="padding-top: 0px;"><strong><span style="color: rgba(255, 255, 255, 0.8);">EDITAL</span></strong></a></li>
-                    <li class="nav-item"><a class="nav-link" href="eventos.html" style="margin-bottom: -22px;padding-top: 0px;padding-bottom: 0px;"><strong><span style="color: rgba(255, 255, 255, 0.8);">EVENTOS</span></strong></a></li>
-                    <li class="nav-item"><a class="nav-link" href="alas.html"><strong><span style="color: rgba(255, 255, 255, 0.8);">ALAS</span></strong></a></li>
+                    <li class="nav-item"><a class="nav-link" href="cursos.html" style="padding-top: 0px;"><strong><span
+                                    style="color: rgba(255, 255, 255, 0.8);">CURSOS</span></strong></a></li>
+                    <li class="nav-item"><a class="nav-link" href="edital.html" style="padding-top: 0px;"><strong><span
+                                    style="color: rgba(255, 255, 255, 0.8);">EDITAL</span></strong></a></li>
+                    <li class="nav-item"><a class="nav-link" href="eventos.html"
+                            style="margin-bottom: -22px;padding-top: 0px;padding-bottom: 0px;"><strong><span
+                                    style="color: rgba(255, 255, 255, 0.8);">EVENTOS</span></strong></a></li>
+                    <li class="nav-item"><a class="nav-link" href="alas.html"><strong><span
+                                    style="color: rgba(255, 255, 255, 0.8);">ALAS</span></strong></a></li>
                 </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link active" href="login.html"><strong><span style="color: rgb(255, 255, 255);">LOGIN</span></strong></a></li>
-                    <li class="nav-item"></li>
-                    <li class="nav-item"></li>
-                </ul>
+                <?php if (isset($_SESSION['username'])) { ?>
+                    <li class="nav-item dropdown"> <!-- Não estava fechado corretamente -->
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false"
+                            style="font-size: 16px; font-weight: bold; color: #fff; text-decoration: none; padding-right: 0; margin-right: -10px; display: inline-block; width: fit-content;">
+                            <?php echo $_SESSION['username']; ?>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                        </ul>
+                    </li> <!-- Fechamento correto aqui -->
+                <?php } else { ?>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="login.html">
+                            <strong><span style="color: rgb(255, 255, 255);">LOGIN</span></strong>
+                        </a>
+                    </li> <!-- Fechar corretamente aqui -->
+                <?php } ?>
+
             </div>
         </div>
     </nav><!-- End: Fixed navbar starting with transparency -->
@@ -75,7 +101,7 @@
             <!-- Start: card-2 -->
             <div class="col-sm-6 col-lg-4 mb-4 ">
                 <!-- Start: card -->
-                <div class="card" style="cursor: pointer;background-color: #f4ffdba9;margin:3.5%" onclick="window.location.href='EventoNatal.html'"><img class="card-img-top p-3" src="assets/img/evento1.jpg?h=9c915c3906a22888b425be0ef9fa01d2" alt="" style="border-radius: 24px; object-fit: cover" width="306" height="307"><!-- Start: texto -->
+                <div class="card" style="cursor: pointer;background-color: #f4ffdba9;margin:3.5%" onclick="window.location.href='EventoNatal.php'"><img class="card-img-top p-3" src="assets/img/evento1.jpg?h=9c915c3906a22888b425be0ef9fa01d2" alt="" style="border-radius: 24px; object-fit: cover" width="306" height="307"><!-- Start: texto -->
                     <div class="card-body">
                         <h5 class="card-title"><span style="color: rgb(35, 79, 51);">Espetáculo A Paixão de Cristo é sucesso de público</span></h5>
                         <p class="card-text text-muted">01/04/2024</p>
@@ -85,7 +111,7 @@
             <!-- End: card-2 -->
             <div class="col-sm-6 col-lg-4 mb-4">
                 <!-- Start: card -->
-                <div class="card" style="cursor: pointer;background-color: #f4ffdba9;margin:3.5%" onclick="window.location.href='Evento2.html'"><img class="card-img-top p-3" src="assets/img/evento2.jpg?h=dbf7df034eb06ec1ed67d9638759484c" alt="" style="border-radius: 24px; object-fit: cover" width="306" height="307"><!-- Start: texto -->
+                <div class="card" style="cursor: pointer;background-color: #f4ffdba9;margin:3.5%" onclick="window.location.href='Evento2.php'"><img class="card-img-top p-3" src="assets/img/evento2.jpg?h=dbf7df034eb06ec1ed67d9638759484c" alt="" style="border-radius: 24px; object-fit: cover" width="306" height="307"><!-- Start: texto -->
                     <div class="card-body">
                         <h5 class="card-title"><span style="color: rgb(35, 79, 51);">Espetáculo A Paixão de Cristo será apresentado em Ibirama na quinta-feira</span></h5>
                         <p class="card-text text-muted">25/03/2024</p>
@@ -96,7 +122,7 @@
             <!-- Start: card-3 -->
             <div class="col-sm-6 col-lg-4 mb-4">
                 <!-- Start: card -->
-                <div class="card" style="cursor: pointer;background-color: #f4ffdba9;margin:3.5%" onclick="window.location.href='Evento3.html'"><img class="card-img-top p-3" src="assets/img/evento3.jpg?h=ff2a397b3a1b1f92ac17f1bf5a8b0bd5" alt="" style="border-radius: 24px; object-fit: cover" width="306" height="307"><!-- Start: texto -->
+                <div class="card" style="cursor: pointer;background-color: #f4ffdba9;margin:3.5%" onclick="window.location.href='Evento3.php'"><img class="card-img-top p-3" src="assets/img/evento3.jpg?h=ff2a397b3a1b1f92ac17f1bf5a8b0bd5" alt="" style="border-radius: 24px; object-fit: cover" width="306" height="307"><!-- Start: texto -->
                     <div class="card-body">
                         <h5 class="card-title"><span style="color: rgb(35, 79, 51);">Festival da Canção de Ibirama retorna na programação do Weihnachtsmarkt</span></h5>
                         <p class="card-text text-muted">01/11/2023</p>
@@ -106,7 +132,7 @@
             <!-- Start: card-3 -->
             <div class="col-sm-6 col-lg-4 mb-4">
                 <!-- Start: card -->
-                <div class="card" style="cursor: pointer;background-color: #f4ffdba9;margin:3.5%; " onclick="window.location.href='Evento3.html'"><img class="card-img-top p-3" src="assets/img/evento4.jpg?h=81eb13ba8ac515c6751bfaefd9b839c5" alt="" style="border-radius: 24px; object-fit: cover" width="306" height="307"><!-- Start: texto -->
+                <div class="card" style="cursor: pointer;background-color: #f4ffdba9;margin:3.5%; " onclick="window.location.href='Evento3.php'"><img class="card-img-top p-3" src="assets/img/evento4.jpg?h=81eb13ba8ac515c6751bfaefd9b839c5" alt="" style="border-radius: 24px; object-fit: cover" width="306" height="307"><!-- Start: texto -->
                     <div class="card-body">
                         <h5 class="card-title"><span style="color: rgb(35, 79, 51);">Ibirama abre período de inscrições de projetos na Lei Paulo Gustavo</span></h5>
                         <p class="card-text text-muted">30/10/2023</p>
@@ -117,7 +143,7 @@
             <!-- Start: card-3 -->
             <div class="col-sm-6 col-lg-4 mb-4">
                 <!-- Start: card -->
-                <div class="card" style="cursor: pointer;background-color: #f4ffdba9; margin:3.5%" onclick="window.location.href='Evento3.html'"><img class="card-img-top p-3" src="assets/img/post-bg.jpg?h=9b3eae5bf913af77d61c0390cba13bf5" alt="" style="border-radius: 24px; object-fit: cover" width="306" height="307"><!-- Start: texto -->
+                <div class="card" style="cursor: pointer;background-color: #f4ffdba9; margin:3.5%" onclick="window.location.href='Evento3.php'"><img class="card-img-top p-3" src="assets/img/post-bg.jpg?h=9b3eae5bf913af77d61c0390cba13bf5" alt="" style="border-radius: 24px; object-fit: cover" width="306" height="307"><!-- Start: texto -->
                     <div class="card-body">
                         <h5 class="card-title"><span style="color: rgb(35, 79, 51);">Espaço sideral descoberto</span></h5>
                         <p class="card-text text-muted">01/11/2023</p>
@@ -127,7 +153,7 @@
             <!-- Start: card-3 -->
             <div class="col-sm-6 col-lg-4 mb-4">
                 <!-- Start: card -->
-                <div class="card" style="cursor: pointer;background-color: #f4ffdba9;margin:3.5%" onclick="window.location.href='Evento3.html'"><img class="card-img-top p-3" src="assets/img/teat3.jpg?h=d6d7966f76837f74546046ed64ddd6eb" alt="" style="border-radius: 24px; object-fit: cover" width="306" height="307"><!-- Start: texto -->
+                <div class="card" style="cursor: pointer;background-color: #f4ffdba9;margin:3.5%" onclick="window.location.href='Evento3.php'"><img class="card-img-top p-3" src="assets/img/teat3.jpg?h=d6d7966f76837f74546046ed64ddd6eb" alt="" style="border-radius: 24px; object-fit: cover" width="306" height="307"><!-- Start: texto -->
                     <div class="card-body">
                         <h5 class="card-title"><span style="color: rgb(35, 79, 51);">Festa junina com balé</span></h5>
                         <p class="card-text text-muted">01/11/2023</p>
