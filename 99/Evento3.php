@@ -54,10 +54,10 @@
                                     style="color: rgba(255, 255, 255, 0.8);">CURSOS</span></strong></a></li>
                     <li class="nav-item"><a class="nav-link" href="edital.php" style="padding-top: 0px;"><strong><span
                                     style="color: rgba(255, 255, 255, 0.8);">EDITAL</span></strong></a></li>
-                    <li class="nav-item"><a class="nav-link" href="eventos.html"
+                    <li class="nav-item"><a class="nav-link" href="eventos.php"
                             style="margin-bottom: -22px;padding-top: 0px;padding-bottom: 0px;"><strong><span
                                     style="color: rgba(255, 255, 255, 0.8);">EVENTOS</span></strong></a></li>
-                    <li class="nav-item"><a class="nav-link" href="alas.html"><strong><span
+                    <li class="nav-item"><a class="nav-link" href="alas.php"><strong><span
                                     style="color: rgba(255, 255, 255, 0.8);">ALAS</span></strong></a></li>
                 </ul>
                 <?php if (isset($_SESSION['username'])) { ?>
