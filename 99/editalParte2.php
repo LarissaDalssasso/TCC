@@ -281,9 +281,9 @@
                     <textarea id="parametros-orcamentarios" name="parametros-orcamentarios"></textarea>
                 </div>
                 <div class="mt-3">
-                    <a href="editalParte1.html" class="btn btn-primary">Parte Um</a>
+                    <a href="editalParte1.php" class="btn btn-primary">Parte Um</a>
                     <button type="submit" id="salvar" name="salvar">Salvar</button>
-                    <a href="editalParte3.html" class="btn btn-primary">Parte Três</a>
+                    <a href="editalParte3.php" class="btn btn-primary">Parte Três</a>
                 </div>
         
 

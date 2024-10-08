@@ -235,7 +235,7 @@
         <div class="mt-3">
             <a href="index.php" class="btn btn-primary">Menu</a>
             <button type="submit" class="btn btn-primary" name="salvar">Salvar</button>
-            <a href="editalParte2.html" class="btn btn-primary">Parte Dois</a>
+            <a href="editalParte2.php" class="btn btn-primary">Parte Dois</a>
         </div>
 
     </form>

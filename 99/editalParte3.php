@@ -70,7 +70,7 @@
             <input type="file" id="declaracoes-gerais-socio" name="declaracoes-gerais-socio">
         </div>
         <div class="mt-3">
-            <a href="editalParte2.html" class="btn btn-primary">Parte Dois</a>
+            <a href="editalParte2.php" class="btn btn-primary">Parte Dois</a>
 
             <button type="submit" id="salvar" name="salvar">Salvar</button>
             <a href="index.php" class="btn btn-primary">Menu</a>
