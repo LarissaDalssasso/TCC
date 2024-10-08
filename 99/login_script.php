@@ -17,15 +17,12 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Conexão falhou: " . $conn->connect_error);
 }
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user = trim($_POST['username']);
     $pass = trim($_POST['password']);
 
     if (empty($user) || empty($pass)) {
         $error = "Por favor, preencha todos os campos.";
-    } elseif (!filter_var($user, FILTER_VALIDATE_EMAIL)) {
-        $error = "E-mail inválido.";
     } else {
         // Verifica se o usuário foi encontrado
         $stmt = $conn->prepare("SELECT * FROM funcionario WHERE email = ? OR nome = ?");
