@@ -12,10 +12,7 @@ summary {
   list-style: none;
 }
 
-summary::-webkit-details-marker,
-summary::marker {
-  display: none;
-}
+
 
 .container {
   margin: 40px;

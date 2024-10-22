@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($conn->query($sql) === TRUE) {
         // Redirecionar de volta para a página de cadastro
-        header("Location: cadastro.php");
+        header("Location: ../login.html");
     } else {
         echo "Erro: " . $sql . "<br>" . $conn->error;
     }
@@ -33,3 +33,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Fechar a conexão
     $conn->close();
 }
+

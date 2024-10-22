@@ -87,7 +87,8 @@ a:hover {
 
 .button-group {
     display: flex;
-    gap: 10px;
+    justify-content: center;
+    gap: 30px;
 }
 
 .btn-primary:hover {

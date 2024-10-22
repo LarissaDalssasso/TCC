@@ -17,46 +17,37 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Conexão falhou: " . $conn->connect_error);
 }
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user = trim($_POST['username']);
     $pass = trim($_POST['password']);
 
-    // Sanitização dos dados
-    echo "Username: " . htmlspecialchars($user) . "<br>";
-    echo "Password: " . htmlspecialchars($pass) . "<br>";
-
-    // Verifica se os campos estão vazios
     if (empty($user) || empty($pass)) {
-        header("Location: login.html?error=empty_fields");
-        exit();
+        $error = "Por favor, preencha todos os campos.";
+    } else {
+        // Verifica se o usuário foi encontrado
+        $stmt = $conn->prepare("SELECT * FROM funcionario WHERE email = ? OR nome = ?");
+        $stmt->bind_param("ss", $user, $user);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            // Verifica a senha
+            $row = $result->fetch_assoc();
+            if (password_verify($pass, $row['senha'])) {
+                // Login bem-sucedido
+                $_SESSION['username'] = $row['nome'];
+                header("Location: ./index.php");
+                exit();
+            } else {
+                $error = "Senha incorreta.";
+            }
+        } else {
+            $error = "Usuário não encontrado.";
+        }
     }
 
-    // Prepara e executa a consulta
-    $stmt = $conn->prepare("SELECT * FROM funcionario WHERE email = ? OR nome = ?");
-    $stmt->bind_param("ss", $user, $user);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    // Verifica se o usuário foi encontrado
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        echo "Senha do banco: " . $row['senha'] . "<br>";
-
-        // Verifica a senha
-        if (password_verify($pass, $row['senha'])) {
-            echo "Senha verificada com sucesso!<br>";
-            $_SESSION['username'] = $row['nome'];
-            header("Location: ./index.html");
-            exit();
-        } else {
-            echo "Senha incorreta<br>";
-            header("Location: login.html?error=incorrect_password");
-            exit();
-        }
-    } else {
-        echo "Usuário não encontrado<br>";
-        header("Location: login.html?error=user_not_found");
+    if (isset($error)) {
+        header("Location: login.html?error=" . urlencode($error));
         exit();
     }
 }

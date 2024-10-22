@@ -163,7 +163,11 @@ img {
     width: auto;
 }
 
-tr > td > a {
+.btn-update,.btn-danger {
     align-items: center;
-    padding-top: 0;
+    margin-right: 2em;
+    
+}
+.btn-danger{
+    margin-top: -0.81em;
 }

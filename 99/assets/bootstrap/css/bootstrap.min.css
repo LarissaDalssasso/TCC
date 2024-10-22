@@ -208,6 +208,16 @@ hr {
     opacity: .25
 }
 
+
+.navbar-nav .dropdown-toggle::before {
+    display: none;
+}
+
+.navbar-nav .dropdown-toggle {
+    list-style: none;
+    padding-left: 0;
+}
+
 h6,
 .h6,
 h5,
@@ -475,7 +485,7 @@ label {
 }
 
 button {
-    border-radius: 0
+    border-radius: 6px
 }
 
 button:focus:not(:focus-visible) {
@@ -845,7 +855,6 @@ progress {
 }
 
 .row {
-    --bs-gutter-x: 1.5rem;
     --bs-gutter-y: 0;
     display: flex;
     flex-wrap: wrap;
@@ -4495,6 +4504,37 @@ fieldset:disabled .btn {
     flex: 1 1 auto;
     text-align: center
 }
+
+.navbar-nav li::marker {
+    content: none;
+}
+
+li::marker {
+    content: none;
+}
+
+.dropdown-menu {
+    background-color: #03391982;
+    padding: 10px;
+    border-radius: 10px;
+
+  
+}
+
+.dropdown-menu a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    /* espaço entre as opções */
+    border-radius: 10px;
+    /* arredondado */
+}
+
+.dropdown-menu a:hover {
+    background-color: #1d411a;
+    color: #fff;
+}
+
 
 .nav-justified>.nav-link,
 .nav-justified .nav-item {
@@ -14108,13 +14148,13 @@ img::-moz-selection {
     padding: 15px 25px;
     letter-spacing: 1px;
     text-transform: uppercase;
-    border-radius: 0;
+    border-radius: 10px;
     font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif
 }
 
 .btn-primary {
     background-color: #011b01be;
-border: none;
+    border: none;
 }
 
 .btn-primary:hover,
@@ -14280,9 +14320,7 @@ header.masthead .site-heading .subheading {
     font-size: 24px;
     font-weight: 300;
     line-height: 1.1;
-    display: flex;
-    justify-content: center;
-    text-align: center;
+    display: block;
     margin: 10px 0 0;
     font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif
 }
@@ -14435,6 +14473,7 @@ footer .copyright {
     text-align: center
 }
 
-header.masthead .page-heading, header.masthead .site-heading {
+header.masthead .page-heading,
+header.masthead .site-heading {
     text-align: center;
 }

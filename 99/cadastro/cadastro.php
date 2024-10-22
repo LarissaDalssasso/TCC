@@ -90,13 +90,18 @@
                     </div>
 
                     <div class="mb-3 button-group">
-                        <button id="submit" type="submit" class="btn btn-primary botao" >Registrar</button>
-                        <button id="clean" type="reset" class="btn btn-secondary botao">Limpar</button>
+                        <button id="submit" type="submit" class="btn btn-primary botao">Registrar</button>
+                        <button id="clean" type="reset" class="btn btn-primary botao">Limpar</button>
                     </div>
 
-                    <div class="mt-3 button-group"  >
-                        <a href="administrar_funcionarios.php" class="btn btn-primary botao" id="adm">Administrar Funcionários</a>
+                    <div class="mt-3 button-group">
+                        <a href="administrar_funcionarios.php" class="btn btn-primary botao" id="adm">Administrar
+                            Funcionários</a> 
+                            
+                            <a href="../index.html" class="btn btn-primary botao" id="adm">Voltar</a>
+
                     </div>
+                    
                 </form>
             </div>
         </div>

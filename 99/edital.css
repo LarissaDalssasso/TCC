@@ -1,0 +1,75 @@
+body {
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #183a0f
+  }
+  
+  form {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #183a0f;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  input[type="tel"],
+  input[type="email"],
+  input[type="date"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+  }
+  
+  input[type="radio"],
+  input[type="checkbox"] {
+    margin-right: 5px;
+  }
+  
+  textarea {
+    height: 100px;
+  }
+  
+  
+  
+  input[type="file"] {
+    padding: 10px;
+  }
+  
+  /* Estilos para os radio buttons e checkboxes */
+  input[type="radio"] + label,
+  input[type="checkbox"] + label {
+    display: inline-block;
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
+  
+  /* Estilos para os campos de texto */
+  .input-field {
+    border-radius: 5px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    color: #011102;
+    transition: border-color 0.3s ease;
+  }
+  
+  .input-field:hover {
+    border-color: #183a0f;
+  }
+  

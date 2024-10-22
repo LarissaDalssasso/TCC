@@ -7,10 +7,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nome = $_POST['nome'];
     $email = $_POST['email'];
     $area = $_POST['area'];
-    $senha = $_POST['senha'];
     $genero = $_POST['genero'];
 
-    $sql = "UPDATE funcionario SET nome='$nome', email='$email', area='$area', senha='$senha', genero='$genero' WHERE id=$id";
+    $sql = "UPDATE funcionario SET nome='$nome', email='$email', area='$area', genero='$genero' WHERE id=$id";
 
     if ($conn->query($sql) === TRUE) {
         echo "Funcionário atualizado com sucesso!";
@@ -61,11 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input type="text" class="form-control" id="area" name="area"
                         value="<?php echo $funcionario['area']; ?>" required>
                 </div>
-                <div class="form-group">
-                    <label for="senha">Senha:</label>
-                    <input type="password" class="form-control" id="senha" name="senha"
-                        value="<?php echo $funcionario['senha']; ?>" required>
-                </div>
+                
                 <div class="form-group">
                     <label for="genero">Gênero:</label>
                     <select class="form-control" id="genero" name="genero" required>
