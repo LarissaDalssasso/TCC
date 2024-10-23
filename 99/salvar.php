@@ -58,24 +58,24 @@ try {
         throw new Exception("Erro ao preparar a instrução SQL para editalParte2: " . mysqli_error($conn));
     }
     mysqli_stmt_bind_param($stmt, "ssssssssssssssssss", 
-        $_POST['nome_projeto'], 
+        $_POST['nome-projeto'], 
         $_POST['categoria'], 
-        $_POST['descricao_projeto'], 
+        $_POST['descricao-projeto'], 
         $_POST['objetivo'], 
         $_POST['meta'], 
         $_POST['publico'], 
-        $_POST['acao_cultural'], 
-        $_POST['medidas_acessibilidade'], 
-        $_POST['implementacao_acessibilidade'], 
-        $_POST['local_execucao'], 
-        $_POST['data_inicio'], 
-        $_POST['data_final'], 
-        $_POST['estrategia_divulgacao'], 
+        $_POST['acao-cultural'], 
+        $_POST['medidas-acessibilidade'], 
+        $_POST['implementacao-acessibilidade'], 
+        $_POST['local-execucao'], 
+        $_POST['data-inicio'], 
+        $_POST['data-final'], 
+        $_POST['estrategia-divulgacao'], 
         $_POST['contrapartida'], 
-        $_POST['recursos_financeiros'], 
-        $_POST['detalhe_recursos'], 
-        $_POST['venda_produtos_ingressos'], 
-        $_POST['parametros_orcamentarios']);
+        $_POST['recursos-financeiros'], 
+        $_POST['detalhe-recursos'], 
+        $_POST['venda-produtos_ingressos'], 
+        $_POST['parametros-orcamentarios']);
     
     if (!mysqli_stmt_execute($stmt)) {
         throw new Exception("Erro ao executar a instrução SQL para editalParte2: " . mysqli_stmt_error($stmt));
@@ -90,16 +90,16 @@ try {
     }
     mysqli_stmt_bind_param($stmt, "sssssssssss", 
         $_POST['anexos'], 
-        $_POST['estatuto_social'], 
-        $_POST['ata_eleicao_pose'], 
-        $_POST['documento_pessoal_dirigente'], 
-        $_POST['comprovante_residencia_dirigente'], 
-        $_POST['declaracoes_gerais'], 
-        $_POST['certificado_condicao_microempreendedor'], 
-        $_POST['cnpj_ativo'], 
-        $_POST['documento_pessoal_socio'], 
-        $_POST['comprovante_residencia_socio'], 
-        $_POST['declaracoes_gerais_socio']);
+        $_POST['estatuto-social'], 
+        $_POST['ata_eleicao-pose'], 
+        $_POST['documento-pessoal_dirigente'], 
+        $_POST['comprovante-residencia_dirigente'], 
+        $_POST['declaracoes-gerais'], 
+        $_POST['certificado-condicao_microempreendedor'], 
+        $_POST['cnpj-ativo'], 
+        $_POST['documento-pessoal-socio'], 
+        $_POST['comprovante-residencia-socio'], 
+        $_POST['declaracoes-gerais-socio']);
     
     if (!mysqli_stmt_execute($stmt)) {
         throw new Exception("Erro ao executar a instrução SQL para editalParte3: " . mysqli_stmt_error($stmt));
