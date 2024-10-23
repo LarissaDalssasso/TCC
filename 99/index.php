@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="assets/css/News-Cards-1.css?h=19de63894dd5898d7874581c81f61f35">
     <link rel="stylesheet" href="assets/css/News-Cards.css?h=f5670ae41835ad3f2c29fb53f9cfb93f">
     <link rel="stylesheet" href="assets/css/untitled.css?h=c4a4fb8d4b04afd37d06542391175254">
-    <link rel="stylesheet" href="assets/css/Waves---DentalTech.css?h=628c01a359dbc6e2de829e0469c6b52e">
+    <link rel="stylesheet" href="assets/css/Waves---DentalTech.css">
     <link rel="stylesheet" href="assets/css/form.css?h=193234bc42a8caa5a234be2173f3e1d6">
     <link rel="stylesheet" href="assets/css/formatacao.css?h=44bd75216289d00ac8c938eccbd9b67b">
     <link rel="stylesheet" href="assets/css/espacamentos.css?h=f982ad878b86b64ed6ecf5b558b6f5f3">
@@ -97,23 +97,16 @@
             </div>
         </div>
     </header><!-- Start: waves -->
-    <div class="&quot;container-fluid p-0&quot;"
-        style="margin-top: -2px;padding-bottom: 0px;padding-top: 0px;margin-bottom: 0px;padding-right: 0px;">
-        <div class="header"
-            style="padding-left: 0px;padding-top: 0px;/*margin-left: 0px;*/padding-right: 0px;margin-right: 0px;margin-bottom: -76px;padding-bottom: 74px;">
+        
             <div style="padding-right: 0px;"><svg class="waves" viewBox="0 24 150 28">
 
-                    <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z">
-                    </path>
+            <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" fill="#446442"></path>
 
 
-                    <use xlink:href="#gentle-wave" x="48" y="3" fill="rgb(68,100,66)"></use>
-                    <use xlink:href="#gentle-wave" x="48" y="5" fill="rgb(68,100,66)"></use>
-                    <use xlink:href="#gentle-wave" x="48" y="7" fill="rgb(68,100,66)"></use>
 
                 </svg></div>
-        </div>
-    </div><!-- End: waves -->
+        
+   <!-- End: waves -->
     <div class="col-lg-8 offset-lg-1 mx-auto" style="padding-top: 8px;">
         <h2><span style="color: rgb(248, 248, 248);">Cidade de Ibirama</span></h2>
         <p><span style="color: rgb(248, 248, 248);">Com pouco mais de 18 mil habitantes, Ibirama celebra o perfil de uma
