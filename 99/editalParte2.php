@@ -89,7 +89,9 @@
           <!-- Planejamento e Organização -->
           <div>
             <label for="nome-projeto">Nome do Projeto:</label>
-            <input type="text" id="nome-projeto" name="nome-projeto">
+            <textarea type="text" id="nome-projeto" name="nome-projeto"></textarea>
+            
+
         </div>
         <div>
             <label for="categoria">Escolha a categoria a que vai concorrer:</label>
@@ -356,7 +358,7 @@
                 </div>
                 <div class="mt-3">
                     <a href="editalParte1.php" class="btn btn-primary">Parte Um</a>
-                    <button type="submit" id="salvar" name="salvar">Salvar</button>
+                    <button type="submit" class="btn btn-primary" name="salvar">Salvar</button>
                     <a href="editalParte3.php" class="btn btn-primary">Parte Três</a>
                 </div>
         

@@ -96,8 +96,6 @@
     <div style="padding-bottom: 0px;margin: auto;padding-top: 0px;padding-right: 90px;padding-left: 90px; margin-top:20px;">
         <!-- Start: cards -->
         <div class="row" data-masonry="{&quot;percentPosition&quot;: true }">
-            <!-- Start: card-1 -->
-            <!-- End: card-1 -->
             <!-- Start: card-2 -->
             <div class="col-sm-6 col-lg-4 mb-4 ">
                 <!-- Start: card -->

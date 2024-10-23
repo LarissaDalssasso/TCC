@@ -53,7 +53,8 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="cursos.php" style="padding-top: 0px;"><strong><span
                                     style="color: rgba(255, 255, 255, 0.8);">CURSOS</span></strong></a></li>
-                    <li class="nav-item"><a class="nav-link" href="editalParte1.php" style="padding-top: 0px;"><strong><span
+                    <li class="nav-item"><a class="nav-link" href="editalParte1.php"
+                            style="padding-top: 0px;"><strong><span
                                     style="color: rgba(255, 255, 255, 0.8);">EDITAL</span></strong></a></li>
                     <li class="nav-item"><a class="nav-link" href="eventos.php"
                             style="margin-bottom: -22px;padding-top: 0px;padding-bottom: 0px;"><strong><span
@@ -83,6 +84,7 @@
             </div>
         </div>
     </nav><!-- End: Fixed navbar starting with transparency -->
+
     <header class="masthead"
         style="background-image: url('assets/img/hansa.png?h=5546ece79416c8e49c598504f6269763');margin-bottom: -105px;padding-bottom: 106px;justify-content: center;align-items: center;justify-items: center;">
         <div class="container" style="align-items: center; margin: auto;justify-content: center;">
@@ -97,16 +99,17 @@
             </div>
         </div>
     </header><!-- Start: waves -->
-        
-            <div style="padding-right: 0px;"><svg class="waves" viewBox="0 24 150 28">
 
-            <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" fill="#446442"></path>
+    <div style="padding-right: 0px;"><svg class="waves" viewBox="0 24 150 28">
+
+            <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+                fill="#446442"></path>
 
 
 
-                </svg></div>
-        
-   <!-- End: waves -->
+        </svg></div>
+
+    <!-- End: waves -->
     <div class="col-lg-8 offset-lg-1 mx-auto" style="padding-top: 8px;">
         <h2><span style="color: rgb(248, 248, 248);">Cidade de Ibirama</span></h2>
         <p><span style="color: rgb(248, 248, 248);">Com pouco mais de 18 mil habitantes, Ibirama celebra o perfil de uma
