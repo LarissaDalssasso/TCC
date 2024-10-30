@@ -6,7 +6,12 @@ if (!$conn) {
     die("Erro de conexão: " . mysqli_connect_error());
 }
 $result = mysqli_query($conn, "SELECT * FROM editalParte2 ORDER BY data_inicio DESC");
- ?>
+if (isset($_SESSION['edital_salvo']) && $_SESSION['edital_salvo'] === true) {
+    echo "<script>alert('O edital foi salvo com sucesso!');</script>";
+    unset($_SESSION['edital_salvo']); // Remove a variável de sessão após exibir o pop-up
+}
+
+?>
 
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="pt-br">
@@ -72,7 +77,7 @@ $result = mysqli_query($conn, "SELECT * FROM editalParte2 ORDER BY data_inicio D
                                     style="color: rgba(255, 255, 255, 0.8);">ALAS</span></strong></a></li>
                 </ul>
                 <?php if (isset($_SESSION['username'])) { ?>
-                    <li class="nav-item dropdown"> <!-- Não estava fechado corretamente -->
+                    <li class="nav-item dropdown"> 
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false"
                             style="font-size: 16px; font-weight: bold; color: #fff; text-decoration: none; padding-right: 0; margin-right: -10px; display: inline-block; width: fit-content;">
@@ -81,13 +86,13 @@ $result = mysqli_query($conn, "SELECT * FROM editalParte2 ORDER BY data_inicio D
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="logout.php">Logout</a></li>
                         </ul>
-                    </li> <!-- Fechamento correto aqui -->
+                    </li> 
                 <?php } else { ?>
                     <li class="nav-item">
                         <a class="nav-link active" href="login.html">
                             <strong><span style="color: rgb(255, 255, 255);">LOGIN</span></strong>
                         </a>
-                    </li> <!-- Fechar corretamente aqui -->
+                    </li> 
                 <?php } ?>
 
             </div>
@@ -95,7 +100,7 @@ $result = mysqli_query($conn, "SELECT * FROM editalParte2 ORDER BY data_inicio D
     </nav><!-- End: Fixed navbar starting with transparency -->
 
     <header class="masthead"
-        style="background-image: url('assets/img/hansa.png?h=5546ece79416c8e49c598504f6269763');margin-bottom: -105px;padding-bottom: 106px;justify-content: center;align-items: center;justify-items: center;">
+        style="background-image: url('assets/img/hansa.png?h=5546ece79416c8e49c598504f6269763'); margin-bottom: -105px;padding-bottom: 106px;justify-content: center;align-items: center;justify-items: center;">
         <div class="container" style="align-items: center; margin: auto;justify-content: center;">
             <div class="row" style="padding-right: 0px;margin: auto;">
                 <div class="col-10 col-md-10 col-lg-8 col-xl-10 mx-auto position-relative">
@@ -136,44 +141,44 @@ $result = mysqli_query($conn, "SELECT * FROM editalParte2 ORDER BY data_inicio D
                 última os Anexos.</span></p>
 
 
-
         <div class="editalBotao text-center">
-            <a href="editalParte1.php" class="btn btn-primary">Edital Primeira parte</a>
-            <a href="editalParte2.php" class="btn btn-primary">Edital Segunda parte</a>
-            <a href="editalParte3.php" class="btn btn-primary">Edital Terceira parte</a>
-
-
+            <a href="editalParte1.php" class="btn btn-primary" role="button"
+                aria-label="Acessar edital da primeira parte">Edital Primeira parte</a>
+            <a href="editalParte2.php" class="btn btn-primary" role="button"
+                aria-label="Acessar edital da segunda parte">Edital Segunda parte</a>
+            <a href="editalParte3.php" class="btn btn-primary" role="button"
+                aria-label="Acessar edital da terceira parte">Edital Terceira parte</a>
         </div>
-        <div class="container" style="padding-top: 20px; text-align: center; margin: auto; ">
-             <h2><span style="color: rgb(248, 248, 248);">Editais Cadastrados</span></h2>
-        <?php if (mysqli_num_rows($result) > 0) { ?>
-           
-            <table class="table table-striped" >
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome do Projeto</t>
+        <div class="container" style="padding-top: 50px; text-align: center; margin: auto; ">
+            <h2><span style="color: rgb(248, 248, 248);">Editais Cadastrados</span></h2>
+            <?php if (mysqli_num_rows($result) > 0) { ?>
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome do Projeto</t>
                             <th>Data de Início</th>
                             <th>Data de Fim</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php while ($row = mysqli_fetch_assoc($result)) { ?>
-                        <tr>
-                            <td><?= $row['id']; ?></td>
-                            <td><?= $row['nome_projeto']; ?></td>
-                            <td><?= $row['data_inicio']; ?></td>
-                            <td><?= $row['data_final']; ?></td>
                         </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
-        <?php } else { ?>
-            <p>Nenhum edital encontrado.</p>
-        <?php } ?>
+                    </thead>
+                    <tbody>
+                        <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+                            <tr>
+                                <td><?= $row['id']; ?></td>
+                                <td><?= $row['nome_projeto']; ?></td>
+                                <td><?= $row['data_inicio']; ?></td>
+                                <td><?= $row['data_final']; ?></td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            <?php } else { ?>
+                <p>Nenhum edital encontrado.</p>
+            <?php } ?>
 
-        <?php mysqli_close($conn); ?>
-</div>
+            <?php mysqli_close($conn); ?>
+        </div>
 
     </div>
 

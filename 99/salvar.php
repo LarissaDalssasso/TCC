@@ -120,7 +120,7 @@ try {
     mysqli_commit($conn);
     $_SESSION['nome_projeto'] = $_POST['nome-projeto'];
 
-    // Redirecionar para editalPai.php após o salvamento bem-sucedido
+    $_SESSION['edital_salvo'] = true; // Define a variável de sessão
     header('Location: editalPai.php');
     exit();
 } catch (Exception $e) {
