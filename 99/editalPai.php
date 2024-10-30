@@ -1,4 +1,13 @@
-<?php session_start(); ?>
+<?php session_start();
+$conn = mysqli_connect("localhost", "root", "root", "site");
+
+// Verificar conexão
+if (!$conn) {
+    die("Erro de conexão: " . mysqli_connect_error());
+}
+$result = mysqli_query($conn, "SELECT * FROM editalParte2 ORDER BY data_inicio DESC");
+ ?>
+
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="pt-br">
 
@@ -38,6 +47,7 @@
 </head>
 
 <body>
+
     <!-- Start: Fixed navbar starting with transparency -->
     <nav class="navbar navbar-expand-md fixed-top navbar-transparency navbar-light"
         style="background-color: inherit;margin-top: -42px;padding-bottom: 0px;margin-bottom: 4px;padding-top: 0px;height: 2%; justify-content: center;">
@@ -52,7 +62,7 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="cursos.php" style="padding-top: 0px;"><strong><span
                                     style="color: rgba(255, 255, 255, 0.8);">CURSOS</span></strong></a></li>
-                    <li class="nav-item"><a class="nav-link" href="editalParte1.php"
+                    <li class="nav-item"><a class="nav-link" href="editalPai.php"
                             style="padding-top: 0px;"><strong><span
                                     style="color: rgba(255, 255, 255, 0.8);">EDITAL</span></strong></a></li>
                     <li class="nav-item"><a class="nav-link" href="eventos.php"
@@ -120,19 +130,50 @@
     </div>
     <div class="col-lg-8 offset-lg-1 mx-auto" style="padding-top: 8px; ">
 
-    <h3><span style="color: rgb(248, 248, 248);">Aplique seu edital</span></h3>
-    <p><span style="color: rgb(248, 248, 248);">O edital é dividio em três partes, cada parte pode ser prechida separadamente, primeira parte é a Identificação da Pessoa, a segunda Planejamento e Organização e a última os Anexos.</span></p>
+        <h3><span style="color: rgb(248, 248, 248);">Aplique seu edital</span></h3>
+        <p><span style="color: rgb(248, 248, 248);">O edital é dividio em três partes, cada parte pode ser prechida
+                separadamente, primeira parte é a Identificação da Pessoa, a segunda Planejamento e Organização e a
+                última os Anexos.</span></p>
 
 
 
-    <div class="editalBotao text-center">
+        <div class="editalBotao text-center">
             <a href="editalParte1.php" class="btn btn-primary">Edital Primeira parte</a>
             <a href="editalParte2.php" class="btn btn-primary">Edital Segunda parte</a>
             <a href="editalParte3.php" class="btn btn-primary">Edital Terceira parte</a>
 
 
         </div>
-    
+        <div class="container" style="padding-top: 20px; text-align: center; ">
+             <h2><span style="color: rgb(248, 248, 248);">Editais Cadastrados</span></h2>
+        <?php if (mysqli_num_rows($result) > 0) { ?>
+           
+            <table class="table table-striped" >
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome do Projeto</t>
+                            <th>Data de Início</th>
+                            <th>Data de Fim</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+                        <tr>
+                            <td><?= $row['id']; ?></td>
+                            <td><?= $row['nome_projeto']; ?></td>
+                            <td><?= $row['data_inicio']; ?></td>
+                            <td><?= $row['data_final']; ?></td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        <?php } else { ?>
+            <p>Nenhum edital encontrado.</p>
+        <?php } ?>
+
+        <?php mysqli_close($conn); ?>
+</div>
 
     </div>
 

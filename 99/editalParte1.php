@@ -56,7 +56,7 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="cursos.php" style="padding-top: 0px;"><strong><span
                                     style="color: rgba(255, 255, 255, 0.8);">CURSOS</span></strong></a></li>
-                    <li class="nav-item"><a class="nav-link" href="editalParte1.php"
+                    <li class="nav-item"><a class="nav-link" href="editalPai.php"
                             style="padding-top: 0px;"><strong><span
                                     style="color: rgba(255, 255, 255, 0.8);">EDITAL</span></strong></a></li>
                     <li class="nav-item"><a class="nav-link" href="eventos.html"

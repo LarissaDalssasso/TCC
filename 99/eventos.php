@@ -49,7 +49,7 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="cursos.php" style="padding-top: 0px;"><strong><span
                                     style="color: rgba(255, 255, 255, 0.8);">CURSOS</span></strong></a></li>
-                    <li class="nav-item"><a class="nav-link" href="editalParte1.php" style="padding-top: 0px;"><strong><span
+                    <li class="nav-item"><a class="nav-link" href="editalPai.php" style="padding-top: 0px;"><strong><span
                                     style="color: rgba(255, 255, 255, 0.8);">EDITAL</span></strong></a></li>
                     <li class="nav-item"><a class="nav-link" href="eventos.php"
                             style="margin-bottom: -22px;padding-top: 0px;padding-bottom: 0px;"><strong><span
