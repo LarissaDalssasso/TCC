@@ -98,7 +98,8 @@
                 </div>
             </div>
         </div>
-    </header><!-- Start: waves -->
+    </header>
+    <!-- Start: waves -->
 
     <div style="padding-right: 0px;"><svg class="waves" viewBox="0 24 150 28">
 
