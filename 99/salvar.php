@@ -1,4 +1,6 @@
 <?php
+session_start(); // Inicia a sessão, se não estiver iniciada
+
 // Conexão com o banco de dados
 $conn = mysqli_connect("localhost", "root", "root", "site");
 
@@ -87,7 +89,6 @@ try {
         throw new Exception("Erro ao executar a instrução SQL para editalParte2: " . mysqli_stmt_error($stmt));
     }
     mysqli_stmt_close($stmt);
-
     // Inserir dados em editalParte3
     $stmt = mysqli_prepare($conn, "INSERT INTO editalParte3 (anexos, estatuto_social, ata_eleicao_pose, documento_pessoal_dirigente, comprovante_residencia_dirigente, declaracoes_gerais, certificado_condicao_microempreendedor, cnpj_ativo, documento_pessoal_socio, comprovante_residencia_socio, declaracoes_gerais_socio) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
@@ -118,6 +119,10 @@ try {
     // Se tudo deu certo, comitar a transação
     mysqli_commit($conn);
     $_SESSION['nome_projeto'] = $_POST['nome-projeto'];
+
+    // Redirecionar para editalPai.php após o salvamento bem-sucedido
+    header('Location: editalPai.php');
+    exit();
 } catch (Exception $e) {
     // Se houver algum erro, fazer rollback e mostrar a mensagem de erro
     mysqli_rollback($conn);
