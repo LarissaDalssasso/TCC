@@ -111,7 +111,7 @@
 
     <!-- End: waves -->
     <div class="col-lg-8 offset-lg-1 mx-auto" style="padding-top: 8px;">
-        <h2><span style="color: rgb(248, 248, 248);">Editais</span></h2>
+        <h3><span style="color: rgb(248, 248, 248);">Editais</span></h3>
         <p><span style="color: rgb(248, 248, 248);">Os editais de licitação são documentos que regulam o processo de
                 contratação de bens, serviços e obras pela administração pública. Eles garantem transparência e
                 competitividade, contendo informações sobre o objeto da licitação, condições de participação e critérios
@@ -120,7 +120,7 @@
     </div>
     <div class="col-lg-8 offset-lg-1 mx-auto" style="padding-top: 8px; ">
 
-    <h2><span style="color: rgb(248, 248, 248);">Aplique seu edital</span></h2>
+    <h3><span style="color: rgb(248, 248, 248);">Aplique seu edital</span></h3>
     <p><span style="color: rgb(248, 248, 248);">O edital é dividio em três partes, cada parte pode ser prechida separadamente, primeira parte é a Identificação da Pessoa, a segunda Planejamento e Organização e a última os Anexos.</span></p>
 
 
