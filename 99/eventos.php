@@ -80,7 +80,7 @@
         </div>
     </nav><!-- End: Fixed navbar starting with transparency -->
     <header class="masthead"
-        style="background-image: url('assets/img/hansa.png?h=5546ece79416c8e49c598504f6269763');justify-content: center;align-items: center;justify-items: center;">
+        style="background-image: url('assets/img/hansa.png');justify-content: center;align-items: center;justify-items: center;">
         <div class="container" style="align-items: center; margin: auto;justify-content: center;">
             <div class="row" style="padding-right: 0px;margin: auto;">
                 <div class="col-10 col-md-10 col-lg-8 col-xl-10 mx-auto position-relative">
