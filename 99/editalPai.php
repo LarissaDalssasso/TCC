@@ -144,7 +144,7 @@ $result = mysqli_query($conn, "SELECT * FROM editalParte2 ORDER BY data_inicio D
 
 
         </div>
-        <div class="container" style="padding-top: 20px; text-align: center; ">
+        <div class="container" style="padding-top: 20px; text-align: center; margin: auto; ">
              <h2><span style="color: rgb(248, 248, 248);">Editais Cadastrados</span></h2>
         <?php if (mysqli_num_rows($result) > 0) { ?>
            
