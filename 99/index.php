@@ -37,10 +37,16 @@
     <link rel="stylesheet" href="assets/css/dh-card-image-left-dark.css?h=fbeb7871206b72100c90953ca6cc43cc">
     <link rel="stylesheet" href="assets/css/Login-screen.css?h=a83d532a2ddb77352016bff7774f7e85">
     <link rel="stylesheet" href="assets/css/Navigation-Menu.css?h=587a88704dc45b107523dd7422062369">
-
+    <style>
+        .dropdown-menu {
+            position: absolute;
+            z-index: 1000;
+        }
+    </style>
 </head>
 
 <body>
+
     <nav class="navbar navbar-expand-md fixed-top navbar-transparency navbar-light"
         style="background-color: inherit;margin-top: -42px;padding-bottom: 0px;margin-bottom: 4px;padding-top: 0px;height: 2%; justify-content: center;">
         <div class="container">
@@ -66,16 +72,18 @@
                                     style="color: rgba(255, 255, 255, 0.8);">ALAS</span></strong></a></li>
 
                     <?php if (isset($_SESSION['username'])): ?>
-                        <li class="nav-item dropdowdropdownn">
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false"
                                 style="font-size: 16px; font-weight: bold; color: #fff; text-decoration: none; padding-right: 0; margin-right: -10px; display: inline-block; width: fit-content; ">
                                 <?php echo $_SESSION['username']; ?>
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
+                                style="position: absolute; z-index: 1000;">
                                 <li><a class="dropdown-item" href="logout.php">Logout</a></li>
                                 <?php if (isset($_SESSION['papel']) && $_SESSION['papel'] === 'admin'): ?>
-                                    <li><a class="dropdown-item" href="./cadastro/administrar_funcionarios.php">Administrador</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="./cadastro/administrar_funcionarios.php">Administrador</a></li>
 
                                 <?php endif; ?>
                             </ul>
@@ -90,7 +98,7 @@
                 </ul>
             </div>
         </div>
-    </nav><!-- End: Fixed navbar starting with transparency -->
+                    </nav>
 
 
     
