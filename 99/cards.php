@@ -1,9 +1,9 @@
 <?php
 session_start();
-include './cadastro/config.php';
+include './cadastro/config.php'; 
 
-$sql = "SELECT * FROM eventos";
-$result = $conn->query($sql);
+$sql = "SELECT * FROM eventos"; 
+$result = $conn->query($sql); 
 ?>
 
 
@@ -91,9 +91,10 @@ $result = $conn->query($sql);
                                             href="./cadastro/administrar_funcionarios.php">Administrador</a></li>
 
                                 <?php endif; ?>
-
-                                <?php if (isset($_SESSION['papel']) && $_SESSION['papel'] === 'admin'): ?>
-                                    <li><a class="dropdown-item" href="cadastrarEvento.php">Cadastrar Eventos</a></li>
+                            
+                            <?php if (isset($_SESSION['papel']) && $_SESSION['papel'] === 'admin'): ?>
+                                    <li><a class="dropdown-item"
+                                            href="cadastrarEvento.php">Cadastrar Eventos</a></li>
 
                                 <?php endif; ?>
                             </ul>
@@ -108,10 +109,10 @@ $result = $conn->query($sql);
                 </ul>
             </div>
         </div>
-    </nav>
+                    </nav>
 
 
-
+    
     <header class="masthead"
         style="background-image: url('assets/img/hansa.png');margin-bottom: -105px;padding-bottom: 106px;justify-content: center;align-items: center;justify-items: center;">
         <div class="container" style="align-items: center; margin: auto;justify-content: center;">
@@ -143,13 +144,10 @@ $result = $conn->query($sql);
         <div class="row">
             <?php while ($row = $result->fetch_assoc()): ?>
                 <div class="col-sm-6 col-lg-4 mb-4">
-                    <div class="card" style="cursor: pointer; background-color: #f4ffdba9; margin: 3.5%;"
-                        onclick="window.location.href='detalhesEventos.php?id=<?php echo $row['id']; ?>'">
-                        <img class="card-img-top p-3" src="<?php echo $row['imagem1']; ?>" alt=""
-                            style="border-radius: 24px; object-fit: cover" width="306" height="307">
+                    <div class="card" style="cursor: pointer; background-color: #f4ffdba9; margin: 3.5%;" onclick="window.location.href='detalhesEventos.php?id=<?php echo $row['id']; ?>'">
+                        <img class="card-img-top p-3" src="<?php echo $row['imagem1']; ?>" alt="" style="border-radius: 24px; object-fit: cover" width="306" height="307">
                         <div class="card-body">
-                            <h5 class="card-title"><span
-                                    style="color: rgb(35, 79, 51);"><?php echo $row['titulo']; ?></span></h5>
+                            <h5 class="card-title"><span style="color: rgb(35, 79, 51);"><?php echo $row['titulo']; ?></span></h5>
                             <p class="card-text text-muted"><?php echo $row['data']; ?></p>
                         </div>
                     </div>
@@ -158,12 +156,24 @@ $result = $conn->query($sql);
         </div>
     </div>
 
-    <footer class="text-center">
-        <div class="container text-white py-4">
-            <p>Copyright © 2024 FECT</p>
-        </div>
-    </footer>
 
+    <footer class="text-center"
+        style=" margin-left:auto;justify-content: center; margin-right: auto; padding-bottom: 0px;padding-top: 0px; align-items: center;">
+        <div class="container text-white py-4 py-lg-5" style="padding: auto;margin: auto;">
+            <ul class="list-inline" style="padding-left: 0px;">
+                <li class="list-inline-item me-4"><a class="link-light" href="#">Larissa Dalssasso</a></li>
+                <li class="list-inline-item me-4"><a class="link-light" href="#">&amp;</a></li>
+                <li class="list-inline-item"><a class="link-light" href="#">Kauã Felippe</a></li>
+            </ul>
+            <ul class="list-inline" style="padding-left: 0px;">
+                <li class="list-inline-item me-4"><a class="link-light" href="#"></a></li>
+                <li class="list-inline-item me-4"><a class="link-light" href="#">Instituto Federal Catarinense - Campus
+                        Ibirama</a></li>
+                <li class="list-inline-item"></li>
+            </ul>
+            <p class="text-muted mb-0" style="padding-left: 0px;">Copyright © 2024 FECT</p>
+        </div>
+    </footer><!-- End: Footer Dark -->
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
 
