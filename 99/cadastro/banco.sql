@@ -81,3 +81,13 @@ CREATE TABLE editalParte3 (
   comprovante_residencia_socio TEXT,
   declaracoes_gerais_socio TEXT
 );
+
+CREATE TABLE eventos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    data DATE NOT NULL,
+    descricao TEXT NOT NULL,
+    imagem1 VARCHAR(255),
+    imagem2 VARCHAR(255),
+    imagem3 VARCHAR(255)
+);

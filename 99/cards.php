@@ -1,4 +1,9 @@
-<?php session_start();
+<?php
+session_start();
+include './cadastro/config.php';
+
+$sql = "SELECT * FROM eventos";
+$result = $conn->query($sql);
 ?>
 
 
@@ -86,10 +91,9 @@
                                             href="./cadastro/administrar_funcionarios.php">Administrador</a></li>
 
                                 <?php endif; ?>
-                            
-                            <?php if (isset($_SESSION['papel']) && $_SESSION['papel'] === 'admin'): ?>
-                                    <li><a class="dropdown-item"
-                                            href="cadastrarEvento.php">Cadastrar Eventos</a></li>
+
+                                <?php if (isset($_SESSION['papel']) && $_SESSION['papel'] === 'admin'): ?>
+                                    <li><a class="dropdown-item" href="cadastrarEvento.php">Cadastrar Eventos</a></li>
 
                                 <?php endif; ?>
                             </ul>
@@ -104,10 +108,10 @@
                 </ul>
             </div>
         </div>
-                    </nav>
+    </nav>
 
 
-    
+
     <header class="masthead"
         style="background-image: url('assets/img/hansa.png');margin-bottom: -105px;padding-bottom: 106px;justify-content: center;align-items: center;justify-items: center;">
         <div class="container" style="align-items: center; margin: auto;justify-content: center;">
@@ -135,101 +139,32 @@
         </svg></div>
 
     <!-- End: waves -->
-    <div class="col-lg-8 offset-lg-1 mx-auto" style="padding-top: 8px;">
-        <h2><span style="color: rgb(248, 248, 248);">Cidade de Ibirama</span></h2>
-        <p><span style="color: rgb(248, 248, 248);">Com pouco mais de 18 mil habitantes, Ibirama celebra o perfil de uma
-                comunidade pacata, organizada e muito acolhedora. Situada junto à região catarinense do Alto Vale do
-                Itajaí, tem a sua economia pautada por bons resultados nos setores da indústria, comércio, serviços e
-                agropecuária.</span></p>
-        <p><span style="color: rgb(248, 248, 248);">Fundada em 1897, ainda hoje seus moradores mantém as fortes
-                características da colonização europeia. Grande parcela da população é descendente de alemães e
-                italianos e faz questão de preservar a maioria dos costumes trazidos pelos antepassados.</span></p>
-        <p><span style="color: rgb(248, 248, 248);">O município é de fácil acesso, estando estrategicamente localizado
-                às margens da BR 470. Oferece boas condições logísticas na escoação de produtos, estando distante a
-                cerca de 120 km do Porto de Itajaí e do Aeroporto de Navegantes, e dista somente 10 km do Aeroporto de
-                Lontras.</span></p>
-    </div>
-    <div class="faq" style="margin-top: 70px;margin-bottom: -4px;padding-bottom: 119px;">
-        <!-- Start: faq -->
-        <div class="col-md-6 offset-md-3">
-            <!-- Start: faq-1 -->
-            <div id="faqlist" class="accordion accordion-flush">
-                <div class="accordion-item"
-                    style="margin-bottom: 10px;margin-right: 0px;background: #344b2e;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;border: 1px solid;border-top-style: solid;border-top-color: #f8f8f7;border-right-style: solid;border-right-color: #f8f8f8;border-bottom-style: solid;border-bottom-color: #f8f8f8;border-left-style: solid;border-left-color: #f8f8f8;">
-                    <details class="accordion">
-                        <summary class="accordion__title">O que a Cultura oferece?<span></span></summary>
-                        <article class="accordion__content">
-                            A cultura oferece identidade, coesão social, expressão criativa, conhecimento e
-                            entretenimento, conectando pessoas através de tradições, valores e experiências
-                            compartilhadas. Ela enriquece a vida ao promover diversidade, inclusão e educação, enquanto
-                            também proporciona espaços para lazer e reflexão.
-                        </article>
-                    </details>
+    <div class="container" style="margin-top: 20px;">
+        <div class="row">
+            <?php while ($row = $result->fetch_assoc()): ?>
+                <div class="col-sm-6 col-lg-4 mb-4">
+                    <div class="card" style="cursor: pointer; background-color: #f4ffdba9; margin: 3.5%;"
+                        onclick="window.location.href='detalhesEventos.php?id=<?php echo $row['id']; ?>'">
+                        <img class="card-img-top p-3" src="<?php echo $row['imagem1']; ?>" alt=""
+                            style="border-radius: 24px; object-fit: cover" width="306" height="307">
+                        <div class="card-body">
+                            <h5 class="card-title"><span
+                                    style="color: rgb(35, 79, 51);"><?php echo $row['titulo']; ?></span></h5>
+                            <p class="card-text text-muted"><?php echo $row['data']; ?></p>
+                        </div>
+                    </div>
                 </div>
-                <div style="margin-bottom: 10px;background: #344b2e;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;border: 1px solid #c3c3c3;border-top-style: solid;border-top-color: #c3c3c3;border-right-style: solid;border-right-color: #c3c3c3;border-bottom-style: solid;border-bottom-color: #c3c3c3;border-left-style: solid;border-left-color: #c3c3c3"
-                    class="accordion-item">
-                    <details class="accordion">
-                        <summary class="accordion__title">Maiores Eventos<span></span></summary>
-                        <article class="accordion__content">
-                            O evento de Natal é uma celebração marcada por momentos de união, alegria e solidariedade.
-                            As decorações festivas, como luzes e árvores iluminadas, criam um clima especial de
-                            confraternização. Durante esse período, as famílias e amigos se reúnem para trocar
-                            presentes, compartilhar refeições e reforçar laços de afeto. Além disso, o Natal é uma época
-                            de reflexão, onde se destacam valores como paz, amor e esperança, inspirando gestos de
-                            generosidade e cuidado com o próximo.
-                        </article>
-                    </details>
-                </div>
-            </div><!-- End: faq-1 -->
-        </div><!-- End: faq -->
-    </div>
-
-    <div class="section-border" data-controller="SectionDivider"
-        style="clip-path: url(#section-divider-660bf7b409bb5d0127486a8f);" data-controllers-bound="SectionDivider">
-        <div class="section-background">
-
-
-            <div class="section-background-content" data-controller="BackgroundContours"
-                data-controllers-bound="BackgroundContours">
-                <div class="section-background-canvas background-fx-canvas" style="overflow: hidden;"><canvas
-                        style="display: none; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;"
-                        width="1512" height="1038"></canvas><canvas width="1512" height="1038"
-                        style="position: absolute; left: 0px; top: 0px; width: 1210px; height: 831px;"></canvas></div>
-            </div>
-
-
+            <?php endwhile; ?>
         </div>
     </div>
 
-
-    <!-- Start: Footer Dark -->
-
-
-
-    <footer class="text-center"
-        style=" margin-left:auto;justify-content: center; margin-right: auto; padding-bottom: 0px;padding-top: 0px; align-items: center;">
-        <div class="container text-white py-4 py-lg-5" style="padding: auto;margin: auto;">
-            <ul class="list-inline" style="padding-left: 0px;">
-                <li class="list-inline-item me-4"><a class="link-light" href="#">Larissa Dalssasso</a></li>
-                <li class="list-inline-item me-4"><a class="link-light" href="#">&amp;</a></li>
-                <li class="list-inline-item"><a class="link-light" href="#">Kauã Felippe</a></li>
-            </ul>
-            <ul class="list-inline" style="padding-left: 0px;">
-                <li class="list-inline-item me-4"><a class="link-light" href="#"></a></li>
-                <li class="list-inline-item me-4"><a class="link-light" href="#">Instituto Federal Catarinense - Campus
-                        Ibirama</a></li>
-                <li class="list-inline-item"></li>
-            </ul>
-            <p class="text-muted mb-0" style="padding-left: 0px;">Copyright © 2024 FECT</p>
+    <footer class="text-center">
+        <div class="container text-white py-4">
+            <p>Copyright © 2024 FECT</p>
         </div>
-    </footer><!-- End: Footer Dark -->
-    <script src="assets/bootstrap/js/bootstrap.min.js?h=e55bde7d6e36ebf17ba0b8c1e80e4065"></script>
-    <script src="assets/js/Carousel-Multi-Image--ISA--carousel-multi.js?h=8b6a61c52462cb43846bf671a4118b63"></script>
-    <script src="assets/js/clean-blog.js?h=44b1c6e85af97fda0fedbb834b3ff3f8"></script>
-    <script src="assets/js/faq-xerius%20faq.js?h=1079596b8ac096fe203457b5fbbbb842"></script>
-    <script
-        src="assets/js/Fixed-navbar-starting-with-transparency-script.js?h=d3a58694022081474e39f06e40840737"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+    </footer>
+
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
 
 </html>
