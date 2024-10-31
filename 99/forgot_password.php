@@ -1,10 +1,6 @@
 <?php
 session_start();
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 $servername = "localhost";
 $username = "root";
 $password = "root";
@@ -18,45 +14,46 @@ if ($conn->connect_error) {
     die("Conexão falhou: " . $conn->connect_error);
 }
 
+// Verifica se o método é POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = trim($_POST['email']);
+    // Verifica se o token e a nova senha estão definidos
+    if (isset($_POST['token']) && isset($_POST['new_password'])) {
+        $token = $_POST['token'];
+        $new_password = $_POST['new_password'];
 
-    // Verifica se o email está vazio
-    if (empty($email)) {
-        header("Location: forgot_password.html?error=empty_email");
-        exit();
-    }
+        // Verifica se o token e a nova senha estão preenchidos
+        if (empty($token) || empty($new_password)) {
+            echo "Token ou nova senha não podem estar vazios.";
+            exit();
+        }
 
-    // Prepara e executa a consulta
-    $stmt = $conn->prepare("SELECT * FROM funcionario WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    // Verifica se o usuário foi encontrado
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-
-        // Gera um token de reset de senha
-        $token = bin2hex(random_bytes(16));
-
-        // Atualiza o token de reset de senha no banco de dados
-        $stmt = $conn->prepare("UPDATE funcionario SET reset_token = ? WHERE email = ?");
-        $stmt->bind_param("ss", $token, $email);
+        // Prepara e executa a consulta para verificar o token
+        $stmt = $conn->prepare("SELECT * FROM funcionario WHERE reset_token = ?");
+        $stmt->bind_param("s", $token);
         $stmt->execute();
+        $result = $stmt->get_result();
 
-        // Envia um email com o link de reset de senha
-        $subject = "Reset de Senha";
-        $message = "Clique no link abaixo para resetar sua senha: <a href='reset_password.php?token=$token'>Resetar Senha</a>";
-        $headers = "From: seu_email@example.com\r\n";
-        mail($email, $subject, $message, $headers);
+        // Se o token for válido, atualiza a senha
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $email = $row['email'];
 
-        header("Location: forgot_password.html?success=email_sent");
-        exit();
+            // Atualiza a senha (certifique-se de usar hashing)
+            $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+            $stmt = $conn->prepare("UPDATE funcionario SET senha = ?, reset_token = NULL WHERE email = ?");
+            $stmt->bind_param("ss", $hashed_password, $email);
+            $stmt->execute();
+
+            echo "Senha redefinida com sucesso!";
+        } else {
+            echo "Token inválido ou expirado.";
+        }
     } else {
-        header("Location: forgot_password.html?error=user_not_found");
-        exit();
+        echo "Token ou nova senha não podem estar vazios.";
     }
+} else {
+    // Se não for um POST, pode redirecionar ou exibir uma mensagem
+    echo "Método inválido.";
 }
 
 $conn->close();
