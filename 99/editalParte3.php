@@ -38,7 +38,9 @@
 
 </head>
 
-<body> <nav class="navbar navbar-expand-md fixed-top navbar-transparency navbar-light"
+<body>
+
+    <nav class="navbar navbar-expand-md fixed-top navbar-transparency navbar-light"
         style="background-color: inherit;margin-top: -42px;padding-bottom: 0px;margin-bottom: 4px;padding-top: 0px;height: 2%; justify-content: center;">
         <div class="container">
             <div style="padding-top: 0px; margin-left:auto; margin-right: auto;">
@@ -56,24 +58,31 @@
                     <li class="nav-item"><a class="nav-link" href="editalPai.php"
                             style="padding-top: 0px;"><strong><span
                                     style="color: rgba(255, 255, 255, 0.8);">EDITAL</span></strong></a></li>
-                    <li class="nav-item"><a class="nav-link" href="eventos.php"
+                    <li class="nav-item"><a class="nav-link" href="cards.php"
                             style="margin-bottom: -22px;padding-top: 0px;padding-bottom: 0px;"><strong><span
                                     style="color: rgba(255, 255, 255, 0.8);">EVENTOS</span></strong></a></li>
                     <li class="nav-item"><a class="nav-link" href="alas.php"><strong><span
                                     style="color: rgba(255, 255, 255, 0.8);">ALAS</span></strong></a></li>
 
-                  
                     <?php if (isset($_SESSION['username'])): ?>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false"
-                                style="font-size: 16px; font-weight: bold; color: #fff; text-decoration: none; padding-right: 0; margin-right: -10px; display: inline-block; width: fit-content;">
+                                style="font-size: 16px; font-weight: bold; color: #fff; text-decoration: none; padding-right: 0; margin-right: -10px; display: inline-block; width: fit-content; ">
                                 <?php echo $_SESSION['username']; ?>
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
+                                style="position: absolute; z-index: 1000;">
                                 <li><a class="dropdown-item" href="logout.php">Logout</a></li>
                                 <?php if (isset($_SESSION['papel']) && $_SESSION['papel'] === 'admin'): ?>
-                                    <li><a class="dropdown-item" href="./cadastro/administrar_funcionarios.php">Administrador</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="./cadastro/administrar_funcionarios.php">Administrador</a></li>
+
+                                <?php endif; ?>
+                            
+                            <?php if (isset($_SESSION['papel']) && $_SESSION['papel'] === 'admin'): ?>
+                                    <li><a class="dropdown-item"
+                                            href="cadastrarEvento.php">Cadastrar Eventos</a></li>
 
                                 <?php endif; ?>
                             </ul>
@@ -88,8 +97,7 @@
                 </ul>
             </div>
         </div>
-    </nav><!-- End: Fixed navbar starting with transparency -->
-
+                    </nav>
     <form id="form" action="salvar.php" method="post">
 
         <!-- Anexos -->

@@ -7,6 +7,16 @@ if (isset($_GET['id'])) {
     $sql = "SELECT * FROM eventos WHERE id = '$id'";
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
+
+    // Buscar o evento anterior
+    $prevSql = "SELECT id FROM eventos WHERE id < '$id' ORDER BY id DESC LIMIT 1";
+    $prevResult = $conn->query($prevSql);
+    $prevEvent = $prevResult->fetch_assoc();
+
+    // Buscar o próximo evento
+    $nextSql = "SELECT id FROM eventos WHERE id > '$id' ORDER BY id ASC LIMIT 1";
+    $nextResult = $conn->query($nextSql);
+    $nextEvent = $nextResult->fetch_assoc();
 } else {
     header('Location: eventos.php');
     exit;
@@ -20,7 +30,7 @@ if (isset($_GET['id'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no;">
-    <title>Menu</title>
+    <title>eventos</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/Cardo.css?h=54435dcaa177a916e3e63e7316171ab2">
     <link rel="stylesheet" href="assets/css/Lora.css?h=8d0d5802b74a1ea44811aa3318e6cda4">
@@ -49,23 +59,23 @@ if (isset($_GET['id'])) {
     <link rel="stylesheet" href="assets/css/dh-card-image-left-dark.css?h=fbeb7871206b72100c90953ca6cc43cc">
     <link rel="stylesheet" href="assets/css/Login-screen.css?h=a83d532a2ddb77352016bff7774f7e85">
     <link rel="stylesheet" href="assets/css/Navigation-Menu.css?h=587a88704dc45b107523dd7422062369">
-    
 
-   <style>
+
+    <style>
         .imE {
-            max-width: 290px; 
-            width: 100%; 
-            height: auto; 
-            margin: 10px;
-            border-radius: 8px; 
+            max-width: 300px;
+            width: 100%;
+            height: auto;
+            margin: 8px;
+            border-radius: 8px;
         }
 
         .image-container {
-            display: flex; 
-            justify-content: center; 
-            flex-wrap: wrap; 
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
         }
-    </style> 
+    </style>
 </head>
 
 <body>
@@ -127,37 +137,29 @@ if (isset($_GET['id'])) {
             </div>
         </div>
     </nav>
-
-    <header class="masthead" style="background-color: #446442; display: flex; justify-content: center">
-        <div class="container">
-            <div class="row" style="justify-content: center">
-                <div class="col-md-10 col-lg-8 mx-auto position-relative">
-                    <div class="site-heading" style="
-                            padding-bottom: 0px;
-                            margin-bottom: 0px;
-                            padding-top: 0px;
-                            margin-top: 84px;
-                            justify-content: center;
-                          ">
-                        <h1 style="font-size: 45px"><?php echo $row['titulo']; ?></h1>
-                        <span class="subheading"><?php echo $row['data']; ?></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <div class="col-lg-8 col-xl-8 offset-lg-1 mx-auto" style="padding-top: 8px">
-        <p>
-            <span style="color: rgb(255, 255, 255)"><?php echo $row['descricao']; ?></span>
+    <div class="col-lg-8 col-xl-8 offset-lg-1 mx-auto" style="padding-top: 5%; justify-content: center;">
+        <h1 style="color: rgb(255, 255, 255); margin-top: 20px;"><?php echo $row['titulo']; ?></h1>
+        <p style="color: rgb(255, 255, 255); margin-top: 10px;">
+            <?php echo $row['descricao']; ?>
         </p>
         <div class="image-container">
             <img class="imE" src="<?php echo $row['imagem1']; ?>" />
             <img class="imE" src="<?php echo $row['imagem2']; ?>" />
             <img class="imE" src="<?php echo $row['imagem3']; ?>" />
         </div>
+        <div class="d-flex justify-content-between" style="margin-top: 20px;">
+            <div class="me-auto">
+                <?php if (isset($prevEvent['id'])): ?>
+                    <a href="detalhesEventos.php?id=<?php echo $prevEvent['id']; ?>" class="btn btn-primary">Anterior</a>
+                <?php endif; ?>
+            </div>
+            <div class="ms-auto">
+                <?php if (isset($nextEvent['id'])): ?>
+                    <a href="detalhesEventos.php?id=<?php echo $nextEvent['id']; ?>" class="btn btn-primary">Próximo</a>
+                <?php endif; ?>
+            </div>
+        </div>
     </div>
-
     <footer class="text-center" style="padding-bottom: 0px; padding-top: 0px; display: flex; justify-content: center">
         <div class="container text-white py-4 py-lg-5" style="
               margin-bottom: -36px;
@@ -195,4 +197,3 @@ if (isset($_GET['id'])) {
 </body>
 
 </html>
-
