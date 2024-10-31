@@ -53,6 +53,15 @@
                         <div class="valid-feedback">Email é válido</div>
                         <div class="invalid-feedback">Campo do email não pode estar em branco</div>
                     </div>
+                    <div class="mb-3">
+                        <select class="form-select" name="papel" required>
+                            <option selected disabled value="">Escolha o Papel do Usuário</option>
+                            <option value="admin">Administrador</option>
+                            <option value="moderador">Moderador</option>
+                            <option value="usuario">Usuário Comum</option>
+                        </select>
+                        <div class="invalid-feedback">Selecione um papel para o usuário</div>
+                    </div>
 
                     <div class="mb-3">
                         <select class="form-select" name="area" required>
@@ -96,12 +105,12 @@
 
                     <div class="mt-3 button-group">
                         <a href="administrar_funcionarios.php" class="btn btn-primary botao" id="adm">Administrar
-                            Funcionários</a> 
-                            
-                            <a href="../index.php" class="btn btn-primary botao" id="adm">Voltar</a>
+                            Funcionários</a>
+
+                        <a href="../index.php" class="btn btn-primary botao" id="adm">Voltar</a>
 
                     </div>
-                    
+
                 </form>
             </div>
         </div>

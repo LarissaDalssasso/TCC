@@ -17,6 +17,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Conexão falhou: " . $conn->connect_error);
 }
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user = trim($_POST['username']);
     $pass = trim($_POST['password']);
@@ -36,6 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (password_verify($pass, $row['senha'])) {
                 // Login bem-sucedido
                 $_SESSION['username'] = $row['nome'];
+                $_SESSION['papel'] = $row['papel']; // Salva o papel do usuário na sessão
                 header("Location: ./index.php");
                 exit();
             } else {

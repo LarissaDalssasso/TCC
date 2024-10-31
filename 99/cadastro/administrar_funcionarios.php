@@ -1,6 +1,13 @@
 <?php
 include 'config.php';
+session_start();
+
+if (!isset($_SESSION['papel']) || $_SESSION['papel'] !== 'admin') {
+    echo "Acesso negado. Apenas administradores podem acessar esta página.";
+    exit;
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-br">

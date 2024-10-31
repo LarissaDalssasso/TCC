@@ -1,36 +1,39 @@
 <?php
+// Inicie a sessão, caso ainda não tenha iniciado
+session_start();
+
+// Inclua o arquivo de conexão com o banco de dados
 include 'config.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Conectar ao banco de dados
-    $conn = new mysqli($servername, $username, $password, $dbname);
+// Capture os dados do formulário
+$nome = $_POST['nome'];
+$email = $_POST['email'];
+$papel = $_POST['papel']; // Captura o papel selecionado no formulário
+$area = $_POST['area'];
+$senha = password_hash($_POST['senha'], PASSWORD_BCRYPT);
+$genero = $_POST['genero'];
 
-    // Verificar conexão
-    if ($conn->connect_error) {
-        die("Conexão falhou: " . $conn->connect_error);
-    }
+// Prepare a instrução SQL para inserir os dados no banco de dados
+$sql = "INSERT INTO funcionario (nome, email, papel, area, senha, genero) VALUES (?, ?, ?, ?, ?, ?)";
+$stmt = $conn->prepare($sql);
 
-    // Obter e escapar os valores do formulário
-    $nome = $conn->real_escape_string($_POST['nome']);
-    $email = $conn->real_escape_string($_POST['email']);
-    $area = $conn->real_escape_string($_POST['area']);
-    $senha = $conn->real_escape_string($_POST['senha']);
-    $genero = $conn->real_escape_string($_POST['genero']);
+// Verifique se a preparação da instrução foi bem-sucedida
+if ($stmt) {
+    // Associe os parâmetros
+    $stmt->bind_param("ssssss", $nome, $email, $papel, $area, $senha, $genero);
 
-    // Hash da senha
-    $hashed_password = password_hash($senha, PASSWORD_DEFAULT);
-
-    // Inserir os dados no banco de dados
-    $sql = "INSERT INTO funcionario (nome, email, area, senha, genero) VALUES ('$nome', '$email','$area', '$hashed_password', '$genero')";
-
-    if ($conn->query($sql) === TRUE) {
-        // Redirecionar de volta para a página de cadastro
-        header("Location: ../login.html");
+    // Execute a instrução e verifique se a execução foi bem-sucedida
+    if ($stmt->execute()) {
+        echo "Funcionário cadastrado com sucesso!";
     } else {
-        echo "Erro: " . $sql . "<br>" . $conn->error;
+        echo "Erro ao cadastrar funcionário: " . $stmt->error;
     }
 
-    // Fechar a conexão
-    $conn->close();
+    // Feche a instrução
+    $stmt->close();
+} else {
+    echo "Erro na preparação da instrução: " . $conn->error;
 }
 
+// Feche a conexão com o banco de dados
+$conn->close();

@@ -11,8 +11,7 @@ CREATE TABLE funcionario (
     genero  ENUM('Masculino', 'Feminino', 'Outro') NOT NULL
 
 );
-
-
+ALTER TABLE funcionario ADD COLUMN papel ENUM('admin', 'moderador', 'usuario') DEFAULT 'usuario';
 USE site;
 
 CREATE TABLE editalParte1 (
