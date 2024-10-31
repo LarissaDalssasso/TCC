@@ -10390,7 +10390,7 @@ li[data-type=control_head].isSelected .question-wrapper {
 
 .ButtonStylePicker-Main::-webkit-scrollbar-track {
   background: #535f6f !important;
-  border-radius: 0 !important;
+
 }
 
 .ButtonStylePicker-Main::-webkit-scrollbar-thumb, .ButtonStylePicker-Main::-webkit-scrollbar-thumb:hover {
@@ -10524,7 +10524,7 @@ li[data-type=control_inline] input[type=text]:not(#productSearch-input) {
 
 li[data-type=control_inline] .FITB-inptCont input {
   border-width: 0 0 1px !important;
-  border-radius: 0 !important;
+  
 }
 
 .cont .language-dd {

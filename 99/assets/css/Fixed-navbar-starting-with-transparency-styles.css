@@ -63,7 +63,7 @@
 
 .navbar .dropdown-menu {
   box-shadow: none;
-  border-radius: 0 !important;
+  /*border-radius: 0 !important;*/
   padding: 0;
   border: none;
   min-width: 200px;

@@ -65,12 +65,11 @@
                     <li class="nav-item"><a class="nav-link" href="alas.php"><strong><span
                                     style="color: rgba(255, 255, 255, 0.8);">ALAS</span></strong></a></li>
 
-                  
                     <?php if (isset($_SESSION['username'])): ?>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdowdropdownn">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false"
-                                style="font-size: 16px; font-weight: bold; color: #fff; text-decoration: none; padding-right: 0; margin-right: -10px; display: inline-block; width: fit-content;">
+                                style="font-size: 16px; font-weight: bold; color: #fff; text-decoration: none; padding-right: 0; margin-right: -10px; display: inline-block; width: fit-content; ">
                                 <?php echo $_SESSION['username']; ?>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
