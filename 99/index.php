@@ -91,8 +91,8 @@
             <div class="row" style="padding-right: 0px;margin: auto;">
                 <div class="col-10 col-md-10 col-lg-8 col-xl-10 mx-auto position-relative">
                     <div class="site-heading">
-                        <h1 style="padding-top: 0px;margin-right: 0px;padding-right: 0px;margin-top: 70px;">
-                            Fundação do Esporte, Cultura e Turismo</h1><span class="subheading"
+                        <h1 style="padding-top: 0px;margin-right: 0px;padding-right: 0px;margin-top: 70px; color:#fffff;">
+                            Fundação do Esporte,<br> Cultura e Turismo</h1><span class="subheading"
                             style="margin: auto;">Descubra mais sobre sua cidade</span>
                     </div>
                 </div>
