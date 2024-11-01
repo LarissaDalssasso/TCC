@@ -1,5 +1,6 @@
 <?php
 session_start();
+$isAdmin = isset($_SESSION['papel']) && $_SESSION['papel'] === 'admin';
 include './cadastro/config.php';
 
 if (isset($_GET['id'])) {
@@ -153,12 +154,18 @@ if (isset($_GET['id'])) {
                     <a href="detalhesEventos.php?id=<?php echo $prevEvent['id']; ?>" class="btn btn-primary">Anterior</a>
                 <?php endif; ?>
             </div>
+            <div class="d-flex justify-content-between">
+                <?php if ($isAdmin): ?>
+                    <a href="editarEventos.php?id=<?php echo $row['id']; ?>" class="btn btn-primary btn-block mt-3">Editar</a>
+                <?php endif; ?>
+            </div>
             <div class="ms-auto">
                 <?php if (isset($nextEvent['id'])): ?>
                     <a href="detalhesEventos.php?id=<?php echo $nextEvent['id']; ?>" class="btn btn-primary">Próximo</a>
                 <?php endif; ?>
             </div>
         </div>
+
     </div>
     <footer class="text-center" style="padding-bottom: 0px; padding-top: 0px; display: flex; justify-content: center">
         <div class="container text-white py-4 py-lg-5" style="

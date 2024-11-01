@@ -121,7 +121,7 @@ $result = $conn->query($sql);
                     <div class="site-heading">
                         <h1
                             style="padding-top: 0px;margin-right: 0px;padding-right: 0px;margin-top: 70px; color:#fffff;">
-                            Fundação do Esporte,<br> Cultura e Turismo</h1><span class="subheading"
+                            Eventos</h1><span class="subheading"
                             style="margin: auto;">Descubra mais sobre sua cidade</span>
                     </div>
                 </div>

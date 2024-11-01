@@ -3,6 +3,11 @@ session_start();
 
 include './cadastro/config.php';
 
+if (!isset($_SESSION['papel']) || $_SESSION['papel'] !== 'admin') {
+    echo "Acesso negado. Apenas administradores podem acessar esta página.";
+    exit;
+}
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $titulo = $_POST['titulo'];
     $data = $_POST['data'];
@@ -44,7 +49,7 @@ if (isset($conn)) {
 <html lang="pt-BR">
 
 <head>
-<meta charset="utf-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no;">
     <title>Cadastrar Eventos</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
@@ -156,7 +161,7 @@ if (isset($conn)) {
             <button type="submit">Cadastrar Evento</button>
         </form>
     </div>
-    
+
     <script src="assets/bootstrap/js/bootstrap.min.js?h=e55bde7d6e36ebf17ba0b8c1e80e4065"></script>
     <script src="assets/js/Carousel-Multi-Image--ISA--carousel-multi.js?h=8b6a61c52462cb43846bf671a4118b63"></script>
     <script src="assets/js/clean-blog.js?h=44b1c6e85af97fda0fedbb834b3ff3f8"></script>
