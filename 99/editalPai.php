@@ -126,14 +126,11 @@ if (isset($_SESSION['edital_salvo']) && $_SESSION['edital_salvo'] === true) {
     </header>
     <!-- Start: waves -->
 
-    <div style="padding-right: 0px;"><svg class="waves" viewBox="0 24 150 28">
-
-            <path id="gentle-wave" d="M-160 44c30 0 90-18 88-18s 58 18 88 18 58-18 90-18 58 18 88 18 v44h-352z"
-                fill="#446442"></path>
-
-
-
-        </svg></div>
+    <div style="padding-right: 0px;">
+    <svg class="waves" viewBox="0 22.25 125 40">
+        <path id="gentle-wave" d="M-160 50c40 0 70-25 110-25s70 25 110 25 70-25 110-25 70 25 110 25v40h-440z" fill="#446442"></path>
+    </svg>
+</div>
 
     <!-- End: waves -->
     <div class="col-lg-8 offset-lg-1 mx-auto" style="padding-top: 8px;">
@@ -147,11 +144,9 @@ if (isset($_SESSION['edital_salvo']) && $_SESSION['edital_salvo'] === true) {
     <div class="col-lg-8 offset-lg-1 mx-auto" style="padding-top: 8px; ">
 
         <h3><span style="color: rgb(248, 248, 248);">Aplique seu edital</span></h3>
-        <p><span style="color: rgb(248, 248, 248);">O edital é dividio em três partes, cada parte pode ser prechida
+        <p><span style="color: rgb(248, 248, 248);">O edital é dividio em três partes, cada parte pode ser preenchida
                 separadamente, primeira parte é a Identificação da Pessoa, a segunda Planejamento e Organização e a
                 última os Anexos.</span></p>
-
-
         <div class="editalBotao text-center">
             <a href="editalParte1.php" class="btn btn-primary" role="button"
                 aria-label="Acessar edital da primeira parte">Edital Primeira parte</a>
@@ -190,12 +185,9 @@ if (isset($_SESSION['edital_salvo']) && $_SESSION['edital_salvo'] === true) {
 
             <?php mysqli_close($conn); ?>
         </div>
-
     </div>
 
     <!-- Start: Footer Dark -->
-
-
 
     <footer class="text-center"
         style=" margin-left:auto;justify-content: center; margin-right: auto; padding-bottom: 0px;padding-top: 0px; align-items: center;">

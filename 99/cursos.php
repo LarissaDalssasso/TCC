@@ -112,9 +112,12 @@
             </div>
         </div>
     </header>
+    
     <article>
+        
         <div class="row" style="justify-content: center; margin: auto">
             <!-- Start: News Cards -->
+
             <figure class="snip1527">
                 <div class="image"><img src="assets/img/art-2224886_1920.jpg" alt="pr-sample24"
                         style=" justify-content: right;" /></div>

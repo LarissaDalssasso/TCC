@@ -113,6 +113,11 @@ session_start();
             </div>
         </div>
     </header>
+    <div style="padding-right: 0px;">
+    <svg class="waves" viewBox="0 22.25 125 40">
+        <path id="gentle-wave" d="M-160 50c40 0 70-25 110-25s70 25 110 25 70-25 110-25 70 25 110 25v40h-440z" fill="#446442"></path>
+    </svg>
+</div>
     <!-- Start: dh-card-image-left-dark -->
     <section style="justify-content: center;">
         <div class="container" style="padding-left: 0px;padding-right: 0px; margin: auto; margin-top: 10%;">
@@ -120,6 +125,7 @@ session_start();
                 <div class="photo-background"
                     style="background-image: url(&quot;assets/img/bibi.jpg?h=d4b81948bafaa9d7bcb920ac8da7ad30&quot;);padding-top: 0px;">
                 </div>
+                
                 <div class="photo-details"
                     style="background-color: #243f1c;margin: auto; padding: auto; justify-content: center;">
                     <h1 style="margin-right: 2px;padding-left: 0px;margin-left: -12px;">Biblioteca municipal Ibiramense

@@ -130,14 +130,11 @@ $result = $conn->query($sql);
     </header>
     <!-- Start: waves -->
 
-    <div style="padding-right: 0px;"><svg class="waves" viewBox="0 24 150 28">
-
-            <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
-                fill="#446442"></path>
-
-
-
-        </svg></div>
+    <div style="padding-right: 0px;">
+    <svg class="waves" viewBox="0 22.25 125 40">
+        <path id="gentle-wave" d="M-160 50c40 0 70-25 110-25s70 25 110 25 70-25 110-25 70 25 110 25v40h-440z" fill="#446442"></path>
+    </svg>
+</div>
 
     <!-- End: waves -->
     <div class="container" style="margin-top: 20px;">
