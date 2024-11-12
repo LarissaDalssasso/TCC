@@ -19,12 +19,12 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="assets/css/Lora.css?h=8d0d5802b74a1ea44811aa3318e6cda4">
     <link rel="stylesheet" href="assets/css/Open%20Sans.css?h=9e213a74de5b277830c6eb6bd5f5862d">
     <link rel="stylesheet" href="assets/css/Roboto.css?h=26433eca780f70f93a970c5403b3ba8a">
-    <link rel="stylesheet" href="assets/css/accordion-faq-list.css?h=03017b5fe5da3d3fd1f6bdfafaec34cf">
+    <link rel="stylesheet" href="assets/css/accordion-faq-list.css">
     <link rel="stylesheet" href="assets/css/Articles-Cards-images.css?h=da4d1cf3be712304717573ab3cf0bbe3">
     <link rel="stylesheet" href="assets/css/Carousel-Multi-Image--ISA-.css?h=3a42df1cc3eaeb061a294987537c4cee">
     <link rel="stylesheet" href="assets/css/Corporate-Footer-Clean.css?h=d441d77de4880d53c739b4a52a593159">
     <link rel="stylesheet" href="assets/css/faq.css?h=12592fb6d6bd9a3e0e5e469de7b4b7d2">
-    <link rel="stylesheet" href="assets/css/faq.compiled.css?h=1688e06fc52004af4926270c96a0bef7">
+    <link rel="stylesheet" href="assets/css/faq.compiled.css">
     <link rel="stylesheet" href="assets/css/Footer-Dark-Multi-Column-icons.css?h=befd8a398792e305b7ffd4a176b5b585">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css">
     <link rel="stylesheet" href="assets/css/Masonry-gallery-cards-responsive.css?h=179c54b3d671ef8d56e046cb9cffb0bd">
@@ -142,7 +142,7 @@ $result = $conn->query($sql);
             <?php while ($row = $result->fetch_assoc()): ?>
                 <div class="col-sm-6 col-lg-4 mb-4">
                     <div class="card" style="cursor: pointer; background-color: #f4ffdba9; margin: 3.5%;" onclick="window.location.href='detalhesEventos.php?id=<?php echo $row['id']; ?>'">
-                        <img class="card-img-top p-3" src="<?php echo $row['imagem1']; ?>" alt="" style="border-radius: 24px; object-fit: cover" width="306" height="307">
+                        <img class="card-img-top p-3" src="<?php echo $row['imagem1']; ?>" alt="" style="border-radius: 24px; object-fit: cover" width="0" height="307">
                         <div class="card-body">
                             <h5 class="card-title"><span style="color: rgb(35, 79, 51);"><?php echo $row['titulo']; ?></span></h5>
                             <p class="card-text text-muted"><?php echo $row['data']; ?></p>

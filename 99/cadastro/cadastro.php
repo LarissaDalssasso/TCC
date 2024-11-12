@@ -103,10 +103,6 @@
                         <button id="clean" type="reset" class="btn btn-primary botao">Limpar</button>
                     </div>
 
-                    <div class="mt-3 button-group">
-                        <a href="administrar_funcionarios.php" class="btn btn-primary botao" id="adm">Administrar
-                            Funcionários</a>
-
                         <a href="../index.php" class="btn btn-primary botao" id="adm">Voltar</a>
 
                     </div>

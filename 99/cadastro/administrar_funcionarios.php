@@ -61,7 +61,7 @@ if (!isset($_SESSION['papel']) || $_SESSION['papel'] !== 'admin') {
         </table>
         
         <div class="mt-3">
-            <a href="cadastro.php" class="btn btn-primary">Voltar</a>
+            <a href="../index.php" class="btn btn-primary">Voltar</a>
         </div>
     </div>
 
