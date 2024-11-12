@@ -31,7 +31,7 @@ if ($result_check->num_rows > 0) {
         if ($stmt->execute()) {
             echo "<script>
                     alert('Funcionário cadastrado com sucesso!');
-                    window.location.href = 'login.html';
+                    window.location.href = '../login.html';
                   </script>";
         } else {
             echo "Erro ao cadastrar funcionário: " . $stmt->error;
