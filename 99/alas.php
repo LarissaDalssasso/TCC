@@ -120,7 +120,7 @@ session_start();
 </div>
     <!-- Start: dh-card-image-left-dark -->
     <section style="justify-content: center;">
-        <div class="container" style="padding-left: 0px;padding-right: 0px; margin: auto; margin-top: 10%;">
+        <div class="container" style="padding-left: 0px;padding-right: 0px; margin: auto;">
             <div class="photo-card">
                 <div class="photo-background"
                     style="background-image: url(&quot;assets/img/bibi.jpg?h=d4b81948bafaa9d7bcb920ac8da7ad30&quot;);padding-top: 0px;">
