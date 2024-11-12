@@ -40,6 +40,7 @@
 
 
 </head>
+
 <body>
 
     <nav class="navbar navbar-expand-md fixed-top navbar-transparency navbar-light"
@@ -81,10 +82,9 @@
                                             href="./cadastro/administrar_funcionarios.php">Administrador</a></li>
 
                                 <?php endif; ?>
-                            
-                            <?php if (isset($_SESSION['papel']) && $_SESSION['papel'] === 'admin'): ?>
-                                    <li><a class="dropdown-item"
-                                            href="cadastrarEvento.php">Cadastrar Eventos</a></li>
+
+                                <?php if (isset($_SESSION['papel']) && $_SESSION['papel'] === 'admin'): ?>
+                                    <li><a class="dropdown-item" href="cadastrarEvento.php">Cadastrar Eventos</a></li>
 
                                 <?php endif; ?>
                             </ul>
@@ -99,16 +99,17 @@
                 </ul>
             </div>
         </div>
-                    </nav>
+    </nav>
 
     <form id="form" action="salvar.php" method="post">
         <h1>Inscrições de Editais</h1>
         <p></p>
         <div>
-        <label for="representante-social">Identificação da Pessoa</label> <p>
-            <input type="radio" id="pessoa-juridica-sem-lucro" name="identificacao"
-                value="Pessoa Jurídica sem finalidade lucrativa">
-            <label for="pessoa-juridica-sem-lucro">Pessoa Jurídica sem finalidade lucrativa</label>
+            <label for="representante-social">Identificação da Pessoa</label>
+            <p>
+                <input type="radio" id="pessoa-juridica-sem-lucro" name="identificacao"
+                    value="Pessoa Jurídica sem finalidade lucrativa">
+                <label for="pessoa-juridica-sem-lucro">Pessoa Jurídica sem finalidade lucrativa</label>
         </div>
         <div>
             <input type="radio" id="pessoa-juridica-com-lucro" name="identificacao"
@@ -333,6 +334,28 @@
         </div>
 
     </form>
+    <script>
+        // Salvar dados no Local Storage ao sair de cada campo
+        document.querySelectorAll('input, textarea').forEach(element => {
+            element.addEventListener('input', () => {
+                localStorage.setItem(element.id, element.value);
+            });
+        });
+
+        // Restaurar dados ao carregar a página
+        window.addEventListener('load', () => {
+            document.querySelectorAll('input, textarea').forEach(element => {
+                if (localStorage.getItem(element.id)) {
+                    element.value = localStorage.getItem(element.id);
+                }
+            });
+        });
+
+        // Limpar Local Storage após o envio do formulário
+        document.getElementById('form').addEventListener('submit', () => {
+            localStorage.clear();
+        });
+    </script>
 </body>
 
 </html>

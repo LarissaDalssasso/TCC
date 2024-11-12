@@ -379,6 +379,28 @@
         
 
 </form>
+<script>
+        // Salvar dados no Local Storage ao sair de cada campo
+        document.querySelectorAll('input, textarea').forEach(element => {
+            element.addEventListener('input', () => {
+                localStorage.setItem(element.id, element.value);
+            });
+        });
+
+        // Restaurar dados ao carregar a página
+        window.addEventListener('load', () => {
+            document.querySelectorAll('input, textarea').forEach(element => {
+                if (localStorage.getItem(element.id)) {
+                    element.value = localStorage.getItem(element.id);
+                }
+            });
+        });
+
+        // Limpar Local Storage após o envio do formulário
+        document.getElementById('form').addEventListener('submit', () => {
+            localStorage.clear();
+        });
+    </script>
 </body>
 
 </html>
