@@ -15,7 +15,7 @@ ALTER TABLE funcionario ADD COLUMN papel ENUM('admin', 'moderador', 'usuario') D
 USE site;
 
 CREATE TABLE editalParte1 (
-  id INT PRIMARY KEY,
+  id INT AUTO_INCREMENT PRIMARY KEY,
   identificacao VARCHAR(255),
   representante_social VARCHAR(255),
   nome_fantasia VARCHAR(255),
@@ -46,7 +46,7 @@ CREATE TABLE editalParte1 (
 );
 
 CREATE TABLE editalParte2 (
-  id INT PRIMARY KEY,
+  id INT AUTO_INCREMENT PRIMARY KEY,
   nome_projeto VARCHAR(255),
   categoria VARCHAR(255),
   descricao_projeto TEXT,
@@ -68,7 +68,7 @@ CREATE TABLE editalParte2 (
 );
 
 CREATE TABLE editalParte3 (
-  id INT PRIMARY KEY,
+  id INT AUTO_INCREMENT PRIMARY KEY ,
   anexos TEXT,
   estatuto_social TEXT,
   ata_eleicao_pose TEXT,
