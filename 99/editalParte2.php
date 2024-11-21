@@ -1,11 +1,45 @@
-<?php session_start(); ?> 
+<?php session_start();
+session_start();
+$conn = mysqli_connect("localhost", "root", "root", "site");
+
+// Verifica se o formulário foi enviado
+if (isset($_POST['salvar'])) {
+    $nome_projeto = $_POST['nome-projeto'];
+    $categoria = $_POST['categoria'];
+    $descricao_projeto = $_POST['descricao-projeto'];
+    $objetivo = $_POST['objetivo'];
+    $meta = $_POST['meta'];
+    $publico = $_POST['publico'];
+    $acao_cultural = implode(", ", $_POST['acao-cultural']); // Para checkboxes
+    $medidas_acessibilidade = $_POST['medidas-acessibilidade'];
+    $implementacao_acessibilidade = $_POST['implementacao-acessibilidade'];
+    $local_execucao = $_POST['local-execucao'];
+    $data_inicio = $_POST['data-inicio'];
+    $data_fim = $_POST['data-fim'];
+    $valor_total = $_POST['valor-total'];
+    $justificativa = $_POST['justificativa'];
+
+    // Salvar na tabela editalParte2
+    $sql = "INSERT INTO editalParte2 (nome_projeto, categoria, descricao_projeto, objetivo, meta, publico, acao_cultural, medidas_acessibilidade, implementacao_acessibilidade, local_execucao, data_inicio, data_fim, valor_total, justificativa, id_parte1) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssssssssssssisi", $nome_projeto, $categoria, $descricao_projeto, $objetivo, $meta, $publico, $acao_cultural, $medidas_acessibilidade, $implementacao_acessibilidade, $local_execucao, $data_inicio, $data_fim, $valor_total, $justificativa, $_GET['id_parte1']);
+    $stmt->execute();
+
+    // Captura o ID gerado
+    $idParte2 = $stmt->insert_id;
+
+    // Redireciona para a Parte 3
+    header("Location: editalParte3.php?id_parte2=$idParte2");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html>
 
 <head>
     <title>Formulário de Inscrição</title>
     <link rel="stylesheet" href="edital.css">
-   
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no;">
     <title>Edital</title>
@@ -80,10 +114,9 @@
                                             href="./cadastro/administrar_funcionarios.php">Administrador</a></li>
 
                                 <?php endif; ?>
-                            
-                            <?php if (isset($_SESSION['papel']) && $_SESSION['papel'] === 'admin'): ?>
-                                    <li><a class="dropdown-item"
-                                            href="cadastrarEvento.php">Cadastrar Eventos</a></li>
+
+                                <?php if (isset($_SESSION['papel']) && $_SESSION['papel'] === 'admin'): ?>
+                                    <li><a class="dropdown-item" href="cadastrarEvento.php">Cadastrar Eventos</a></li>
 
                                 <?php endif; ?>
                             </ul>
@@ -98,14 +131,14 @@
                 </ul>
             </div>
         </div>
-                    </nav>
-    <form id="form" action="salvar.php" method="post">   
+    </nav>
+    <form id="form" action="salvar.php" method="post">
 
-          <!-- Planejamento e Organização -->
-          <div>
+        <!-- Planejamento e Organização -->
+        <div>
             <label for="nome-projeto">Nome do Projeto:</label>
             <textarea type="text" id="nome-projeto" name="nome-projeto"></textarea>
-            
+
 
         </div>
         <div>
@@ -118,7 +151,7 @@
             <div>
                 <input type="radio" id="categoria-2" name="categoria"
                     value="1.2. Apoio à reforma de sala de cinema, implantação de cinema de rua ou cinema itinerante (R$22.544,94)">
-                <label for="categoria-2">1.2. Apoio à reforma de sala de cinema, implantação de cinema de rua ou cinema
+                <label for="categoria-2">1.2. Apoio à reforma, implantação de cinema de rua ou cinema
                     itinerante (R$22.544,94)</label>
             </div>
             <div>
@@ -376,10 +409,10 @@
                     <button type="submit" class="btn btn-primary" name="salvar">Salvar</button>
                     <a href="editalParte3.php" class="btn btn-primary">Parte Três</a>
                 </div>
-        
 
-</form>
-<script>
+
+    </form>
+    <script>
         // Salvar dados no Local Storage ao sair de cada campo
         document.querySelectorAll('input, textarea').forEach(element => {
             element.addEventListener('input', () => {

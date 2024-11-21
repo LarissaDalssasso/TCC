@@ -1,3 +1,51 @@
+<?php
+session_start();
+$conn = mysqli_connect("localhost", "root", "root", "site");
+
+// Verifica se o formulário foi enviado
+if (isset($_POST['salvar'])) {
+    $identificacao = $_POST['identificacao'];
+    $representante_social = $_POST['representante-social'];
+    $nome_fantasia = $_POST['nome-fantasia'];
+    $cnpj = $_POST['cnpj'];
+    $endereco = $_POST['endereco'];
+    $rua = $_POST['rua'];
+    $numero = $_POST['numero'];
+    $cidade = $_POST['cidade'];
+    $estado = $_POST['estado'];
+    $cep = $_POST['cep'];
+    $representante_legal = $_POST['representante-legal'];
+    $cargo = $_POST['cargo'];
+    $cpf = $_POST['cpf'];
+    $rg = $_POST['rg'];
+    $endereco_representante = $_POST['endereco-representante'];
+    $rua_representante = $_POST['rua-representante'];
+    $numero_representante = $_POST['numero-representante'];
+    $cidade_representante = $_POST['cidade-representante'];
+    $estado_representante = $_POST['estado-representante'];
+    $cep_representante = $_POST['cep-representante'];
+    $telefone = $_POST['telefone'];
+    $genero = $_POST['genero'];
+    $raca = $_POST['raca'];
+    $deficiencia = $_POST['deficiencia'];
+    $tipo_deficiencia = $_POST['tipo-deficiencia'];
+    $escolaridade = $_POST['escolaridade'];
+    $curriculo = $_POST['curriculo'];
+
+    // Salvar na tabela editalParte1
+    $sql = "INSERT INTO editalParte1 (identificacao, representante_social, nome_fantasia, cnpj, endereco, rua, numero, cidade, estado, cep, representante_legal, cargo, cpf, rg, endereco_representante, rua_representante, numero_representante, cidade_representante, estado_representante, cep_representante, telefone, genero, raca, deficiencia, tipo_deficiencia, escolaridade, curriculo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssssssssssssssssssssssss", $identificacao, $representante_social, $nome_fantasia, $cnpj, $endereco, $rua, $numero, $cidade, $estado, $cep, $representante_legal, $cargo, $cpf, $rg, $endereco_representante, $rua_representante, $numero_representante, $cidade_representante, $estado_representante, $cep_representante, $telefone, $genero, $raca, $deficiencia, $tipo_deficiencia, $escolaridade, $curriculo,);
+    $stmt->execute();
+
+    // Captura o ID gerado
+    $idParte1 = $stmt->insert_id;
+
+    // Redireciona para a Parte 
+    header("Location: editalParte2.php?id_parte1=$idParte1");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html>
 

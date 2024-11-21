@@ -1,36 +1,81 @@
-<?php session_start();
+<?php
+session_start();
+
 $conn = mysqli_connect("localhost", "root", "root", "site");
 
-// Verificar conexão
-if (!$conn) {
-    die("Erro de conexão: " . mysqli_connect_error());
-}
-$result = mysqli_query($conn, "SELECT * FROM editalParte2 ORDER BY data_inicio DESC");
+// Definindo o ID
+$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+// Verificar se o edital foi salvo
 if (isset($_SESSION['edital_salvo']) && $_SESSION['edital_salvo'] === true) {
     echo "<script>alert('O edital foi salvo com sucesso!');</script>";
     unset($_SESSION['edital_salvo']); // Remove a variável de sessão após exibir o pop-up
+}
+function verificaTresPartes($conn, $id)
+{
+    $count1 = 0;
+    $count2 = 0;
+    $count3 = 0;
+
+    // Verifica a primeira parte
+    $sql1 = "SELECT COUNT(*) as count FROM editalParte1 WHERE id = ?";
+    $stmt1 = $conn->prepare($sql1);
+    $stmt1->bind_param("i", $id);
+    $stmt1->execute();
+    $stmt1->bind_result($count1);
+    $stmt1->fetch();
+    $stmt1->close();
+
+    // Verifica a segunda parte
+    $sql2 = "SELECT COUNT(*) as count FROM editalParte2 WHERE id_parte1 = ?";
+    $stmt2 = $conn->prepare($sql2);
+    $stmt2->bind_param("i", $id);
+    $stmt2->execute();
+    $stmt2->bind_result($count2);
+    $stmt2->fetch();
+    $stmt2->close();
+
+    // Verifica a terceira parte
+    $sql3 = "SELECT COUNT(*) as count FROM editalParte3 WHERE id_parte2 = ?";
+    $stmt3 = $conn->prepare($sql3);
+    $stmt3->bind_param("i", $id);
+    $stmt3->execute();
+    $stmt3->bind_result($count3);
+    $stmt3->fetch();
+    $stmt3->close();
+
+    return $count1 > 0 && $count2 > 0 && $count3 > 0;
+}
+
+$result = mysqli_query($conn, "SELECT * FROM editalParte2 ORDER BY data_inicio DESC");
+
+if (!$result) {
+    echo "Erro na consulta: " . mysqli_error($conn);
+    mysqli_close($conn);
+    exit;
 }
 
 ?>
 
 <!DOCTYPE html>
-<html data-bs-theme="light" lang="pt-br">
+<html lang="pt-br">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Edital</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Adicionei o Font Awesome -->
     <link rel="stylesheet" href="assets/css/Cardo.css?h=54435dcaa177a916e3e63e7316171ab2">
     <link rel="stylesheet" href="assets/css/Lora.css?h=8d0d5802b74a1ea44811aa3318e6cda4">
     <link rel="stylesheet" href="assets/css/Open%20Sans.css?h=9e213a74de5b277830c6eb6bd5f5862d">
     <link rel="stylesheet" href="assets/css/Roboto.css?h=26433eca780f70f93a970c5403b3ba8a">
     <link rel="stylesheet" href="assets/css/accordion-faq-list.css?h=03017b5fe5da3d3fd1f6bdfafaec34cf">
     <link rel="stylesheet" href="assets/css/Articles-Cards-images.css?h=da4d1cf3be712304717573ab3cf0bbe3">
-    <link rel="stylesheet" href="assets/css/Carousel-Multi-Image--ISA-.css?h=3a42df1cc3eaeb061a294987537c4cee">
+    <link rel="stylesheet" href="assets/css/Carousel-Multi-Image--ISA-.css?h=3a42df1cc3eaeb061a294987537c4 cee">
     <link rel="stylesheet" href="assets/css/Corporate-Footer-Clean.css?h=d441d77de4880d53c739b4a52a593159">
     <link rel="stylesheet" href="assets/css/faq.css?h=12592fb6d6bd9a3e0e5e469de7b4b7d2">
-    <link rel="stylesheet" href="assets/css/faq.compiled.css?h=1688e06fc52004af4926270c96a0bef7">
     <link rel="stylesheet" href="assets/css/Footer-Dark-Multi-Column-icons.css?h=befd8a398792e305b7ffd4a176b5b585">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css">
     <link rel="stylesheet" href="assets/css/Masonry-gallery-cards-responsive.css?h=179c54b3d671ef8d56e046cb9cffb0bd">
@@ -48,9 +93,10 @@ if (isset($_SESSION['edital_salvo']) && $_SESSION['edital_salvo'] === true) {
     <link rel="stylesheet" href="assets/css/dh-card-image-left-dark.css?h=fbeb7871206b72100c90953ca6cc43cc">
     <link rel="stylesheet" href="assets/css/Login-screen.css?h=a83d532a2ddb77352016bff7774f7e85">
     <link rel="stylesheet" href="assets/css/Navigation-Menu.css?h=587a88704dc45b107523dd7422062369">
-
 </head>
+
 <body>
+
 
     <nav class="navbar navbar-expand-md fixed-top navbar-transparency navbar-light"
         style="background-color: inherit;margin-top: -42px;padding-bottom: 0px;margin-bottom: 4px;padding-top: 0px;height: 2%; justify-content: center;">
@@ -69,7 +115,8 @@ if (isset($_SESSION['edital_salvo']) && $_SESSION['edital_salvo'] === true) {
                                     style="color: rgba(255, 255, 255, 0.8);">CURSOS</span></strong></a></li>
                     <li class="nav-item"><a class="nav-link" href="editalPai.php"
                             style="padding-top: 0px;"><strong><span
-                                    style="color: rgba(255, 255, 255, 0.8);">EDITAL</span></strong></a></li>
+                                    style="color: rgba(255, 255,                                     255, 255, 0.8);">EDITAL</span></strong></a>
+                    </li>
                     <li class="nav-item"><a class="nav-link" href="cards.php"
                             style="margin-bottom: -22px;padding-top: 0px;padding-bottom: 0px;"><strong><span
                                     style="color: rgba(255, 255, 255, 0.8);">EVENTOS</span></strong></a></li>
@@ -80,8 +127,8 @@ if (isset($_SESSION['edital_salvo']) && $_SESSION['edital_salvo'] === true) {
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false"
-                                style="font-size: 16px; font-weight: bold; color: #fff; text-decoration: none; padding-right: 0; margin-right: -10px; display: inline-block; width: fit-content; ">
-                                <?php echo $_SESSION['username']; ?>
+                                style="font-size: 16px; font-weight: bold; color: #fff; text-decoration: none; padding-right: 0; margin-right: -10px; display: inline-block; width: fit-content;">
+                                <?php echo htmlspecialchars($_SESSION['username']); ?>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
                                 style="position: absolute; z-index: 1000;">
@@ -89,13 +136,7 @@ if (isset($_SESSION['edital_salvo']) && $_SESSION['edital_salvo'] === true) {
                                 <?php if (isset($_SESSION['papel']) && $_SESSION['papel'] === 'admin'): ?>
                                     <li><a class="dropdown-item"
                                             href="./cadastro/administrar_funcionarios.php">Administrador</a></li>
-
-                                <?php endif; ?>
-                            
-                            <?php if (isset($_SESSION['papel']) && $_SESSION['papel'] === 'admin'): ?>
-                                    <li><a class="dropdown-item"
-                                            href="cadastrarEvento.php">Cadastrar Eventos</a></li>
-
+                                    <li><a class="dropdown-item" href="cadastrarEvento.php">Cadastrar Eventos</a></li>
                                 <?php endif; ?>
                             </ul>
                         </li>
@@ -109,7 +150,8 @@ if (isset($_SESSION['edital_salvo']) && $_SESSION['edital_salvo'] === true) {
                 </ul>
             </div>
         </div>
-                    </nav>
+    </nav>
+
     <header class="masthead"
         style="background-image: url('assets/img/hansa.png'); margin-bottom: -105px;padding-bottom: 106px;justify-content: center;align-items: center;justify-items: center;">
         <div class="container" style="align-items: center; margin: auto;justify-content: center;">
@@ -124,15 +166,14 @@ if (isset($_SESSION['edital_salvo']) && $_SESSION['edital_salvo'] === true) {
             </div>
         </div>
     </header>
-    <!-- Start: waves -->
 
     <div style="padding-right: 0px;">
-    <svg class="waves" viewBox="0 22.25 125 40">
-        <path id="gentle-wave" d="M-160 50c40 0 70-25 110-25s70 25 110 25 70-25 110-25 70 25 110 25v40h-440z" fill="#446442"></path>
-    </svg>
-</div>
+        <svg class="waves" viewBox="0 22.25 125 40">
+            <path id="gentle-wave" d="M-160 50c40 0 70-25 110-25s70 25 110 25 70-25 110-25 70 25 110 25v40h-440z"
+                fill="#446442"></path>
+        </svg>
+    </div>
 
-    <!-- End: waves -->
     <div class="col-lg-8 offset-lg-1 mx-auto" style="padding-top: 8px;">
         <h3><span style="color: rgb(248, 248, 248);">Editais</span></h3>
         <p><span style="color: rgb(248, 248, 248);">Os editais de licitação são documentos que regulam o processo de
@@ -141,11 +182,11 @@ if (isset($_SESSION['edital_salvo']) && $_SESSION['edital_salvo'] === true) {
                 de julgamento. A divulgação do edital é fundamental para que todas as empresas interessadas possam
                 participar de forma justa e igualitária.</span></p>
     </div>
-    <div class="col-lg-8 offset-lg-1 mx-auto" style="padding-top: 8px; ">
 
+    <div class="col-lg-8 offset-lg-1 mx-auto" style="padding-top: 8px;">
         <h3><span style="color: rgb(248, 248, 248);">Aplique seu edital</span></h3>
-        <p><span style="color: rgb(248, 248, 248);">O edital é dividio em três partes, cada parte pode ser preenchida
-                separadamente, primeira parte é a Identificação da Pessoa, a segunda Planejamento e Organização e a
+        <p><span style="color: rgb(248, 248, 248);">O edital é dividido em três partes, cada parte pode ser preenchida
+                separadamente, a primeira parte é a Identificação da Pessoa, a segunda Planejamento e Organização e a
                 última os Anexos.</span></p>
         <div class="editalBotao text-center">
             <a href="editalParte1.php" class="btn btn-primary" role="button"
@@ -155,61 +196,75 @@ if (isset($_SESSION['edital_salvo']) && $_SESSION['edital_salvo'] === true) {
             <a href="editalParte3.php" class="btn btn-primary" role="button"
                 aria-label="Acessar edital da terceira parte">Edital Terceira parte</a>
         </div>
-        <div class="container" style="padding-top: 50px; text-align: center; margin: auto; ">
-            <h2><span style="color: rgb(248, 248, 248);">Editais Cadastrados</span></h2>
-            <?php if (mysqli_num_rows($result) > 0) { ?>
+        <div class="container" style="padding-top: 50px; text-align: center; margin: auto;">
+            <h2><span style="color: rgb(248, 196, 113); font-size: 30px;">EDITAIS PREENCHIDOS</span></h2>
+            <br>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome do Edital</th>
+                        <th>Data de Início</th>
+                        <th>Data de Fim</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            $id = $row['id_parte1']; // Use o id da parte 1
+                            $nomeEdital = $row['nome_projeto'];
+                            $dataInicio = $row['data_inicio'];
+                            $dataFim = $row['data_final'];
 
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nome do Projeto</t>
-                            <th>Data de Início</th>
-                            <th>Data de Fim</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while ($row = mysqli_fetch_assoc($result)) { ?>
-                            <tr>
-                                <td><?= $row['id']; ?></td>
-                                <td><?= $row['nome_projeto']; ?></td>
-                                <td><?= $row['data_inicio']; ?></td>
-                                <td><?= $row['data_final']; ?></td>
-                            </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
-            <?php } else { ?>
-                <p>Nenhum edital encontrado.</p>
-            <?php } ?>
-
-            <?php mysqli_close($conn); ?>
+                            // Verifica se todas as partes do edital estão preenchidas
+                            if (verificaTresPartes($conn, $id)) {
+                                echo "<tr>";
+                                echo "<td>" . $id . "</td>";
+                                echo "<td>" . $nomeEdital . "</td>";
+                                echo "<td>" . $dataInicio . "</td>";
+                                echo "<td>" . $dataFim . "</td>";
+                                echo "<td><span style='color: green;'>Completo</span></td>";
+                                echo "</tr>";
+                            }
+                        }
+                    } else {
+                        echo "<tr><td colspan='5'>Nenhum edital preenchido encontrado.</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
         </div>
-    </div>
+        <!-- Start: Footer Dark -->
+        <footer class="text-center"
+            style="margin-left:auto;justify-content: center; margin-right: auto; padding-bottom: 0px;padding-top: 0px; align-items: center;">
+            <div class="container text-white py-4 py-lg-5" style="padding: auto;margin: auto;">
+                <ul class="list-inline" style="padding-left: 0px;">
+                    <li class="list-inline-item me-4"><a class="link-light" href="#">Larissa Dalssasso</a></li>
+                    <li class="list-inline-item me-4"><a class="link-light" href="#">&amp;</a></li>
+                    <li class="list-inline-item"><a class="link-light" href="#">Kauã Felippe</a></li>
+                </ul>
+                <ul class="list-inline" style="padding-left: 0px;">
+                    <li class="list-inline-item me-4"><a class="link-light" href="#"></a></li>
+                    <li class="list-inline-item me-4"><a class="link-light" href="#">Instituto Federal Catarinense -
+                            Campus Ibirama</a></li>
+                    <li class="list-inline-item"></li>
+                </ul>
+                <p class="text-muted mb-0" style="padding-left: 0px;">Copyright © 2024 FECT</p>
+            </div>
+        </footer><!-- End: Footer Dark -->
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 
-    <!-- Start: Footer Dark -->
 
-    <footer class="text-center"
-        style=" margin-left:auto;justify-content: center; margin-right: auto; padding-bottom: 0px;padding-top: 0px; align-items: center;">
-        <div class="container text-white py-4 py-lg-5" style="padding: auto;margin: auto;">
-            <ul class="list-inline" style="padding-left: 0px;">
-                <li class="list-inline-item me-4"><a class="link-light" href="#">Larissa Dalssasso</a></li>
-                <li class="list-inline-item me-4"><a class="link-light" href="#">&amp;</a></li>
-                <li class="list-inline-item"><a class="link-light" href="#">Kauã Felippe</a></li>
-            </ul>
-            <ul class="list-inline" style="padding-left: 0px;">
-                <li class="list-inline-item me-4"><a class="link-light" href="#"></a></li>
-                <li class="list-inline-item me-4"><a class="link-light" href="#">Instituto Federal Catarinense - Campus
-                        Ibirama</a></li>
-                <li class="list-inline-item"></li>
-            </ul>
-            <p class="text-muted mb-0" style="padding-left: 0px;">Copyright © 2024 FECT</p>
-        </div>
-    </footer><!-- End: Footer Dark -->
-    <script src="assets/bootstrap/js/bootstrap.min.js?h=e55bde7d6e36ebf17ba0b8c1e80e4065"></script>
-    <script src="assets/js/Carousel-Multi-Image--ISA--carousel-multi.js?h=8b6a61c52462cb43846bf671a4118b63"></script>
-    <script src="assets/js/clean-blog.js?h=44b1c6e85af97fda0fedbb834b3ff3f8"></script>
-    <script src="assets/js/faq-xerius%20faq.js?h=1079596b8ac096fe203457b5fbbbb842"></script>
-    <script
-        src="assets/js/Fixed-navbar-starting-with-transparency-script.js?h=d3a58694022081474e39f06e40840737"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.min.js?h=e55bde7d6e36ebf17ba0b8c1e80e4065"></script>
+        <script
+            src="assets/js/Carousel-Multi-Image--ISA--carousel-multi.js?h=8b6a61c52462cb43846bf671a4118b63"></script>
+        <script src="assets/js/clean-blog.js?h=44b1c6e85af97fda0fedbb834b3ff3f8"></script>
+        <script src="assets/js/faq-xerius%20faq.js?h=1079596b8ac096fe203457b5fbbbb842"></script>
+        <script
+            src="assets/js/Fixed-navbar-starting-with-transparency-script.js?h=d3a58694022081474e39f06e40840737"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+</body>
+
+</html>

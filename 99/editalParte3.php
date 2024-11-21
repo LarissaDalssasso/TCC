@@ -1,3 +1,26 @@
+<?php
+session_start();
+$conn = mysqli_connect("localhost", "root", "root", "site");
+
+// Verifica se o formulário foi enviado
+if (isset($_POST['salvar'])) {
+    $estatuto_social = $_POST['estatuto-social'];
+    $ata_eleicao_pose = $_POST['ata-eleicao-pose'];
+    $documento_identidade = $_POST['documento-identidade'];
+    $comprovante_residencia = $_POST['comprovante-residencia'];
+    $outros_documentos = $_POST['outros-documentos'];
+
+    // Salvar na tabela editalParte3
+    $sql = "INSERT INTO editalParte3 (id_parte2, estatuto_social, ata_eleicao_pose, documento_identidade, comprovante_residencia, outros_documentos) VALUES (?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("isssss", $_GET['id_parte2'], $estatuto_social, $ata_eleicao_pose, $documento_identidade, $comprovante_residencia, $outros_documentos);
+    $stmt->execute();
+    
+    // Redireciona após salvar
+    header("Location: editalPai.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -32,15 +55,13 @@
     <link rel="stylesheet"
         href="assets/css/Fixed-navbar-starting-with-transparency-styles.css?h=7587f1df9059ad49d5a6efd0bdf71cbf">
     <link rel="stylesheet"
-        href="assets/css/Fixed-navbar-starting-with-transparency-colors.css?h=cee0ab111828e10642ce8354c9a00ffe">
+        href="assets/css/Fixed-navbar-starting-with-transparency-colors.css?h =cee0ab111828e10642ce8354c9a00ffe">
     <link rel="stylesheet" href="assets/css/dh-card-image-left-dark.css?h=fbeb7871206b72100c90953ca6cc43cc">
     <link rel="stylesheet" href="assets/css/Login-screen.css?h=a83d532a2ddb77352016bff7774f7e85">
     <link rel="stylesheet" href="assets/css/Navigation-Menu.css?h=587a88704dc45b107523dd7422062369">
-
 </head>
 
 <body>
-
     <nav class="navbar navbar-expand-md fixed-top navbar-transparency navbar-light"
         style="background-color: inherit;margin-top: -42px;padding-bottom: 0px;margin-bottom: 4px;padding-top: 0px;height: 2%; justify-content: center;">
         <div class="container">
@@ -58,7 +79,8 @@
                                     style="color: rgba(255, 255, 255, 0.8);">CURSOS</span></strong></a></li>
                     <li class="nav-item"><a class="nav-link" href="editalPai.php"
                             style="padding-top: 0px;"><strong><span
-                                    style="color: rgba(255, 255, 255, 0.8);">EDITAL</span></strong></a></li>
+                                    style="color: rgba(255, 255,                                     255, 255, 0.8);">EDITAL</span></strong></a>
+                    </li>
                     <li class="nav-item"><a class="nav-link" href="cards.php"
                             style="margin-bottom: -22px;padding-top: 0px;padding-bottom: 0px;"><strong><span
                                     style="color: rgba(255, 255, 255, 0.8);">EVENTOS</span></strong></a></li>
@@ -69,8 +91,8 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false"
-                                style="font-size: 16px; font-weight: bold; color: #fff; text-decoration: none; padding-right: 0; margin-right: -10px; display: inline-block; width: fit-content; ">
-                                <?php echo $_SESSION['username']; ?>
+                                style="font-size: 16px; font-weight: bold; color: #fff; text-decoration: none; padding-right: 0; margin-right: -10px; display: inline-block; width: fit-content;">
+                                <?php echo htmlspecialchars($_SESSION['username']); ?>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
                                 style="position: absolute; z-index: 1000;">
@@ -78,12 +100,7 @@
                                 <?php if (isset($_SESSION['papel']) && $_SESSION['papel'] === 'admin'): ?>
                                     <li><a class="dropdown-item"
                                             href="./cadastro/administrar_funcionarios.php">Administrador</a></li>
-
-                                <?php endif; ?>
-
-                                <?php if (isset($_SESSION['papel']) && $_SESSION['papel'] === 'admin'): ?>
                                     <li><a class="dropdown-item" href="cadastrarEvento.php">Cadastrar Eventos</a></li>
-
                                 <?php endif; ?>
                             </ul>
                         </li>
@@ -99,74 +116,121 @@
         </div>
     </nav>
     <form id="form" action="salvar.php" method="post">
-
         <!-- Anexos -->
-        <div>
-            <label for="anexos">Anexos:</label>
-            <input type="file" id="anexos" name="anexos" multiple>
-        </div>
-        <div>
-            <label for="estatuto-social">Estatuto Social, com sede no Município e finalidade cultural,
-                devidamente registrado:</label>
-            <input type="file" id="estatuto-social" name="estatuto-social">
-        </div>
-        <div>
-            <label for="ata-eleicao-pose">Ata de eleição e posse devidamente registrada:</label>
-            <input type="file" id="ata-eleicao-pose" name="ata-eleicao-pose">
-        </div>
-        <div>
-            <label for="cnpj">Cópia do Cadastro Nacional de Pessoa Jurídica:</label>
-            <input type="file" id="cnpj" name="cnpj">
-        </div>
-        <div>
-            <label for="documento-pessoal-dirigente">Cópia de documento pessoal que contenha o CPF e RG do
-                dirigente da OSC:</label>
-            <input type="file" id="documento-pessoal-dirigente" name="documento-pessoal-dirigente">
-        </div>
-        <div>
-            <label for="comprovante-residencia-dirigente">Cópia de comprovante de residência do dirigente da
-                OSC:</label>
-            <input type="file" id="comprovante-residencia-dirigente" name="comprovante-residencia-dirigente">
-        </div>
-        <div>
-            <label for="declaracoes-gerais">Declarações gerais (Anexo II):</label>
-            <input type="file" id="declaracoes-gerais" name="declaracoes-gerais">
-        </div>
-        <div>
-            <label for="certificado-condicao-microempreendedor">Certificado de Condição de Microempreendedor
-                Individual – CCMEI ou Contrato Social, com sede no Município de Ibirama anterior ao mês de julho
-                de 2022:</label>
-            <input type="file" id="certificado-condicao-microempreendedor"
-                name="certificado-condicao-microempreendedor">
-        </div>
-        <div>
-            <label for="cnpj-ativo"> Cópia de Cadastro Nacional de Pessoa Jurídica ativo com Classificação
-                Nacional de Atividades Econômicas (CNAE) vinculado ao setor cultural:</label>
-            <input type="file" id="cnpj-ativo" name="cnpj-ativo">
-        </div>
-        <div>
-            <label for="documento-pessoal-socio">Cópia de documento pessoal que contenha CPF e RG do sócio
-                proprietário:</label>
-            <input type="file" id="documento-pessoal-socio" name="documento-pessoal-socio">
-        </div>
-        <div>
-            <label for="comprovante-residencia-socio">Cópia do comprovante de residência do sócio
-                proprietário:</label>
-            <input type="file" id="comprovante-residencia-socio" name="comprovante-residencia-socio">
-        </div>
-        <div>
-            <label for="declaracoes-gerais-socio">Declarações Gerais (Anexo II):</label>
-            <input type="file" id="declaracoes-gerais-socio" name="declaracoes-gerais-socio">
-        </div>
+        <div class="container mt-5" style="margin-top: 100px;"> <!-- Adicionando espaçamento superior -->
+            <h3>Anexos:</h3>
+            <div class="row">
+                <!-- Anexo 1 -->
+                <div class="col-md-6 mb-3">
+                    <div class="card" style="border: 1px solid #ccc; border-radius: 20px;"> <!-- Aumentando o raio das bordas -->
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: #333;"><strong>Estatuto Social</strong></h5>
+                            <p class="card-text">Com sede no Município e finalidade cultural, devidamente registrado.</p>
+                            <input type="file" id="estatuto-social" name="estatuto-social" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <!-- Anexo 2 -->
+                <div class="col-md-6 mb-3">
+                    <div class="card" style="border: 1px solid #ccc; border-radius: 20px;">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: #333;"><strong>Ata de Eleição e Posse</strong></h5>
+                            <p class="card-text">Devidamente registrada.</p>
+                            <input type="file" id="ata-eleicao-pose" name="ata-eleicao-pose" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <!-- Anexo 3 -->
+                <div class="col-md-6 mb-3">
+                    <div class="card" style="border: 1px solid #ccc; border-radius: 20px;">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: #333;"><strong>CNPJ</strong></h5>
+                            <p class="card-text">Cópia do Cadastro Nacional de Pessoa Jurídica.</p>
+                            <input type="file" id="cnpj" name="cnpj" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <!-- Anexo 4 -->
+                <div class="col-md-6 mb-3">
+                    <div class="card" style="border: 1px solid #ccc; border-radius: 20px;">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: #333;"><strong>Documento Pessoal do Dirigente</strong></h5>
+                            <p class="card-text">Cópia que contenha CPF e RG.</p>
+                            <input type="file" id="documento-pessoal-dirigente" name="documento-pessoal-dirigente" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <!-- Anexo 5 -->
+                <div class="col-md-6 mb-3">
+                    <div class="card" style="border: 1px solid #ccc; border-radius: 20px;">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: #333;"><strong>Comprovante de Residência do Dirigente</strong></h5>
+                            <p class="card-text">Cópia do comprovante de residência.</p>
+                            <input type="file" id="comprovante-residencia-dirigente" name="comprovante-residencia-dirigente" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <!-- Anexo 6 -->
+                <div class="col-md-6 mb-3">
+                    <div class="card" style="border: 1px solid #ccc; border-radius: 20px;">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: #333;"><strong>Certificado de Condição de Microempreendedor</strong></h5>
+                            <p class="card-text">CCMEI ou Contrato Social, com sede no Município de Ibirama anterior ao mês de julho de 2022.</p>
+                            <input type="file" id="certificado-condicao-microempreendedor" name="certificado-condicao-microempreendedor" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <!-- Anexo 7 -->
+                <div class="col-md- 6 mb-3">
+                    <div class="card" style="border: 1px solid #ccc; border-radius: 20px;">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: #333;"><strong>CNPJ Ativo</strong></h5>
+                            <p class="card-text">Cópia de Cadastro Nacional de Pessoa Jurídica ativo com CNAE vinculado ao setor cultural.</p>
+                            <input type="file" id="cnpj-ativo" name="cnpj-ativo" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <!-- Anexo 8 -->
+                <div class="col-md-6 mb-3">
+                    <div class="card" style="border: 1px solid #ccc; border-radius: 20px;">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: #333;"><strong>Documento Pessoal do Sócio Proprietário</strong></h5>
+                            <p class="card-text">Cópia que contenha CPF e RG.</p>
+                            <input type="file" id="documento-pessoal-socio" name="documento-pessoal-socio" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <!-- Anexo 9 -->
+                <div class="col-md-6 mb-3">
+                    <div class="card" style="border: 1px solid #ccc; border-radius: 20px;">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: #333;"><strong>Comprovante de Residência do Sócio Proprietário</strong></h5>
+                            <p class="card-text">Cópia do comprovante de residência.</p>
+                            <input type="file" id="comprovante-residencia-socio" name="comprovante-residencia-socio" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <!-- Anexo 10 -->
+                <div class="col-md-6 mb-3">
+                    <div class="card" style="border: 1px solid #ccc; border-radius: 20px;">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: #333;"><strong>Declarações Gerais (Anexo II)</strong></h5>
+                            <p class="card-text">Envie as declarações gerais.</p>
+                            <input type="file" id="declaracoes-gerais-socio" name="declaracoes-gerais-socio" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <div class="mb-3">
+                <a href="assets/img/ANEXO_II.pdf" class="btn btn-secondary" download>Baixar Anexo II</a>
+            </div>
+        </div>
         <div class="mt-3">
             <a href="editalParte2.php" class="btn btn-primary">Parte Dois</a>
-
             <button type="submit" class="btn btn-primary" name="salvar">Salvar</button>
             <a href="index.php" class="btn btn-primary">Menu</a>
         </div>
-
-
     </form>
     <script>
         // Salvar dados no Local Storage ao sair de cada campo

@@ -6,13 +6,12 @@ CREATE TABLE funcionario (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    area  ENUM('Esportes', 'Cultura', 'Turismo', 'Educação') NOT NULL,
+    area ENUM('Esportes', 'Cultura', 'Turismo', 'Educação') NOT NULL,
     senha VARCHAR(255) NOT NULL,
-    genero  ENUM('Masculino', 'Feminino', 'Outro') NOT NULL
-
+    genero ENUM('Masculino', 'Feminino', 'Outro') NOT NULL
 );
+
 ALTER TABLE funcionario ADD COLUMN papel ENUM('admin', 'moderador', 'usuario') DEFAULT 'usuario';
-USE site;
 
 CREATE TABLE editalParte1 (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -64,11 +63,15 @@ CREATE TABLE editalParte2 (
   recursos_financeiros TEXT,
   detalhe_recursos TEXT,
   venda_produtos_ingressos TEXT,
-  parametros_orcamentarios TEXT
+  parametros_orcamentarios TEXT,
+  id_parte1 INT,
+  FOREIGN KEY (id_parte1) REFERENCES editalParte1(id)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
 );
 
 CREATE TABLE editalParte3 (
-  id INT AUTO_INCREMENT PRIMARY KEY ,
+  id INT AUTO_INCREMENT PRIMARY KEY,
   anexos TEXT,
   estatuto_social TEXT,
   ata_eleicao_pose TEXT,
@@ -79,7 +82,11 @@ CREATE TABLE editalParte3 (
   cnpj_ativo TEXT,
   documento_pessoal_socio TEXT,
   comprovante_residencia_socio TEXT,
-  declaracoes_gerais_socio TEXT
+  declaracoes_gerais_socio TEXT,
+  id_parte2 INT,
+  FOREIGN KEY (id_parte2) REFERENCES editalParte2(id)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
 );
 
 CREATE TABLE eventos (
