@@ -109,7 +109,7 @@
 
     
     <header class="masthead"
-        style="background-image: url('assets/img/hansa.png');margin-bottom: -105px;padding-bottom: 106px;justify-content: center;align-items: center;justify-items: center;">
+        style="background-image: url('assets/img/hansa.png'); height: 100vh; background-size: cover; background-position: center; padding-bottom: 106px;justify-content: center;align-items: center;justify-items: center;">
         <div class="container" style="align-items: center; margin: auto;justify-content: center;">
             <div class="row" style="padding-right: 0px;margin: auto;">
                 <div class="col-10 col-md-10 col-lg-8 col-xl-10 mx-auto position-relative">
@@ -125,12 +125,11 @@
     </header>
     <!-- Start: waves -->
 
-    <div style="padding-right: 0px;">
+    <div style="margin-top: -100px;"> <!-- Ajuste para que as ondas fiquem visíveis -->
     <svg class="waves" viewBox="0 22.25 125 40">
         <path id="gentle-wave" d="M-160 50c40 0 70-25 110-25s70 25 110 25 70-25 110-25 70 25 110 25v40h-440z" fill="#446442"></path>
     </svg>
 </div>
-
     <!-- End: waves -->
     <div class="col-lg-8 offset-lg-1 mx-auto" style="padding-top: 8px;">
         <h2><span style="color: rgb(248, 248, 248);">Cidade de Ibirama</span></h2>
