@@ -11,6 +11,12 @@ if (isset($_POST['salvar'])) {
     $comprovante_residencia = $_POST['comprovante-residencia'];
     $outros_documentos = $_POST['outros-documentos'];
 
+    move_uploaded_file($_FILES['estatuto-social']['tmp_name'], 'uploads/' . $estatuto_social);
+    move_uploaded_file($_FILES['ata-eleicao-pose']['tmp_name'], 'uploads/' . $ata_eleicao_pose);
+    move_uploaded_file($_FILES['documento-identidade']['tmp_name'], 'uploads/' . $documento_identidade);
+    move_uploaded_file($_FILES['comprovante_residencia']['tmp_name'], 'uploads/' . $comprovante_residencia);
+    move_uploaded_file($_FILES['outros_documentos']['tmp_name'], 'uploads/' . $outros_documentos);
+
     // Salvar na tabela editalParte3
     $sql = "INSERT INTO editalParte3 (id_parte2, estatuto_social, ata_eleicao_pose, documento_identidade, comprovante_residencia, outros_documentos) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
