@@ -59,7 +59,7 @@ if (isset($_GET['delete_id'])) {
     <title>Edital</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
+
     <link rel="stylesheet" href="assets/css/Cardo.css?h=54435dcaa177a916e3e63e7316171ab2">
     <link rel="stylesheet" href="assets/css/Lora.css?h=8d0d5802b74a1ea44811aa3318e6cda4">
     <link rel="stylesheet" href="assets/css/Open%20Sans.css?h=9e213a74de5b277830c6eb6bd5f5862d">
@@ -87,33 +87,42 @@ if (isset($_GET['delete_id'])) {
     <link rel="stylesheet" href="assets/css/Login-screen.css?h=a83d532a2ddb77352016bff7774f7e85">
     <link rel="stylesheet" href="assets/css/Navigation-Menu.css?h=587a88704dc45b107523dd7422062369">
     <link rel="stylesheet" href="index.css">
-    
-    
+
+
 
 </head>
 <style>
-.table-primary {
-    --bs-table-color:  #212529;
-    ;
+    .table-primary {
+        --bs-table-color: #212529;
+        ;
         --bs-table-bg: #ebf0eb;
-    --bs-table-border-color: #011b01be;;
-    --bs-table-striped-bg: #011b01be;;
-    --bs-table-striped-color: #011b01be;
-    ;
-    --bs-table-active-bg: #011b01be;;
-    --bs-table-active-color: #011b01be;
-    ;
-    --bs-table-hover-bg: #011b01be;;
-    --bs-table-hover-color: #011b01be;
-    
-    color: var(--bs-table-color);
-    border-color: var(--bs-table-border-color)
-}
+        --bs-table-border-color: #011b01be;
+        ;
+        --bs-table-striped-bg: #011b01be;
+        ;
+        --bs-table-striped-color: #011b01be;
+        ;
+        --bs-table-active-bg: #011b01be;
+        ;
+        --bs-table-active-color: #011b01be;
+        ;
+        --bs-table-hover-bg: #011b01be;
+        ;
+        --bs-table-hover-color: #011b01be;
+
+        color: var(--bs-table-color);
+        border-color: var(--bs-table-border-color)
+    }
+
+    .hidden {
+        display: none;
+    }
 </style>
+
 <body>
 
 
-<nav class="navbar navbar-expand-md fixed-top navbar-transparency navbar-light"
+    <nav class="navbar navbar-expand-md fixed-top navbar-transparency navbar-light"
         style="background-color: inherit;margin-top: -42px;padding-bottom: 0px;margin-bottom: 4px;padding-top: 0px;height: 2%; justify-content: center;">
         <div class="container">
             <div style="padding-top: 0px; margin-left:auto; margin-right: auto;">
@@ -152,10 +161,9 @@ if (isset($_GET['delete_id'])) {
                                             href="./cadastro/administrar_funcionarios.php">Administrador</a></li>
 
                                 <?php endif; ?>
-                            
-                            <?php if (isset($_SESSION['papel']) && $_SESSION['papel'] === 'admin'): ?>
-                                    <li><a class="dropdown-item"
-                                            href="cadastrarEvento.php">Cadastrar Eventos</a></li>
+
+                                <?php if (isset($_SESSION['papel']) && $_SESSION['papel'] === 'admin'): ?>
+                                    <li><a class="dropdown-item" href="cadastrarEvento.php">Cadastrar Eventos</a></li>
 
                                 <?php endif; ?>
                             </ul>
@@ -170,7 +178,7 @@ if (isset($_GET['delete_id'])) {
                 </ul>
             </div>
         </div>
-                    </nav>
+    </nav>
 
 
 
@@ -218,88 +226,179 @@ if (isset($_GET['delete_id'])) {
             <a href="editalParte3.php" class="btn btn-primary" role="button"
                 aria-label="Acessar edital da terceira parte">Edital Terceira parte</a>
         </div>
-        
+
 
         <div class="container mt-5">
-        <h3><span style="color: rgb(248, 248, 248);">Visualizar Editais Salvos</span> </h3>
-        <?php if (isset($_GET['success'])): ?>
-            <div class="alert alert-success">Edital excluído com sucesso!</div>
-        <?php endif; ?>
-
-        <table class="table table-primary">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome Fantasia</th>
-                    <th>Representante Social</th>
-                    <th>Nome do Projeto</th>
-                    <th>Descrição do Projeto</th>
-                    <th>Anexos</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                        <?php
-                        if (mysqli_num_rows($result) > 0) {
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                echo "<tr>";
-                                echo "<td>" . $row['id'] . "</td>";
-                                echo "<td>" . htmlspecialchars($row['nome_fantasia']) . "</td>";
-                                echo "<td>" . htmlspecialchars($row['representante_social']) . "</td>";
-                                echo "<td>" . htmlspecialchars($row['nome_projeto']) . "</td>";
-                                echo "<td>" . htmlspecialchars($row['descricao_projeto']) . "</td>";
-                                echo "<td>" . htmlspecialchars($row['anexos']) . "</td>";
-                                echo "<td>";
-                                // Verifica se o usuário é um administrador
-                                if (isset($_SESSION['papel']) && $_SESSION['papel'] === 'admin') {
-                                    echo "<a href='editalPai.php?delete_id=" . $row['id'] . "' onclick='return confirm(\"Tem certeza que deseja excluir este edital?\");' class='text-danger'>
-                        <i class='fas fa-trash'></i>
-                      </a>";
-                                }
-                                echo "</td>";
-                                echo "</tr>";
+            <h3><span style="color: rgb(248, 248, 248);">Visualizar Editais Salvos</span> </h3>
+            <?php if (isset($_GET['success'])): ?>
+                <div class="alert alert-success">Edital excluído com sucesso!</div>
+            <?php endif; ?>
+            <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome Fantasia</th>
+                        <th>Representante Social</th>
+                        <th>Nome do Projeto</th>
+                        <th>Descrição do Projeto</th>
+                        <th>Anexos</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo "<tr>";
+                            echo "<td>" . $row['id'] . "</td>";
+                            echo "<td>" . htmlspecialchars($row['nome_fantasia']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['representante_social']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['nome_projeto']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['descricao_projeto']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['anexos']) . "</td>";
+                            echo "<td>";
+                            echo "<a href='#' class='text-primary detalhes-link' data-id='" . $row['id'] . "' title='Ver detalhes'>
+        <i class='fas fa-eye'></i>
+      </a> ";
+                            if (isset($_SESSION['papel']) && $_SESSION['papel'] === 'admin') {
+                                echo "<a href='editalPai.php?delete_id=" . $row['id'] . "' onclick='return confirm(\"Tem certeza que deseja excluir este edital?\");' class='text-danger'>
+            <i class='fas fa-trash'></i>
+          </a>";
                             }
-                        } else {
-                            echo "<tr><td colspan='6'>Nenhum edital encontrado.</td></tr>";
+                            echo "</td>";
+                            echo "</tr>";
                         }
-                        ?>
-                    </tbody>
-                </table>
-            </div>
-
-
-
-
-
-            <footer class="text-center"
-                style="margin-left:auto;justify-content: center; margin-right: auto; padding-bottom: 0px;padding-top: 0px; align-items: center;">
-                <div class="container text-white py-4 py-lg-5" style="padding: auto;margin: auto;">
-                    <ul class="list-inline" style="padding-left: 0px;">
-                        <li class="list-inline-item me-4"><a class="link-light" href="#">Larissa Dalssasso</a></li>
-                        <li class="list-inline-item me-4"><a class="link-light" href="#">&amp;</a></li>
-                        <li class="list-inline-item"><a class="link-light" href="#">Kauã Felippe</a></li>
-                    </ul>
-                    <ul class="list-inline" style="padding-left: 0px;">
-                        <li class="list-inline-item me-4"><a class="link-light" href="#"></a></li>
-                        <li class="list-inline-item me-4"><a class="link-light" href="#">Instituto Federal Catarinense -
-                                Campus Ibirama</a></li>
-                        <li class="list-inline-item"></li>
-                    </ul>
-                    <p class="text-muted mb-0" style="padding-left: 0px;">Copyright © 2024 FECT</p>
+                    } else {
+                        echo "<tr><td colspan='6'>Nenhum edital encontrado.</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="detalhesModal" tabindex="-1" aria-labelledby="detalhesModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="detalhesModalLabel">Detalhes do Edital</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="modalContent">
+                        <!-- O conteúdo do edital será carregado aqui via AJAX -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    </div>
                 </div>
-            </footer><!-- End: Footer Dark -->
-            <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+            </div>
+        </div>
 
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
 
-            <script src="assets/bootstrap/js/bootstrap.min.js?h=e55bde7d6e36ebf17ba0b8c1e80e4065"></script>
-            <script
-                src="assets/js/Carousel-Multi-Image--ISA--carousel-multi.js?h=8b6a61c52462cb43846bf671a4118b63"></script>
-            <script src="assets/js/clean-blog.js?h=44b1c6e85af97fda0fedbb834b3ff3f8"></script>
-            <script src="assets/js/faq-xerius%20faq.js?h=1079596b8ac096fe203457b5fbbbb842"></script>
-            <script
-                src="assets/js/Fixed-navbar-starting-with-transparency-script.js?h=d3a58694022081474e39f06e40840737"></script>
-            <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+
+        <footer class="text-center"
+            style="margin-left:auto;justify-content: center; margin-right: auto; padding-bottom: 0px;padding-top: 0px; align-items: center;">
+            <div class="container text-white py-4 py-lg-5" style="padding: auto;margin: auto;">
+                <ul class="list-inline" style="padding-left: 0px;">
+                    <li class="list-inline-item me-4"><a class="link-light" href="#">Larissa Dalssasso</a></li>
+                    <li class="list-inline-item me-4"><a class="link-light" href="#">&amp;</a></li>
+                    <li class="list-inline-item"><a class="link-light" href="#">Kauã Felippe</a></li>
+                </ul>
+                <ul class="list-inline" style="padding-left: 0px;">
+                    <li class="list-inline-item me-4"><a class="link-light" href="#"></a></li>
+                    <li class="list-inline-item me-4"><a class="link-light" href="#">Instituto Federal Catarinense -
+                            Campus Ibirama</a></li>
+                    <li class="list-inline-item"></li>
+                </ul>
+                <p class="text-muted mb-0" style="padding-left: 0px;">Copyright © 2024 FECT</p>
+            </div>
+        </footer><!-- End: Footer Dark -->
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script src="assets/bootstrap/js/bootstrap.min.js?h=e55bde7d6e36ebf17ba0b8c1e80e4065"></script>
+        <script
+            src="assets/js/Carousel-Multi-Image--ISA--carousel-multi.js?h=8b6a61c52462cb43846bf671a4118b63"></script>
+        <script src="assets/js/clean-blog.js?h=44b1c6e85af97fda0fedbb834b3ff3f8"></script>
+        <script src="assets/js/faq-xerius%20faq.js?h=1079596b8ac096fe203457b5fbbbb842"></script>
+        <script
+            src="assets/js/Fixed-navbar-starting-with-transparency-script.js?h=d3a58694022081474e39f06e40840737"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                // Quando um link de detalhes é clicado
+                $('.detalhes-link').on('click', function () {
+                    var editalId = $(this).data('id'); // Obtém o ID do edital
+
+                    // Faz uma requisição AJAX para obter os detalhes
+                    $.ajax({
+                        url: 'detalhesEdital.php', // O arquivo que retorna os detalhes
+                        type: 'GET',
+                        data: { id: editalId },
+                        success: function (response) {
+                            // Carrega a resposta no modal
+                            $('#modalContent').html(response);
+                            $('#detalhesModal').modal('show'); // Exibe o modal
+                            $('nav').addClass('hidden'); // Oculta a navegação
+                        },
+                        error: function () {
+                            alert('Erro ao carregar os detalhes do edital.');
+                        }
+                    });
+                });
+
+                // Quando o modal é fechado
+                $('#detalhesModal').on('hidden.bs.modal', function () {
+                    $('nav').removeClass('hidden'); // Mostra a navegação novamente
+                });
+            });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const modal = document.getElementById('detalhesModal');
+
+                modal.addEventListener('show.bs.modal', function (event) {
+                    const button = event.relatedTarget; // Botão que acionou o modal
+                    const nomeFantasia = button.getAttribute('data-nome-fantasia');
+                    const representanteSocial = button.getAttribute('data-representante-social');
+                    const nomeProjeto = button.getAttribute('data-nome-projeto');
+                    const descricaoProjeto = button.getAttribute('data-descricao-projeto');
+                    const anexos = button.getAttribute('data-anexos');
+
+                    // Atualizar o conteúdo do modal
+                    modal.querySelector('#detalheNomeFantasia').textContent = nomeFantasia;
+                    modal.querySelector('#detalheRepresentanteSocial').textContent = representanteSocial;
+                    modal.querySelector('#detalheNomeProjeto').textContent = nomeProjeto;
+                    modal.querySelector('#detalheDescricaoProjeto').textContent = descricaoProjeto;
+                    modal.querySelector('#detalheAnexos').textContent = anexos;
+                });
+            });
+
+            // Função para carregar detalhes do edital
+            function carregarDetalhesEdital(id) {
+                fetch(`detalhesEdital.php?id=${id}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            console.error(data.error);
+                        } else {
+                            // Atualiza o modal com os dados recebidos
+                            document.getElementById('detalheNomeFantasia').textContent = data.nome_fantasia;
+                            document.getElementById('detalheRepresentanteSocial').textContent = data.representante_social;
+                            document.getElementById('detalheNomeProjeto').textContent = data.nome_projeto;
+                            document.getElementById('detalheDescricaoProjeto').textContent = data.descricao_projeto;
+                            document.getElementById('detalheAnexos').textContent = data.anexos;
+                            // Abre o modal
+                            $('#detalhesModal').modal('show');
+                        }
+                    })
+                    .catch(error => console.error('Erro ao carregar detalhes do edital:', error));
+            }
+        </script>
 </body>
 
 </html>
