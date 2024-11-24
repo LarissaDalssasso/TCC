@@ -12,43 +12,42 @@ if (isset($_SESSION['edital_salvo']) && $_SESSION['edital_salvo'] === true) {
     unset($_SESSION['edital_salvo']); // Remove a variável de sessão após exibir o pop-up
 }
 
-function verificaTresPartes($conn, $id)
-{
-    // Verifica a primeira parte
-    $count1 = 0;
-    $count2 = 0;
-    $count3 = 0;
-    $sql1 = "SELECT COUNT(*) as count FROM editalParte1 WHERE id = ?";
-    $stmt1 = $conn->prepare($sql1);
-    $stmt1->bind_param("i", $id);
+$sql = "SELECT p1.id, p1.nome_fantasia, p1.representante_social, p2.nome_projeto, p2.descricao_projeto, p3.anexos 
+        FROM editalParte1 p1 
+        LEFT JOIN editalParte2 p2 ON p1.id = p2.id 
+        LEFT JOIN editalParte3 p3 ON p1.id = p3.id 
+        ORDER BY p1.id DESC";
+$result = mysqli_query($conn, $sql);
+
+// Lógica para excluir um edital
+if (isset($_GET['delete_id'])) {
+    $delete_id = intval($_GET['delete_id']);
+
+    // Excluir da tabela editalParte1 (e outras partes se necessário)
+    $sqlDelete1 = "DELETE FROM editalParte1 WHERE id = ?";
+    $stmt1 = $conn->prepare($sqlDelete1);
+    $stmt1->bind_param("i", $delete_id);
     $stmt1->execute();
-    $stmt1->bind_result($count1);
-    $stmt1->fetch();
-    $stmt1->close();
 
-    // Verifica a segunda parte
-    $sql2 = "SELECT COUNT(*) as count FROM editalParte2 WHERE id_parte1 = ?";
-    $stmt2 = $conn->prepare($sql2);
-    $stmt2->bind_param("i", $id);
+    $sqlDelete2 = "DELETE FROM editalParte2 WHERE id = ?";
+    $stmt2 = $conn->prepare($sqlDelete2);
+    $stmt2->bind_param("i", $delete_id);
     $stmt2->execute();
-    $stmt2->bind_result($count2);
-    $stmt2->fetch();
-    $stmt2->close();
 
-    // Verifica a terceira parte
-    $sql3 = "SELECT COUNT(*) as count FROM editalParte3 WHERE id_parte2 = ?";
-    $stmt3 = $conn->prepare($sql3);
-    $stmt3->bind_param("i", $id); // Aqui você deve usar o ID da parte 2
+    $sqlDelete3 = "DELETE FROM editalParte3 WHERE id = ?";
+    $stmt3 = $conn->prepare($sqlDelete3);
+    $stmt3->bind_param("i", $delete_id);
     $stmt3->execute();
-    $stmt3->bind_result($count3);
-    $stmt3->fetch();
+
+    // Fechar as declarações
+    $stmt1->close();
+    $stmt2->close();
     $stmt3->close();
 
-    return $count1 > 0 && $count2 > 0 && $count3 > 0;
+    // Redirecionar ou mostrar mensagem de sucesso
+    header("Location: editalPai.php?success=1"); // Redireciona após exclusão
+    exit();
 }
-
-$result = mysqli_query($conn, "SELECT * FROM editalParte2 ORDER BY data_inicio DESC"); // Seleciona a primeira parte
-
 ?>
 
 <!DOCTYPE html>
@@ -60,7 +59,7 @@ $result = mysqli_query($conn, "SELECT * FROM editalParte2 ORDER BY data_inicio D
     <title>Edital</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Adicionei o Font Awesome -->
+    
     <link rel="stylesheet" href="assets/css/Cardo.css?h=54435dcaa177a916e3e63e7316171ab2">
     <link rel="stylesheet" href="assets/css/Lora.css?h=8d0d5802b74a1ea44811aa3318e6cda4">
     <link rel="stylesheet" href="assets/css/Open%20Sans.css?h=9e213a74de5b277830c6eb6bd5f5862d">
@@ -87,12 +86,34 @@ $result = mysqli_query($conn, "SELECT * FROM editalParte2 ORDER BY data_inicio D
     <link rel="stylesheet" href="assets/css/dh-card-image-left-dark.css?h=fbeb7871206b72100c90953ca6cc43cc">
     <link rel="stylesheet" href="assets/css/Login-screen.css?h=a83d532a2ddb77352016bff7774f7e85">
     <link rel="stylesheet" href="assets/css/Navigation-Menu.css?h=587a88704dc45b107523dd7422062369">
-</head>
+    <link rel="stylesheet" href="index.css">
+    
+    
 
+</head>
+<style>
+.table-primary {
+    --bs-table-color:  #212529;
+    ;
+        --bs-table-bg: #ebf0eb;
+    --bs-table-border-color: #011b01be;;
+    --bs-table-striped-bg: #011b01be;;
+    --bs-table-striped-color: #011b01be;
+    ;
+    --bs-table-active-bg: #011b01be;;
+    --bs-table-active-color: #011b01be;
+    ;
+    --bs-table-hover-bg: #011b01be;;
+    --bs-table-hover-color: #011b01be;
+    
+    color: var(--bs-table-color);
+    border-color: var(--bs-table-border-color)
+}
+</style>
 <body>
 
 
-    <nav class="navbar navbar-expand-md fixed-top navbar-transparency navbar-light"
+<nav class="navbar navbar-expand-md fixed-top navbar-transparency navbar-light"
         style="background-color: inherit;margin-top: -42px;padding-bottom: 0px;margin-bottom: 4px;padding-top: 0px;height: 2%; justify-content: center;">
         <div class="container">
             <div style="padding-top: 0px; margin-left:auto; margin-right: auto;">
@@ -109,8 +130,7 @@ $result = mysqli_query($conn, "SELECT * FROM editalParte2 ORDER BY data_inicio D
                                     style="color: rgba(255, 255, 255, 0.8);">CURSOS</span></strong></a></li>
                     <li class="nav-item"><a class="nav-link" href="editalPai.php"
                             style="padding-top: 0px;"><strong><span
-                                    style="color: rgba(255, 255,                                     255, 255, 0.8);">EDITAL</span></strong></a>
-                    </li>
+                                    style="color: rgba(255, 255, 255, 0.8);">EDITAL</span></strong></a></li>
                     <li class="nav-item"><a class="nav-link" href="cards.php"
                             style="margin-bottom: -22px;padding-top: 0px;padding-bottom: 0px;"><strong><span
                                     style="color: rgba(255, 255, 255, 0.8);">EVENTOS</span></strong></a></li>
@@ -121,8 +141,8 @@ $result = mysqli_query($conn, "SELECT * FROM editalParte2 ORDER BY data_inicio D
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false"
-                                style="font-size: 16px; font-weight: bold; color: #fff; text-decoration: none; padding-right: 0; margin-right: -10px; display: inline-block; width: fit-content;">
-                                <?php echo htmlspecialchars($_SESSION['username']); ?>
+                                style="font-size: 16px; font-weight: bold; color: #fff; text-decoration: none; padding-right: 0; margin-right: -10px; display: inline-block; width: fit-content; ">
+                                <?php echo $_SESSION['username']; ?>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
                                 style="position: absolute; z-index: 1000;">
@@ -130,7 +150,13 @@ $result = mysqli_query($conn, "SELECT * FROM editalParte2 ORDER BY data_inicio D
                                 <?php if (isset($_SESSION['papel']) && $_SESSION['papel'] === 'admin'): ?>
                                     <li><a class="dropdown-item"
                                             href="./cadastro/administrar_funcionarios.php">Administrador</a></li>
-                                    <li><a class="dropdown-item" href="cadastrarEvento.php">Cadastrar Eventos</a></li>
+
+                                <?php endif; ?>
+                            
+                            <?php if (isset($_SESSION['papel']) && $_SESSION['papel'] === 'admin'): ?>
+                                    <li><a class="dropdown-item"
+                                            href="cadastrarEvento.php">Cadastrar Eventos</a></li>
+
                                 <?php endif; ?>
                             </ul>
                         </li>
@@ -144,7 +170,9 @@ $result = mysqli_query($conn, "SELECT * FROM editalParte2 ORDER BY data_inicio D
                 </ul>
             </div>
         </div>
-    </nav>
+                    </nav>
+
+
 
     <header class="masthead"
         style="background-image: url('assets/img/hansa.png'); margin-bottom: -105px;padding-bottom: 106px;justify-content: center;align-items: center;justify-items: center;">
@@ -190,77 +218,88 @@ $result = mysqli_query($conn, "SELECT * FROM editalParte2 ORDER BY data_inicio D
             <a href="editalParte3.php" class="btn btn-primary" role="button"
                 aria-label="Acessar edital da terceira parte">Edital Terceira parte</a>
         </div>
+        
 
-        <div class="container" style="padding-top: 50px; text-align: center; margin: auto;">
-            <h2><span style="color: rgb(248, 196, 113); font-size: 30px;">EDITAIS PREENCHIDOS</span></h2>
-            <br>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome do Edital</th>
-                        <th>Data de Início</th>
-                        <th>Data de Fim</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    // Loop através dos editais da primeira parte
-                    if (mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            $idParte1 = $row['id']; // ID da parte 1
-                            $nomeEdital = $row['nome_projeto'];
-                            $dataInicio = $row['data_inicio'];
-                            $dataFim = $row['data_final'];
+        <div class="container mt-5">
+        <h3><span style="color: rgb(248, 248, 248);">Visualizar Editais Salvos</span> </h3>
+        <?php if (isset($_GET['success'])): ?>
+            <div class="alert alert-success">Edital excluído com sucesso!</div>
+        <?php endif; ?>
 
-                            // Verifica se todas as partes do edital estão preenchidas
-                            if (verificaTresPartes($conn, $idParte1)) {
+        <table class="table table-primary">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome Fantasia</th>
+                    <th>Representante Social</th>
+                    <th>Nome do Projeto</th>
+                    <th>Descrição do Projeto</th>
+                    <th>Anexos</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                        <?php
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
                                 echo "<tr>";
-                                echo "<td>" . $idParte1 . "</td>"; // ID da parte 1
-                                echo "<td>" . $nomeEdital . "</td>";
-                                echo "<td>" . $dataInicio . "</td>";
-                                echo "<td>" . $dataFim . "</td>";
-                                echo "<td><span style='color: green;'>Completo</span></td>";
+                                echo "<td>" . $row['id'] . "</td>";
+                                echo "<td>" . htmlspecialchars($row['nome_fantasia']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['representante_social']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['nome_projeto']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['descricao_projeto']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['anexos']) . "</td>";
+                                echo "<td>";
+                                // Verifica se o usuário é um administrador
+                                if (isset($_SESSION['papel']) && $_SESSION['papel'] === 'admin') {
+                                    echo "<a href='editalPai.php?delete_id=" . $row['id'] . "' onclick='return confirm(\"Tem certeza que deseja excluir este edital?\");' class='text-danger'>
+                        <i class='fas fa-trash'></i>
+                      </a>";
+                                }
+                                echo "</td>";
                                 echo "</tr>";
                             }
+                        } else {
+                            echo "<tr><td colspan='6'>Nenhum edital encontrado.</td></tr>";
                         }
-                    } else {
-                        echo "<tr><td colspan='5'>Nenhum edital preenchido encontrado.</td></tr>";
-                    }
-                    ?>
-                </tbody>
-            </table>
-        </div>
-        <!-- Start: Footer Dark -->
-        <footer class="text-center"
-            style="margin-left:auto;justify-content: center; margin-right: auto; padding-bottom: 0px;padding-top: 0px; align-items: center;">
-            <div class="container text-white py-4 py-lg-5" style="padding: auto;margin: auto;">
-                <ul class="list-inline" style="padding-left: 0px;">
-                    <li class="list-inline-item me-4"><a class="link-light" href="#">Larissa Dalssasso</a></li>
-                    <li class="list-inline-item me-4"><a class="link-light" href="#">&amp;</a></li>
-                    <li class="list-inline-item"><a class="link-light" href="#">Kauã Felippe</a></li>
-                </ul>
-                <ul class="list-inline" style="padding-left: 0px;">
-                    <li class="list-inline-item me-4"><a class="link-light" href="#"></a></li>
-                    <li class="list-inline-item me-4"><a class="link-light" href="#">Instituto Federal Catarinense -
-                            Campus Ibirama</a></li>
-                    <li class="list-inline-item"></li>
-                </ul>
-                <p class="text-muted mb-0" style="padding-left: 0px;">Copyright © 2024 FECT</p>
+                        ?>
+                    </tbody>
+                </table>
             </div>
-        </footer><!-- End: Footer Dark -->
-        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 
 
-        <script src="assets/bootstrap/js/bootstrap.min.js?h=e55bde7d6e36ebf17ba0b8c1e80e4065"></script>
-        <script
-            src="assets/js/Carousel-Multi-Image--ISA--carousel-multi.js?h=8b6a61c52462cb43846bf671a4118b63"></script>
-        <script src="assets/js/clean-blog.js?h=44b1c6e85af97fda0fedbb834b3ff3f8"></script>
-        <script src="assets/js/faq-xerius%20faq.js?h=1079596b8ac096fe203457b5fbbbb842"></script>
-        <script
-            src="assets/js/Fixed-navbar-starting-with-transparency-script.js?h=d3a58694022081474e39f06e40840737"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+
+
+            <footer class="text-center"
+                style="margin-left:auto;justify-content: center; margin-right: auto; padding-bottom: 0px;padding-top: 0px; align-items: center;">
+                <div class="container text-white py-4 py-lg-5" style="padding: auto;margin: auto;">
+                    <ul class="list-inline" style="padding-left: 0px;">
+                        <li class="list-inline-item me-4"><a class="link-light" href="#">Larissa Dalssasso</a></li>
+                        <li class="list-inline-item me-4"><a class="link-light" href="#">&amp;</a></li>
+                        <li class="list-inline-item"><a class="link-light" href="#">Kauã Felippe</a></li>
+                    </ul>
+                    <ul class="list-inline" style="padding-left: 0px;">
+                        <li class="list-inline-item me-4"><a class="link-light" href="#"></a></li>
+                        <li class="list-inline-item me-4"><a class="link-light" href="#">Instituto Federal Catarinense -
+                                Campus Ibirama</a></li>
+                        <li class="list-inline-item"></li>
+                    </ul>
+                    <p class="text-muted mb-0" style="padding-left: 0px;">Copyright © 2024 FECT</p>
+                </div>
+            </footer><!-- End: Footer Dark -->
+            <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+
+            <script src="assets/bootstrap/js/bootstrap.min.js?h=e55bde7d6e36ebf17ba0b8c1e80e4065"></script>
+            <script
+                src="assets/js/Carousel-Multi-Image--ISA--carousel-multi.js?h=8b6a61c52462cb43846bf671a4118b63"></script>
+            <script src="assets/js/clean-blog.js?h=44b1c6e85af97fda0fedbb834b3ff3f8"></script>
+            <script src="assets/js/faq-xerius%20faq.js?h=1079596b8ac096fe203457b5fbbbb842"></script>
+            <script
+                src="assets/js/Fixed-navbar-starting-with-transparency-script.js?h=d3a58694022081474e39f06e40840737"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
 </body>
 
 </html>
