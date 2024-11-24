@@ -4,6 +4,7 @@ $conn = mysqli_connect("localhost", "root", "root", "site");
 
 // Verifica se o formulário foi enviado
 if (isset($_POST['salvar'])) {
+    var_dump($_POST);
     $estatuto_social = $_POST['estatuto-social'];
     $ata_eleicao_pose = $_POST['ata-eleicao-pose'];
     $documento_identidade = $_POST['documento-identidade'];
@@ -115,8 +116,7 @@ if (isset($_POST['salvar'])) {
             </div>
         </div>
     </nav>
-    <form id="form" action="salvar.php" method="post" enctype="multipart/form-data">
-                <!-- Anexos -->
+<form id="form" action="salvar.php" method="post" enctype="multipart/form-data">                <!-- Anexos -->
         <div class="container mt-5" style="margin-top: 100px;"> <!-- Adicionando espaçamento superior -->
             <h3>Anexos:</h3>
             <div class="row">

@@ -4,6 +4,7 @@ $conn = mysqli_connect("localhost", "root", "root", "site");
 
 // Verifica se o formulário foi enviado
 if (isset($_POST['salvar'])) {
+    var_dump($_POST);
     $identificacao = $_POST['identificacao'];
     $representante_social = $_POST['representante-social'];
     $nome_fantasia = $_POST['nome-fantasia'];
@@ -32,13 +33,18 @@ if (isset($_POST['salvar'])) {
     $escolaridade = $_POST['escolaridade'];
     $curriculo = $_POST['curriculo'];
 
-    // Salvar na tabela editalParte1
-    $sql = "INSERT INTO editalParte1 (identificacao, representante_social, nome_fantasia, cnpj, endereco, rua, numero, cidade, estado, cep, representante_legal, cargo, cpf, rg, endereco_representante, rua_representante, numero_representante, cidade_representante, estado_representante, cep_representante, telefone, genero, raca, deficiencia, tipo_deficiencia, escolaridade, curriculo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssssssssssssssssssssss", $identificacao, $representante_social, $nome_fantasia, $cnpj, $endereco, $rua, $numero, $cidade, $estado, $cep, $representante_legal, $cargo, $cpf, $rg, $endereco_representante, $rua_representante, $numero_representante, $cidade_representante, $estado_representante, $cep_representante, $telefone, $genero, $raca, $deficiencia, $tipo_deficiencia, $escolaridade, $curriculo,);
-    $stmt->execute();
 
-    // Captura o ID gerado
+
+
+    if (isset($_FILES['curriculo']) && $_FILES['curriculo']['error'] == 0) {
+        $curriculo = file_get_contents($_FILES['curriculo']['tmp_name']);
+    } else {
+        $curriculo = null; // ou outra lógica para lidar com erros
+    }
+    
+    $sql = "INSERT INTO editalParte1 (identificacao, representante_social, nome_fantasia, cnpj, endereco, rua, numero, cidade, estado, cep, representante_legal, cargo, cpf, rg, endereco_representante, rua_representante, numero_representante, cidade_representante, estado_representante, cep_representante, telefone, genero, raca, deficiencia, tipo_deficiencia, escolaridade, curriculo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    $stmt->execute();
     $idParte1 = $stmt->insert_id;
 
     // Redireciona para a Parte 
@@ -149,7 +155,7 @@ if (isset($_POST['salvar'])) {
         </div>
     </nav>
 
-    <form id="form" action="salvar.php" method="post">
+    <form id="form" action="salvar.php" method="post" enctype="multipart/form-data">
         <h1>Inscrições de Editais</h1>
         <p></p>
         <div>

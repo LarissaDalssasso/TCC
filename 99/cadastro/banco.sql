@@ -98,3 +98,5 @@ CREATE TABLE eventos (
     imagem2 VARCHAR(255),
     imagem3 VARCHAR(255)
 );
+
+ALTER TABLE editalParte3 ADD COLUMN anexos TEXT;
