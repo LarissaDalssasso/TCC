@@ -115,8 +115,8 @@ if (isset($_POST['salvar'])) {
             </div>
         </div>
     </nav>
-    <form id="form" action="salvar.php" method="post">
-        <!-- Anexos -->
+    <form id="form" action="salvar.php" method="post" enctype="multipart/form-data">
+                <!-- Anexos -->
         <div class="container mt-5" style="margin-top: 100px;"> <!-- Adicionando espaçamento superior -->
             <h3>Anexos:</h3>
             <div class="row">

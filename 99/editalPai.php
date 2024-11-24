@@ -11,13 +11,13 @@ if (isset($_SESSION['edital_salvo']) && $_SESSION['edital_salvo'] === true) {
     echo "<script>alert('O edital foi salvo com sucesso!');</script>";
     unset($_SESSION['edital_salvo']); // Remove a variável de sessão após exibir o pop-up
 }
+
 function verificaTresPartes($conn, $id)
 {
+    // Verifica a primeira parte
     $count1 = 0;
     $count2 = 0;
     $count3 = 0;
-
-    // Verifica a primeira parte
     $sql1 = "SELECT COUNT(*) as count FROM editalParte1 WHERE id = ?";
     $stmt1 = $conn->prepare($sql1);
     $stmt1->bind_param("i", $id);
@@ -38,7 +38,7 @@ function verificaTresPartes($conn, $id)
     // Verifica a terceira parte
     $sql3 = "SELECT COUNT(*) as count FROM editalParte3 WHERE id_parte2 = ?";
     $stmt3 = $conn->prepare($sql3);
-    $stmt3->bind_param("i", $id);
+    $stmt3->bind_param("i", $id); // Aqui você deve usar o ID da parte 2
     $stmt3->execute();
     $stmt3->bind_result($count3);
     $stmt3->fetch();
@@ -47,13 +47,7 @@ function verificaTresPartes($conn, $id)
     return $count1 > 0 && $count2 > 0 && $count3 > 0;
 }
 
-$result = mysqli_query($conn, "SELECT * FROM editalParte2 ORDER BY data_inicio DESC");
-
-if (!$result) {
-    echo "Erro na consulta: " . mysqli_error($conn);
-    mysqli_close($conn);
-    exit;
-}
+$result = mysqli_query($conn, "SELECT * FROM editalParte2 ORDER BY data_inicio DESC"); // Seleciona a primeira parte
 
 ?>
 
@@ -196,6 +190,7 @@ if (!$result) {
             <a href="editalParte3.php" class="btn btn-primary" role="button"
                 aria-label="Acessar edital da terceira parte">Edital Terceira parte</a>
         </div>
+
         <div class="container" style="padding-top: 50px; text-align: center; margin: auto;">
             <h2><span style="color: rgb(248, 196, 113); font-size: 30px;">EDITAIS PREENCHIDOS</span></h2>
             <br>
@@ -211,17 +206,18 @@ if (!$result) {
                 </thead>
                 <tbody>
                     <?php
+                    // Loop através dos editais da primeira parte
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
-                            $id = $row['id_parte1']; // Use o id da parte 1
+                            $idParte1 = $row['id']; // ID da parte 1
                             $nomeEdital = $row['nome_projeto'];
                             $dataInicio = $row['data_inicio'];
                             $dataFim = $row['data_final'];
 
                             // Verifica se todas as partes do edital estão preenchidas
-                            if (verificaTresPartes($conn, $id)) {
+                            if (verificaTresPartes($conn, $idParte1)) {
                                 echo "<tr>";
-                                echo "<td>" . $id . "</td>";
+                                echo "<td>" . $idParte1 . "</td>"; // ID da parte 1
                                 echo "<td>" . $nomeEdital . "</td>";
                                 echo "<td>" . $dataInicio . "</td>";
                                 echo "<td>" . $dataFim . "</td>";
