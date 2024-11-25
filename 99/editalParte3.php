@@ -2,27 +2,44 @@
 session_start();
 $conn = mysqli_connect("localhost", "root", "root", "site");
 
+// Verifica se a conexão foi bem-sucedida
+if (!$conn) {
+    die("Conexão falhou: " . mysqli_connect_error());
+}
+
 // Verifica se o formulário foi enviado
 if (isset($_POST['salvar'])) {
-    var_dump($_POST);
-    $estatuto_social = $_POST['estatuto-social'];
-    $ata_eleicao_pose = $_POST['ata-eleicao-pose'];
-    $documento_identidade = $_POST['documento-identidade'];
-    $comprovante_residencia = $_POST['comprovante-residencia'];
-    $outros_documentos = $_POST['outros-documentos'];
+    var_dump($_POST); // Para depuração
+    $estatuto_social = $_FILES['estatuto-social']['name'];
+    $ata_eleicao_pose = $_FILES['ata-eleicao-pose']['name'];
+    $documento_identidade = $_FILES['documento-pessoal-dirigente']['name'];
+    $comprovante_residencia = $_FILES['comprovante-residencia-dirigente']['name'];
+    $outros_documentos = $_FILES['certificado-condicao-microempreendedor']['name']; // Ajuste conforme necessário
 
+    // Move os arquivos para o diretório de uploads
     move_uploaded_file($_FILES['estatuto-social']['tmp_name'], 'uploads/' . $estatuto_social);
     move_uploaded_file($_FILES['ata-eleicao-pose']['tmp_name'], 'uploads/' . $ata_eleicao_pose);
-    move_uploaded_file($_FILES['documento-identidade']['tmp_name'], 'uploads/' . $documento_identidade);
-    move_uploaded_file($_FILES['comprovante_residencia']['tmp_name'], 'uploads/' . $comprovante_residencia);
-    move_uploaded_file($_FILES['outros_documentos']['tmp_name'], 'uploads/' . $outros_documentos);
+    move_uploaded_file($_FILES['documento-pessoal-dirigente']['tmp_name'], 'uploads/' . $documento_identidade);
+    move_uploaded_file($_FILES['comprovante-residencia-dirigente']['tmp_name'], 'uploads/' . $comprovante_residencia);
+    move_uploaded_file($_FILES['certificado-condicao-microempreendedor']['tmp_name'], 'uploads/' . $outros_documentos); // Ajuste conforme necessário
 
     // Salvar na tabela editalParte3
-    $sql = "INSERT INTO editalParte3 (id_parte2, estatuto_social, ata_eleicao_pose, documento_identidade, comprovante_residencia, outros_documentos) VALUES (?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO editalParte3 (id_parte2, estatuto_social, ata_eleicao_pose, documento_pessoal_dirigente, comprovante_residencia_dirigente, outros_documentos) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("isssss", $_GET['id_parte2'], $estatuto_social, $ata_eleicao_pose, $documento_identidade, $comprovante_residencia, $outros_documentos);
-    $stmt->execute();
     
+    // Verifica se a preparação da consulta foi bem-sucedida
+    if ($stmt === false) {
+        die("Erro na preparação da consulta: " . htmlspecialchars($conn->error));
+    }
+
+    // Aqui, ajuste os parâmetros para corresponder à sua tabela
+    $stmt->bind_param("isssss", $_GET['id_parte2'], $estatuto_social, $ata_eleicao_pose, $documento_identidade, $comprovante_residencia, $outros_documentos);
+    
+    // Executa a consulta
+    if (!$stmt->execute()) {
+        die("Erro ao executar a consulta: " . htmlspecialchars($stmt->error));
+    }
+
     // Redireciona após salvar
     header("Location: editalPai.php");
     exit();
@@ -122,8 +139,8 @@ if (isset($_POST['salvar'])) {
             </div>
         </div>
     </nav>
-<form id="form" action="salvar.php" method="post" enctype="multipart/form-data">                <!-- Anexos -->
-        <div class="container mt-5" style="margin-top: 100px;"> <!-- Adicionando espaçamento superior -->
+<form id="form" action="salvar.php?id_parte2=1" method="post" enctype="multipart/form-data">
+    <div class="container mt-5" style="margin-top: 100px;"> <!-- Adicionando espaçamento superior -->
             <h3>Anexos:</h3>
             <div class="row">
                 <!-- Anexo 1 -->

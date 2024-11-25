@@ -94,13 +94,12 @@ try {
 
     if (!$stmt) {
         throw new Exception("Erro ao preparar a instrução SQL para editalParte3: " . mysqli_error($conn));
-    }
-    mysqli_stmt_bind_param(
+    }mysqli_stmt_bind_param(
         $stmt,
         "sssssssssss",
         $_POST['anexos'],
         $_POST['estatuto-social'],
-        $_POST['ata_eleicao-pose'],
+        $_POST['ata-eleicao-pose'], // Corrigido
         $_POST['documento-pessoal_dirigente'],
         $_POST['comprovante-residencia_dirigente'],
         $_POST['declaracoes-gerais'],

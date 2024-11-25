@@ -11,8 +11,7 @@ if (isset($_SESSION['edital_salvo']) && $_SESSION['edital_salvo'] === true) {
     echo "<script>alert('O edital foi salvo com sucesso!');</script>";
     unset($_SESSION['edital_salvo']); // Remove a variável de sessão após exibir o pop-up
 }
-
-$sql = "SELECT p1.id, p1.nome_fantasia, p1.representante_social, p2.nome_projeto,  p3.anexos 
+$sql = "SELECT p1.id, p1.nome_fantasia, p1.representante_social, p2.nome_projeto, p2.descricao_projeto, p3.anexos 
         FROM editalParte1 p1 
         LEFT JOIN editalParte2 p2 ON p1.id = p2.id 
         LEFT JOIN editalParte3 p3 ON p1.id = p3.id 
@@ -234,169 +233,169 @@ if (isset($_GET['delete_id'])) {
                 <div class="alert alert-success">Edital excluído com sucesso!</div>
             <?php endif; ?>
             <div class="table-responsive">
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome Fantasia</th>
-                        <th>Representante Social</th>
-                        <th>Nome do Projeto</th>
-                        <th>Anexos</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    if (mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            echo "<tr>";
-                            echo "<td>" . $row['id'] . "</td>";
-                            echo "<td>" . htmlspecialchars($row['nome_fantasia']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['representante_social']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['nome_projeto']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['anexos']) . "</td>";
-                            echo "<td>";
-                            echo "<a href='#' class='text-primary detalhes-link' data-id='" . $row['id'] . "' title='Ver detalhes'>
-        <i class='fas fa-eye'></i>
-      </a> ";
-                            if (isset($_SESSION['papel']) && $_SESSION['papel'] === 'admin') {
-                                echo "<a href='editalPai.php?delete_id=" . $row['id'] . "' onclick='return confirm(\"Tem certeza que deseja excluir este edital?\");' class='text-danger'>
-            <i class='fas fa-trash'></i>
-          </a>";
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome Fantasia</th>
+                            <th>Representante Social</th>
+                            <th>Nome do Projeto</th>
+                            <th>Anexos</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo "<tr>";
+                                echo "<td>" . $row['id'] . "</td>";
+                                echo "<td>" . htmlspecialchars($row['nome_fantasia']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['representante_social']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['nome_projeto']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['anexos']) . "</td>";
+                                echo "<td>";
+                                echo "<a href='#' class='text-primary detalhes-link' data-id='" . $row['id'] . "' title='Ver detalhes'>
+                                    <i class='fas fa-eye'></i>
+                                  </a> ";
+                                if (isset($_SESSION['papel']) && $_SESSION['papel'] === 'admin') {
+                                    echo "<a href='editalPai.php?delete_id=" . $row['id'] . "' onclick='return confirm(\"Tem certeza que deseja excluir este edital?\");' class='text-danger'>
+                                        <i class='fas fa-trash'></i>
+                                      </a>";
+                                }
+                                echo "</td>";
+                                echo "</tr>";
                             }
-                            echo "</td>";
-                            echo "</tr>";
+                        } else {
+                            echo "<tr><td colspan='6'>Nenhum edital encontrado.</td></tr>";
                         }
-                    } else {
-                        echo "<tr><td colspan='6'>Nenhum edital encontrado.</td></tr>";
-                    }
-                    ?>
-                </tbody>
-            </table>
-        </div>
-        <!-- Modal -->
-        <div class="modal fade" id="detalhesModal" tabindex="-1" aria-labelledby="detalhesModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="detalhesModalLabel">Detalhes do Edital</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body" id="modalContent">
-                        <!-- O conteúdo do edital será carregado aqui via AJAX -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="detalhesModal" tabindex="-1" aria-labelledby="detalhesModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="detalhesModalLabel">Detalhes do Edital</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="modalContent">
+                            <!-- O conteúdo do edital será carregado aqui via AJAX -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
 
 
 
-        <footer class="text-center"
-            style="margin-left:auto;justify-content: center; margin-right: auto; padding-bottom: 0px;padding-top: 0px; align-items: center;">
-            <div class="container text-white py-4 py-lg-5" style="padding: auto;margin: auto;">
-                <ul class="list-inline" style="padding-left: 0px;">
-                    <li class="list-inline-item me-4"><a class="link-light" href="#">Larissa Dalssasso</a></li>
-                    <li class="list-inline-item me-4"><a class="link-light" href="#">&amp;</a></li>
-                    <li class="list-inline-item"><a class="link-light" href="#">Kauã Felippe</a></li>
-                </ul>
-                <ul class="list-inline" style="padding-left: 0px;">
-                    <li class="list-inline-item me-4"><a class="link-light" href="#"></a></li>
-                    <li class="list-inline-item me-4"><a class="link-light" href="#">Instituto Federal Catarinense -
-                            Campus Ibirama</a></li>
-                    <li class="list-inline-item"></li>
-                </ul>
-                <p class="text-muted mb-0" style="padding-left: 0px;">Copyright © 2024 FECT</p>
-            </div>
-        </footer><!-- End: Footer Dark -->
-        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+            <footer class="text-center"
+                style="margin-left:auto;justify-content: center; margin-right: auto; padding-bottom: 0px;padding-top: 0px; align-items: center;">
+                <div class="container text-white py-4 py-lg-5" style="padding: auto;margin: auto;">
+                    <ul class="list-inline" style="padding-left: 0px;">
+                        <li class="list-inline-item me-4"><a class="link-light" href="#">Larissa Dalssasso</a></li>
+                        <li class="list-inline-item me-4"><a class="link-light" href="#">&amp;</a></li>
+                        <li class="list-inline-item"><a class="link-light" href="#">Kauã Felippe</a></li>
+                    </ul>
+                    <ul class="list-inline" style="padding-left: 0px;">
+                        <li class="list-inline-item me-4"><a class="link-light" href="#"></a></li>
+                        <li class="list-inline-item me-4"><a class="link-light" href="#">Instituto Federal Catarinense -
+                                Campus Ibirama</a></li>
+                        <li class="list-inline-item"></li>
+                    </ul>
+                    <p class="text-muted mb-0" style="padding-left: 0px;">Copyright © 2024 FECT</p>
+                </div>
+            </footer><!-- End: Footer Dark -->
+            <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
 
-        <script src="assets/bootstrap/js/bootstrap.min.js?h=e55bde7d6e36ebf17ba0b8c1e80e4065"></script>
-        <script
-            src="assets/js/Carousel-Multi-Image--ISA--carousel-multi.js?h=8b6a61c52462cb43846bf671a4118b63"></script>
-        <script src="assets/js/clean-blog.js?h=44b1c6e85af97fda0fedbb834b3ff3f8"></script>
-        <script src="assets/js/faq-xerius%20faq.js?h=1079596b8ac096fe203457b5fbbbb842"></script>
-        <script
-            src="assets/js/Fixed-navbar-starting-with-transparency-script.js?h=d3a58694022081474e39f06e40840737"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                // Quando um link de detalhes é clicado
-                $('.detalhes-link').on('click', function () {
-                    var editalId = $(this).data('id'); // Obtém o ID do edital
+            <script src="assets/bootstrap/js/bootstrap.min.js?h=e55bde7d6e36ebf17ba0b8c1e80e4065"></script>
+            <script
+                src="assets/js/Carousel-Multi-Image--ISA--carousel-multi.js?h=8b6a61c52462cb43846bf671a4118b63"></script>
+            <script src="assets/js/clean-blog.js?h=44b1c6e85af97fda0fedbb834b3ff3f8"></script>
+            <script src="assets/js/faq-xerius%20faq.js?h=1079596b8ac096fe203457b5fbbbb842"></script>
+            <script
+                src="assets/js/Fixed-navbar-starting-with-transparency-script.js?h=d3a58694022081474e39f06e40840737"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                $(document).ready(function () {
+                    // Quando um link de detalhes é clicado
+                    $('.detalhes-link').on('click', function () {
+                        var editalId = $(this).data('id'); // Obtém o ID do edital
 
-                    // Faz uma requisição AJAX para obter os detalhes
-                    $.ajax({
-                        url: 'detalhesEdital.php', // O arquivo que retorna os detalhes
-                        type: 'GET',
-                        data: { id: editalId },
-                        success: function (response) {
-                            // Carrega a resposta no modal
-                            $('#modalContent').html(response);
-                            $('#detalhesModal').modal('show'); // Exibe o modal
-                            $('nav').addClass('hidden'); // Oculta a navegação
-                        },
-                        error: function () {
-                            alert('Erro ao carregar os detalhes do edital.');
-                        }
+                        // Faz uma requisição AJAX para obter os detalhes
+                        $.ajax({
+                            url: 'detalhesEdital.php', // O arquivo que retorna os detalhes
+                            type: 'GET',
+                            data: { id: editalId },
+                            success: function (response) {
+                                // Carrega a resposta no modal
+                                $('#modalContent').html(response);
+                                $('#detalhesModal').modal('show'); // Exibe o modal
+                                $('nav').addClass('hidden'); // Oculta a navegação
+                            },
+                            error: function () {
+                                alert('Erro ao carregar os detalhes do edital.');
+                            }
+                        });
+                    });
+
+                    // Quando o modal é fechado
+                    $('#detalhesModal').on('hidden.bs.modal', function () {
+                        $('nav').removeClass('hidden'); // Mostra a navegação novamente
+                    });
+                });
+            </script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const modal = document.getElementById('detalhesModal');
+
+                    modal.addEventListener('show.bs.modal', function (event) {
+                        const button = event.relatedTarget; // Botão que acionou o modal
+                        const nomeFantasia = button.getAttribute('data-nome-fantasia');
+                        const representanteSocial = button.getAttribute('data-representante-social');
+                        const nomeProjeto = button.getAttribute('data-nome-projeto');
+                        const descricaoProjeto = button.getAttribute('data-descricao-projeto');
+                        const anexos = button.getAttribute('data-anexos');
+
+                        // Atualizar o conteúdo do modal
+                        modal.querySelector('#detalheNomeFantasia').textContent = nomeFantasia;
+                        modal.querySelector('#detalheRepresentanteSocial').textContent = representanteSocial;
+                        modal.querySelector('#detalheNomeProjeto').textContent = nomeProjeto;
+                        modal.querySelector('#detalheDescricaoProjeto').textContent = descricaoProjeto;
+                        modal.querySelector('#detalheAnexos').textContent = anexos;
                     });
                 });
 
-                // Quando o modal é fechado
-                $('#detalhesModal').on('hidden.bs.modal', function () {
-                    $('nav').removeClass('hidden'); // Mostra a navegação novamente
-                });
-            });
-        </script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const modal = document.getElementById('detalhesModal');
-
-                modal.addEventListener('show.bs.modal', function (event) {
-                    const button = event.relatedTarget; // Botão que acionou o modal
-                    const nomeFantasia = button.getAttribute('data-nome-fantasia');
-                    const representanteSocial = button.getAttribute('data-representante-social');
-                    const nomeProjeto = button.getAttribute('data-nome-projeto');
-                    const descricaoProjeto = button.getAttribute('data-descricao-projeto');
-                    const anexos = button.getAttribute('data-anexos');
-
-                    // Atualizar o conteúdo do modal
-                    modal.querySelector('#detalheNomeFantasia').textContent = nomeFantasia;
-                    modal.querySelector('#detalheRepresentanteSocial').textContent = representanteSocial;
-                    modal.querySelector('#detalheNomeProjeto').textContent = nomeProjeto;
-                    modal.querySelector('#detalheDescricaoProjeto').textContent = descricaoProjeto;
-                    modal.querySelector('#detalheAnexos').textContent = anexos;
-                });
-            });
-
-            // Função para carregar detalhes do edital
-            function carregarDetalhesEdital(id) {
-                fetch(`detalhesEdital.php?id=${id}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.error) {
-                            console.error(data.error);
-                        } else {
-                            // Atualiza o modal com os dados recebidos
-                            document.getElementById('detalheNomeFantasia').textContent = data.nome_fantasia;
-                            document.getElementById('detalheRepresentanteSocial').textContent = data.representante_social;
-                            document.getElementById('detalheNomeProjeto').textContent = data.nome_projeto;
-                            document.getElementById('detalheDescricaoProjeto').textContent = data.descricao_projeto;
-                            document.getElementById('detalheAnexos').textContent = data.anexos;
-                            // Abre o modal
-                            $('#detalhesModal').modal('show');
-                        }
-                    })
-                    .catch(error => console.error('Erro ao carregar detalhes do edital:', error));
-            }
-        </script>
+                // Função para carregar detalhes do edital
+                function carregarDetalhesEdital(id) {
+                    fetch(`detalhesEdital.php?id=${id}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.error) {
+                                console.error(data.error);
+                            } else {
+                                // Atualiza o modal com os dados recebidos
+                                document.getElementById('detalheNomeFantasia').textContent = data.nome_fantasia;
+                                document.getElementById('detalheRepresentanteSocial').textContent = data.representante_social;
+                                document.getElementById('detalheNomeProjeto').textContent = data.nome_projeto;
+                                document.getElementById('detalheDescricaoProjeto').textContent = data.descricao_projeto;
+                                document.getElementById('detalheAnexos').textContent = data.anexos;
+                                // Abre o modal
+                                $('#detalhesModal').modal('show');
+                            }
+                        })
+                        .catch(error => console.error('Erro ao carregar detalhes do edital:', error));
+                }
+            </script>
 </body>
 
 </html>
