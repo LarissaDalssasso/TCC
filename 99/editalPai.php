@@ -12,7 +12,7 @@ if (isset($_SESSION['edital_salvo']) && $_SESSION['edital_salvo'] === true) {
     unset($_SESSION['edital_salvo']); // Remove a variável de sessão após exibir o pop-up
 }
 
-$sql = "SELECT p1.id, p1.nome_fantasia, p1.representante_social, p2.nome_projeto, p2.descricao_projeto, p3.anexos 
+$sql = "SELECT p1.id, p1.nome_fantasia, p1.representante_social, p2.nome_projeto,  p3.anexos 
         FROM editalParte1 p1 
         LEFT JOIN editalParte2 p2 ON p1.id = p2.id 
         LEFT JOIN editalParte3 p3 ON p1.id = p3.id 
@@ -241,7 +241,6 @@ if (isset($_GET['delete_id'])) {
                         <th>Nome Fantasia</th>
                         <th>Representante Social</th>
                         <th>Nome do Projeto</th>
-                        <th>Descrição do Projeto</th>
                         <th>Anexos</th>
                         <th>Ações</th>
                     </tr>
@@ -255,7 +254,6 @@ if (isset($_GET['delete_id'])) {
                             echo "<td>" . htmlspecialchars($row['nome_fantasia']) . "</td>";
                             echo "<td>" . htmlspecialchars($row['representante_social']) . "</td>";
                             echo "<td>" . htmlspecialchars($row['nome_projeto']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['descricao_projeto']) . "</td>";
                             echo "<td>" . htmlspecialchars($row['anexos']) . "</td>";
                             echo "<td>";
                             echo "<a href='#' class='text-primary detalhes-link' data-id='" . $row['id'] . "' title='Ver detalhes'>
