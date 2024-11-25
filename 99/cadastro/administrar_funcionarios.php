@@ -17,9 +17,18 @@ if (!isset($_SESSION['papel']) || $_SESSION['papel'] !== 'admin') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrar Funcionários</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="index.css">
 </head>
-
+<style>
+.btn-update,.btn-danger {
+    align-items: center;
+    margin-right: 2em;
+    margin-bottom: 0%;
+    
+}
+.btn-danger{
+    margin-top: 0em;
+}</style>
 <body>
     <div class="container">
         <h2>Administrar Funcionários</h2>

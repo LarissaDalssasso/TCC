@@ -51,3 +51,8 @@ body {
         margin-top: 20px;
     }
 }
+.btn-update,.btn-danger {
+    align-items: center;
+    margin-right: 2em;
+    
+}

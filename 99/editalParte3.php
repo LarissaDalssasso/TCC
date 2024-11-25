@@ -252,7 +252,7 @@ if (isset($_POST['salvar'])) {
         <div class="mt-3">
             <a href="editalParte2.php" class="btn btn-primary">Parte Dois</a>
             <button type="submit" class="btn btn-primary" name="salvar">Salvar</button>
-            <a href="index.php" class="btn btn-primary">Menu</a>
+            <a href="editalPai.php" class="btn btn-primary">Menu</a>
         </div>
     </form>
     <script>
