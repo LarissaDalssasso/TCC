@@ -1,0 +1,77 @@
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7 colunas para os dias da semana */
+    gap: 10px; /* Espaçamento entre os dias */
+    background-color: #f9f9f9; /* Cor de fundo */
+    padding: 20px;
+    border-radius: 8px;
+}
+.calendar .day {
+    height: 100px; /* Altura fixa do card */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Alinhar conteúdo no topo */
+    align-items: center;
+    background: #e8e8e8; /* Fundo branco para os dias */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.calendar .day-number {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px; /* Espaço entre o número do dia e os eventos */
+}
+
+.calendar .event-link {
+    font-size: 20px;
+    color: #19480d;
+    text-decoration: none;
+    display: block; /* Faz os links ocuparem toda a largura do card */
+    text-align: center;
+    margin-top: 5px; /* Espaçamento entre links */
+}
+
+.calendar .event-link:hover {
+    text-decoration: underline;
+}
+
+
+/* Alinhamento dos nomes dos dias da semana */
+.calendar .row:first-child {
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Garantir que o alinhamento fique fixo */
+.calendar .row {
+    display: contents;
+}
+
+.calendar .col {
+    text-align: center;
+}
+
+.arrow-link {
+    font-size: 24px; /* Tamanho maior para destacar as setas */
+    color: #19480d; /* Cor padrão */
+    text-decoration: none;
+    margin: 0 15px; /* Espaçamento horizontal entre as setas e o título */
+    transition: color 0.3s ease; /* Transição suave ao passar o mouse */
+}
+
+.arrow-link:hover {
+    color: #278d0e; /* Cor ao passar o mouse */
+}
+
+/* Centralização e alinhamento */
+.d-flex.justify-content-center.align-items-center h2 {
+    margin: 0; /* Remove margem extra para melhor alinhamento */
+    font-size: 20px; /* Ajusta o tamanho do texto se necessário */
+}
+.pedro{
+    color: #e8e8e8;
+    font-weight: bold;
+}
